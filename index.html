@@ -274,6 +274,17 @@
     @media (max-width: 600px) { .deal-cards { grid-template-columns: 1fr; } .deals { padding: 60px 20px; } }
 
     /* ── Signup ── */
+    .promo-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, rgba(232,184,75,0.15), rgba(232,184,75,0.05));
+      border: 1px solid rgba(232,184,75,0.3); border-radius: 50px;
+      padding: 10px 24px; margin-bottom: 24px; font-size: 15px; color: #e8b84b;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .promo-badge-icon { font-size: 20px; }
+    .subscriber-count {
+      margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.3);
+    }
     .signup {
       padding: 100px 40px;
       background: rgba(255,255,255,0.02);
@@ -477,6 +488,10 @@
   </section>
 
   <section class="signup" id="signup">
+    <div class="promo-badge" id="promo-badge">
+      <span class="promo-badge-icon">🎉</span>
+      <span>First 100 subscribers get <strong>1 month FREE Pro!</strong></span>
+    </div>
     <h2>Get deals in your inbox</h2>
     <p>Weekly roundup of the best discounts. No spam, just savings.</p>
     <form class="signup-form" name="email-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
@@ -486,6 +501,12 @@
       <button type="submit">Subscribe</button>
     </form>
     <div class="signup-success" id="signup-success">You're in! Check your inbox.</div>
+    <div class="signup-success" id="signup-promo-success" style="display:none;">
+      <span style="font-size:24px;">🎉</span><br/>
+      You're Early Bird #<span id="sub-number"></span>!<br/>
+      <strong>Check your email for your FREE Pro month code!</strong>
+    </div>
+    <div class="subscriber-count" id="subscriber-count"></div>
   </section>
 
   <section class="cta" id="download">
@@ -603,6 +624,7 @@
       e.preventDefault();
       var form = e.target;
       var btn = form.querySelector('button[type="submit"]');
+      var emailInput = form.querySelector('input[type="email"]');
       btn.disabled = true; btn.textContent = 'Checking...';
       try {
         var token = await grecaptcha.execute('6LfamqcsAAAAD5o9slSmCpOzVk3KCyblc8dezG8', { action: 'signup' });
@@ -612,10 +634,49 @@
         });
         var verifyData = await verifyRes.json();
         if (!verifyData.passed) { btn.disabled = false; btn.textContent = 'Subscribe'; alert('Please try again.'); return; }
-        var res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
-        if (res.ok) { form.style.display = 'none'; document.getElementById('signup-success').style.display = 'block'; }
-      } catch (err) { btn.disabled = false; btn.textContent = 'Subscribe'; }
+
+        // Also submit to Netlify for backup
+        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
+
+        // Submit to backend for newsletter + promo code
+        var apiRes = await fetch('https://wilddeals-production.up.railway.app/api/newsletter-signup', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: emailInput.value })
+        });
+        var apiData = await apiRes.json();
+
+        form.style.display = 'none';
+        if (apiData.isFirst100) {
+          document.getElementById('sub-number').textContent = apiData.subscriberNumber;
+          document.getElementById('signup-promo-success').style.display = 'block';
+          var badge = document.getElementById('promo-badge');
+          if (badge) badge.style.display = 'none';
+        } else {
+          document.getElementById('signup-success').style.display = 'block';
+        }
+      } catch (err) {
+        // Fallback: still show success if Netlify form worked
+        form.style.display = 'none';
+        document.getElementById('signup-success').style.display = 'block';
+      }
     });
+
+    // Load subscriber count to show urgency
+    (async function() {
+      try {
+        var res = await fetch('https://wilddeals-production.up.railway.app/api/newsletter-stats');
+        if (res.ok) {
+          var data = await res.json();
+          var badge = document.getElementById('promo-badge');
+          var countEl = document.getElementById('subscriber-count');
+          if (data.first100Remaining <= 0) {
+            if (badge) badge.style.display = 'none';
+          } else {
+            if (countEl) countEl.textContent = data.first100Remaining + ' of 100 free Pro spots remaining!';
+          }
+        }
+      } catch (e) {}
+    })();
 
     // Cookie consent
     (function() { if (!localStorage.getItem('cookie_consent')) { document.getElementById('cookie-banner').style.display = 'block'; } })();
