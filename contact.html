@@ -150,17 +150,53 @@
     document.getElementById('contact-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       var form = e.target;
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Sending...';
+
+      var data = {
+        name: form.querySelector('#name').value,
+        email: form.querySelector('#email').value,
+        message: form.querySelector('#message').value,
+        subject: 'Contact Form'
+      };
+
       try {
-        var res = await fetch('/', {
+        // Submit to backend for AI handling + auto-reply
+        var res = await fetch('https://wilddeals-production.up.railway.app/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-App-Key': 'wilddeals-sk-a7f2k9x3m1' },
+          body: JSON.stringify(data)
+        });
+
+        // Also submit to Netlify as backup
+        fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(new FormData(form)).toString()
-        });
+        }).catch(function() {});
+
         if (res.ok) {
           form.style.display = 'none';
           document.getElementById('form-success').style.display = 'block';
+        } else {
+          btn.disabled = false; btn.textContent = 'Send Message';
+          alert('Something went wrong. Please try again or email support@wilddeals.ca directly.');
         }
-      } catch (err) { /* allow default submit as fallback */ }
+      } catch (err) {
+        // Fallback to Netlify
+        try {
+          await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(new FormData(form)).toString()
+          });
+          form.style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+        } catch (e) {
+          btn.disabled = false; btn.textContent = 'Send Message';
+          alert('Connection error. Please email support@wilddeals.ca directly.');
+        }
+      }
     });
 
     // Cookie consent
