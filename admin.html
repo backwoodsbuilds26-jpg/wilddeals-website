@@ -111,11 +111,22 @@
 <!-- ════════ APP ════════ -->
 <div class="app" id="app">
   <div class="topbar">
-    <h1>🌲 WildDeals Admin</h1>
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="/images/wd.png" alt="WildDeals" style="height:36px;width:36px;border-radius:8px" />
+      <h1>WildDeals Admin</h1>
+    </div>
     <div class="topbar-right">
+      <a href="/growth" target="_blank" style="color:#e8b84b;text-decoration:none;font-size:13px;font-weight:600">📈 Growth Hub</a>
+      <a href="/media-kit" target="_blank" style="color:#7db88a;text-decoration:none;font-size:13px;font-weight:600">📋 Media Kit</a>
+      <a href="/" target="_blank" style="color:#7db88a;text-decoration:none;font-size:13px;font-weight:600">🌐 Site</a>
       <span class="topbar-user" id="admin-email"></span>
       <button class="logout-btn" onclick="handleLogout()">Sign Out</button>
     </div>
+  </div>
+
+  <!-- Banner -->
+  <div style="width:100%;overflow:hidden;max-height:120px">
+    <img src="/images/wild-deals-banner.png" alt="WildDeals Banner" style="width:100%;height:120px;object-fit:cover;display:block" onerror="this.parentElement.style.display='none'" />
   </div>
 
   <div class="tabs">
@@ -136,6 +147,22 @@
         <div class="stat-card"><div class="stat-value" id="stat-categories">12</div><div class="stat-label">Categories</div></div>
         <div class="stat-card"><div class="stat-value" id="stat-avg-discount">-</div><div class="stat-label">Avg Discount</div></div>
       </div>
+      <!-- Quick Links -->
+      <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+        <a href="/growth" target="_blank" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #e8b84b;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
+          <span style="font-size:28px">📈</span> Growth Hub
+        </a>
+        <a href="/media-kit" target="_blank" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1a3a2a;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
+          <span style="font-size:28px">📋</span> Media Kit
+        </a>
+        <a href="/deals" target="_blank" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1a3a2a;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
+          <span style="font-size:28px">🛒</span> Live Site Deals
+        </a>
+        <a href="https://analytics.google.com" target="_blank" rel="noopener" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1a3a2a;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
+          <span style="font-size:28px">📊</span> Google Analytics
+        </a>
+      </div>
+
       <h3 style="color:#1a3a2a;margin-bottom:12px">Deals by Category</h3>
       <div class="table-wrap">
         <table>
