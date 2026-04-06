@@ -29,7 +29,8 @@
     @media print { .page { margin: 0; box-shadow: none; } }
 
     /* ── Cover Page ── */
-    .cover { background: #1a3a2a; color: #e8f5e0; padding: 80px 60px; min-height: 11in; display: flex; flex-direction: column; justify-content: center; }
+    .cover { background: #1a3a2a; color: #e8f5e0; padding: 60px; display: flex; flex-direction: column; justify-content: flex-start; }
+    @media print { .cover { min-height: 11in; justify-content: center; } }
     .cover-badge { display: inline-block; background: rgba(232,184,75,0.15); color: #e8b84b; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 32px; }
     .cover h1 { font-size: 52px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
     .cover h1 span { color: #e8b84b; }
@@ -94,9 +95,51 @@
   <!-- ════════ PAGE 1: COVER ════════ -->
   <div class="page">
     <div class="cover">
-      <div class="cover-badge">Media Kit 2026</div>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:40px;">
+        <img src="/images/wd.png" alt="WildDeals" style="width:64px;height:64px;border-radius:14px;border:2px solid rgba(232,184,75,0.3);" />
+        <div class="cover-badge" style="margin-bottom:0;">Media Kit 2026</div>
+      </div>
       <h1>Wild<span>Deals</span></h1>
       <p class="cover-sub">Canada's #1 app for outdoor gear deals. Hunting, fishing, camping, hiking — updated daily from hundreds of retailers.</p>
+
+      <!-- Highlight Stats -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0;">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(232,184,75,0.2);border-radius:12px;padding:20px;text-align:center;">
+          <div style="color:#e8b84b;font-size:32px;font-weight:800;">300+</div>
+          <div style="color:#7db88a;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Deals Daily</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(232,184,75,0.2);border-radius:12px;padding:20px;text-align:center;">
+          <div style="color:#e8b84b;font-size:32px;font-weight:800;">12</div>
+          <div style="color:#7db88a;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Categories</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(232,184,75,0.2);border-radius:12px;padding:20px;text-align:center;">
+          <div style="color:#e8b84b;font-size:32px;font-weight:800;">50%</div>
+          <div style="color:#7db88a;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Avg Discount</div>
+        </div>
+      </div>
+
+      <!-- What We Do -->
+      <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:24px;margin-bottom:40px;border:1px solid rgba(255,255,255,0.06);">
+        <div style="color:#e8b84b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">What We Do</div>
+        <p style="color:#c0d8c8;font-size:15px;line-height:1.7;">
+          WildDeals aggregates the best outdoor gear deals from Amazon.ca, Cabela's, Bass Pro, Sport Chek, Canadian Tire, MEC, and hundreds more. Our app delivers real-time deal alerts, price tracking, and exclusive Pro features to help Canadian outdoor enthusiasts save money on the gear they love.
+        </p>
+      </div>
+
+      <!-- Target Audience -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px;">
+        <div style="background:rgba(232,184,75,0.08);border-radius:10px;padding:16px;border:1px solid rgba(232,184,75,0.15);">
+          <div style="font-size:20px;margin-bottom:6px;">🎯</div>
+          <div style="color:#e8f5e0;font-size:14px;font-weight:700;">Target Audience</div>
+          <div style="color:#7db88a;font-size:13px;margin-top:4px;">Canadian outdoor enthusiasts, hunters, anglers, campers, hikers aged 25-55</div>
+        </div>
+        <div style="background:rgba(232,184,75,0.08);border-radius:10px;padding:16px;border:1px solid rgba(232,184,75,0.15);">
+          <div style="font-size:20px;margin-bottom:6px;">💰</div>
+          <div style="color:#e8f5e0;font-size:14px;font-weight:700;">Revenue Model</div>
+          <div style="color:#7db88a;font-size:13px;margin-top:4px;">Pro subscriptions, affiliate commissions, and sponsored deal placements</div>
+        </div>
+      </div>
+
       <div class="cover-meta">
         <div class="cover-meta-item">
           <div class="cover-meta-label">Website</div>
