@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /growth
+
+Sitemap: https://wilddeals.ca/sitemap.xml

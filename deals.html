@@ -6,6 +6,17 @@
   <link rel="apple-touch-icon" href="/images/wd.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>All Deals — WildDeals</title>
+  <meta name="description" content="Browse hundreds of outdoor gear deals from Amazon.ca, MEC, SportChek, Cabela's and more. Filter by category, sort by discount. Updated daily." />
+  <link rel="canonical" href="https://wilddeals.ca/deals" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="All Deals — WildDeals" />
+  <meta property="og:description" content="Browse hundreds of outdoor gear deals from top Canadian retailers. Updated daily." />
+  <meta property="og:image" content="https://wilddeals.ca/images/wd.png" />
+  <meta property="og:url" content="https://wilddeals.ca/deals" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="All Deals — WildDeals" />
+  <meta name="twitter:description" content="Browse hundreds of outdoor gear deals from top Canadian retailers." />
+  <meta name="twitter:image" content="https://wilddeals.ca/images/wd.png" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
@@ -172,7 +183,7 @@
     let currentSort = 'discount';
 
     function createDealCard(deal) {
-      const discount = deal.discount ? Math.round(deal.discount) : 0;
+      const discount = deal.discount ? parseInt(String(deal.discount).replace('%','')) : (deal.priceWas > 0 ? Math.round(((deal.priceWas - deal.priceNow) / deal.priceWas) * 100) : 0);
       const imageHTML = deal.image
         ? '<img src="' + deal.image + '" alt="' + (deal.name || '').replace(/"/g, '&quot;') + '" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=deal-emoji-fallback>' + (deal.emoji || '🏷️') + '</div>\'" />'
         : '<div class="deal-emoji-fallback">' + (deal.emoji || '🏷️') + '</div>';
@@ -210,7 +221,7 @@
 
       switch (currentSort) {
         case 'discount':
-          deals.sort(function(a, b) { return (b.discount || 0) - (a.discount || 0); });
+          deals.sort(function(a, b) { return (parseInt(String(b.discount||'0').replace('%',''))||0) - (parseInt(String(a.discount||'0').replace('%',''))||0); });
           break;
         case 'newest':
           deals.sort(function(a, b) {

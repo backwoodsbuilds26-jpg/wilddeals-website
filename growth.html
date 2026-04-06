@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/images/wd.png" />
+  <link rel="apple-touch-icon" href="/images/wd.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WildDeals Growth Hub</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+    /* ── Topbar ── */
+    .topbar { background: #1a3a2a; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
+    .topbar h1 { color: #e8f5e0; font-size: 20px; }
+    .topbar a { color: #7db88a; font-size: 13px; text-decoration: none; }
+    .topbar a:hover { color: #e8f5e0; }
+
+    /* ── Main ── */
+    .main { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+    .bookmark-note {
+      background: linear-gradient(135deg, #1a3a2a, #2a5a3a);
+      color: #e8f5e0;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bookmark-note strong { color: #e8b84b; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 36px; }
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1a3a2a;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #e8b84b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ── Card Grid ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #e8e8e8;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+    .card-icon { font-size: 28px; margin-bottom: 8px; }
+    .card-title { font-size: 15px; font-weight: 700; color: #1a3a2a; margin-bottom: 4px; }
+    .card-desc { font-size: 13px; color: #888; }
+
+    /* ── Checklist ── */
+    .checklist { background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; overflow: hidden; }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+    .checklist-item:last-child { border-bottom: none; }
+    .checklist-item a {
+      color: #1a3a2a;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .checklist-item a:hover { text-decoration: underline; }
+    .check-done { color: #27ae60; font-size: 18px; }
+    .check-todo { color: #ccc; font-size: 18px; }
+    .checklist-note { color: #888; font-size: 12px; margin-left: auto; }
+
+    /* ── Alert Buttons ── */
+    .alert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+    .alert-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      background: #fff;
+      border: 2px solid #e8b84b;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a3a2a;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .alert-btn:hover {
+      background: #e8b84b;
+      color: #2a1800;
+    }
+
+    /* ── Content Ideas ── */
+    .idea-list { background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; overflow: hidden; }
+    .idea-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+    .idea-item:last-child { border-bottom: none; }
+    .idea-icon { font-size: 18px; }
+    .idea-text { font-weight: 600; color: #1a3a2a; }
+
+    /* ── Badge ── */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+    .badge-green { background: #e8f5e0; color: #1a7a3a; }
+    .badge-gold { background: #fff8e0; color: #8a6d1b; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .main { padding: 16px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .alert-grid { grid-template-columns: 1fr; }
+      .topbar { padding: 14px 16px; }
+      .topbar h1 { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════ TOPBAR ════════ -->
+<div class="topbar">
+  <h1>&#127794; WildDeals Growth Hub</h1>
+  <div>
+    <a href="/admin.html">Admin Panel</a>
+  </div>
+</div>
+
+<!-- ════════ MAIN ════════ -->
+<div class="main">
+
+  <div class="bookmark-note">
+    &#11088; <strong>Bookmark this page</strong> &mdash; your one-stop growth command center for WildDeals.ca
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 1. QUICK LINKS — ANALYTICS & SEARCH TOOLS  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">&#128202; Quick Links &mdash; Analytics &amp; Search Tools</div>
+    <div class="card-grid">
+
+      <a class="card" href="https://search.google.com/search-console?resource_id=sc-domain:wilddeals.ca" target="_blank" rel="noopener">
+        <div class="card-icon">&#128270;</div>
+        <div class="card-title">Google Search Console</div>
+        <div class="card-desc">Search performance, indexing, sitemaps</div>
+      </a>
+
+      <a class="card" href="https://analytics.google.com" target="_blank" rel="noopener">
+        <div class="card-icon">&#128200;</div>
+        <div class="card-title">Google Analytics</div>
+        <div class="card-desc">GA4 &mdash; Property ID: G-EG7RPF2LYX</div>
+      </a>
+
+      <a class="card" href="https://trends.google.com/trends/explore?geo=CA&q=outdoor%20deals%20canada" target="_blank" rel="noopener">
+        <div class="card-icon">&#128293;</div>
+        <div class="card-title">Google Trends</div>
+        <div class="card-desc">Trending outdoor deal searches in Canada</div>
+      </a>
+
+      <a class="card" href="https://pagespeed.web.dev/analysis?url=https://wilddeals.ca" target="_blank" rel="noopener">
+        <div class="card-icon">&#9889;</div>
+        <div class="card-title">Google PageSpeed</div>
+        <div class="card-desc">Core Web Vitals &amp; performance audit</div>
+      </a>
+
+      <a class="card" href="https://www.bing.com/webmasters" target="_blank" rel="noopener">
+        <div class="card-icon">&#127760;</div>
+        <div class="card-title">Bing Webmaster Tools</div>
+        <div class="card-desc">Bing search performance &amp; indexing</div>
+      </a>
+
+      <a class="card" href="https://business.google.com" target="_blank" rel="noopener">
+        <div class="card-icon">&#127970;</div>
+        <div class="card-title">Google Business Profile</div>
+        <div class="card-desc">Local search presence &amp; reviews</div>
+      </a>
+
+      <a class="card" href="https://neilpatel.com/ubersuggest/?query=wilddeals.ca" target="_blank" rel="noopener">
+        <div class="card-icon">&#128161;</div>
+        <div class="card-title">Ubersuggest</div>
+        <div class="card-desc">Keyword research &amp; domain analysis</div>
+      </a>
+
+      <a class="card" href="https://answerthepublic.com" target="_blank" rel="noopener">
+        <div class="card-icon">&#10067;</div>
+        <div class="card-title">AnswerThePublic</div>
+        <div class="card-desc">Content ideas from real search queries</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- 2. SEARCH ENGINE SUBMISSIONS       -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">&#128640; Search Engine Submissions</div>
+    <div class="checklist">
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://search.google.com/search-console?resource_id=sc-domain:wilddeals.ca" target="_blank" rel="noopener">Google Search Console</a>
+        <span class="checklist-note">Submit sitemap.xml</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://www.bing.com/webmasters/submitsitemap" target="_blank" rel="noopener">Bing Webmaster Tools</a>
+        <span class="checklist-note">Submit sitemap.xml</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://webmaster.yandex.com" target="_blank" rel="noopener">Yandex Webmaster</a>
+        <span class="checklist-note">Submit sitemap.xml</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-done">&#9989;</span>
+        <span>DuckDuckGo</span>
+        <span class="checklist-note">Uses Bing's index &mdash; covered by Bing submission</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-done">&#9989;</span>
+        <span>Yahoo</span>
+        <span class="checklist-note">Uses Bing's index &mdash; covered by Bing submission</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-done">&#9989;</span>
+        <span>Apple (via apple-touch-icon)</span>
+        <span class="checklist-note">Already done</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- 3. SOCIAL MEDIA & DIRECTORIES      -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">&#128227; Social Media &amp; Directories</div>
+    <div class="checklist">
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://business.google.com" target="_blank" rel="noopener">Google Business Profile</a>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://biz.yelp.com" target="_blank" rel="noopener">Yelp Business</a>
+        <span class="checklist-note">Local visibility</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>Reddit</span>
+        <span class="checklist-note">
+          <a href="https://reddit.com/r/BAPCSalesCanada" target="_blank" rel="noopener">r/BAPCSalesCanada</a> &middot;
+          <a href="https://reddit.com/r/CampingGear" target="_blank" rel="noopener">r/CampingGear</a> &middot;
+          <a href="https://reddit.com/r/frugalcanada" target="_blank" rel="noopener">r/frugalcanada</a>
+        </span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://facebook.com" target="_blank" rel="noopener">Facebook Page</a>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram @wilddeals.ca</a>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://tiktok.com" target="_blank" rel="noopener">TikTok @wilddeals</a>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://x.com" target="_blank" rel="noopener">X / Twitter @wilddeals</a>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://pinterest.com" target="_blank" rel="noopener">Pinterest</a>
+        <span class="checklist-note">Deal pins</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://producthunt.com" target="_blank" rel="noopener">Product Hunt</a>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <a href="https://alternativeto.net" target="_blank" rel="noopener">AlternativeTo</a>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>Canadian Business Directories</span>
+        <span class="checklist-note">
+          <a href="https://www.yellowpages.ca" target="_blank" rel="noopener">YellowPages.ca</a> &middot;
+          <a href="https://411.ca" target="_blank" rel="noopener">411.ca</a>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- 4. GOOGLE ALERTS SETUP             -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">&#128276; Google Alerts Setup</div>
+    <p style="font-size:14px;color:#666;margin-bottom:14px;">Click each button to open Google Alerts with the query pre-filled. Set delivery to "as-it-happens" for best results.</p>
+    <div class="alert-grid">
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22outdoor+gear+deals+canada%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#127981; outdoor gear deals canada
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22camping+sale+canada%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#9978; camping sale canada
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22hunting+gear+discount%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#127993; hunting gear discount
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22fishing+deals+canada%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#128031; fishing deals canada
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22MEC+clearance+sale%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#127956; MEC clearance sale
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22Cabela%27s+canada+sale%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#128058; Cabela's canada sale
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22SportChek+outdoor+sale%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#127939; SportChek outdoor sale
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22Canadian+Tire+outdoor+deals%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#128663; Canadian Tire outdoor deals
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22hiking+gear+sale+canada%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#128694; hiking gear sale canada
+      </a>
+
+      <a class="alert-btn" href="https://www.google.com/alerts#q=%22winter+sports+deals+canada%22&hl=en&gl=ca" target="_blank" rel="noopener">
+        &#9924; winter sports deals canada
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- 5. SEO CHECKLIST                   -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">&#9989; SEO Checklist</div>
+    <div class="checklist">
+
+      <div class="checklist-item">
+        <span class="check-done">&#9989;</span>
+        <span>Sitemap.xml created</span>
+        <span class="badge badge-green" style="margin-left:auto;">Done</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-done">&#9989;</span>
+        <span>Robots.txt created</span>
+        <span class="badge badge-green" style="margin-left:auto;">Done</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-done">&#9989;</span>
+        <span>Favicon added</span>
+        <span class="badge badge-green" style="margin-left:auto;">Done</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-done">&#9989;</span>
+        <span>SSL / HTTPS (Netlify)</span>
+        <span class="badge badge-green" style="margin-left:auto;">Done</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-done">&#9989;</span>
+        <span>Mobile responsive</span>
+        <span class="badge badge-green" style="margin-left:auto;">Done</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>Google Search Console verified</span>
+        <span class="badge badge-gold" style="margin-left:auto;">To Do</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>Bing Webmaster Tools verified</span>
+        <span class="badge badge-gold" style="margin-left:auto;">To Do</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>Meta descriptions on all pages</span>
+        <span class="badge badge-gold" style="margin-left:auto;">To Do</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>OG tags on all pages</span>
+        <span class="badge badge-gold" style="margin-left:auto;">To Do</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>Google Business Profile created</span>
+        <span class="badge badge-gold" style="margin-left:auto;">To Do</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>Schema.org structured data</span>
+        <span class="badge badge-gold" style="margin-left:auto;">To Do</span>
+      </div>
+
+      <div class="checklist-item">
+        <span class="check-todo">&#11036;</span>
+        <span>Blog / content section</span>
+        <span class="badge badge-gold" style="margin-left:auto;">To Do</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- 6. CONTENT IDEAS                   -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">&#128221; Content Ideas</div>
+    <p style="font-size:14px;color:#666;margin-bottom:14px;">Blog post and content ideas for driving organic search traffic to WildDeals.ca</p>
+    <div class="idea-list">
+
+      <div class="idea-item">
+        <span class="idea-icon">&#128293;</span>
+        <span class="idea-text">"Best Camping Deals in Canada [Monthly]"</span>
+      </div>
+
+      <div class="idea-item">
+        <span class="idea-icon">&#127993;</span>
+        <span class="idea-text">"Top 10 Hunting Gear Deals This Week"</span>
+      </div>
+
+      <div class="idea-item">
+        <span class="idea-icon">&#9878;</span>
+        <span class="idea-text">"MEC vs Atmosphere: Where to Get Better Deals"</span>
+      </div>
+
+      <div class="idea-item">
+        <span class="idea-icon">&#128176;</span>
+        <span class="idea-text">"How to Save Money on Outdoor Gear in Canada"</span>
+      </div>
+
+      <div class="idea-item">
+        <span class="idea-icon">&#128197;</span>
+        <span class="idea-text">"Seasonal Buying Guide: When Outdoor Gear Goes on Sale"</span>
+      </div>
+
+      <div class="idea-item">
+        <span class="idea-icon">&#127890;</span>
+        <span class="idea-text">"Best Budget Camping Gear for Beginners"</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
