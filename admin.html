@@ -335,6 +335,7 @@
         <div style="display:flex;gap:12px;margin-top:8px">
           <button class="btn btn-gold" onclick="previewNewsletter()">Preview</button>
           <button class="btn btn-primary" onclick="sendNewsletter()">Send to All Subscribers</button>
+          <button class="btn btn-sm" style="background:#e8b84b;color:#2a1800;" onclick="sendTestNewsletter()">Send Test to Me</button>
         </div>
         <div id="nl-send-result" style="margin-top:12px"></div>
       </div>
@@ -1081,6 +1082,32 @@
     }
   };
 
+  window.sendTestNewsletter = async function() {
+    const template = document.getElementById('nl-template').value;
+    const subject = document.getElementById('nl-subject').value.trim();
+    if (!template) {
+      alert('Please select a template type first.');
+      return;
+    }
+    const to = prompt('Send test email to:', 'jeff@wilddeals.ca');
+    if (!to) return;
+    try {
+      const res = await fetch(`${API_URL}/api/send-test-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-App-Key': APP_SECRET },
+        body: JSON.stringify({ to, template, subject }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(`Test email sent to ${to}.`);
+      } else {
+        alert('Failed: ' + (data.error || 'Unknown error'));
+      }
+    } catch (e) {
+      alert('Network error: ' + e.message);
+    }
+  };
+
   // ── Newsletter Helpers ──
 
   function renderSubscribers(subs) {
@@ -1096,7 +1123,7 @@
           <td>${date}</td>
           <td>${isFirst100 ? '<span class="nl-badge-yes">Early Bird</span>' : '<span class="nl-badge-no">No</span>'}</td>
           <td style="font-family:monospace;font-size:12px">${s.promoCode || '-'}</td>
-          <td><button class="btn btn-sm" style="background:#f0f0f0;color:#888;font-size:11px;" onclick="copyEmail('${(s.email||'').replace(/'/g,"\\'")}')">Copy</button> <button class="btn btn-sm" style="background:transparent;color:#c0392b;font-size:11px;" onclick="deleteSubscriber('${s.id}', '${(s.email||'').replace(/'/g,"\\'")}')">Remove</button></td>
+          <td><button class="btn btn-sm" style="background:#f0f0f0;color:#888;font-size:11px;" onclick="copyEmail('${(s.email||'').replace(/'/g,"\\'")}')">Copy</button> <button class="btn btn-sm" style="background:#1a3a2a;color:#e8f5e0;font-size:11px;" onclick="resendWelcome('${s.id}')"${s.welcomeEmailFailed ? ' title="Welcome email previously failed"' : ''}>Resend${s.welcomeEmailFailed ? ' !' : ''}</button> <button class="btn btn-sm" style="background:transparent;color:#c0392b;font-size:11px;" onclick="deleteSubscriber('${s.id}', '${(s.email||'').replace(/'/g,"\\'")}')">Remove</button></td>
         </tr>`;
       }).join('');
     document.getElementById('nl-subscriber-count').textContent = `Showing ${subs.length} subscriber${subs.length !== 1 ? 's' : ''}`;
@@ -1110,6 +1137,25 @@
 
   window.copyEmail = function(email) {
     navigator.clipboard.writeText(email);
+  };
+
+  window.resendWelcome = async function(id) {
+    if (!confirm('Resend the welcome email to this subscriber?')) return;
+    try {
+      const res = await fetch(`${API_URL}/api/resend-welcome`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-App-Key': APP_SECRET },
+        body: JSON.stringify({ subscriberId: id }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        alert('Welcome email resent to ' + (data.email || 'subscriber') + '.');
+      } else {
+        alert('Failed to resend: ' + (data.error || ('HTTP ' + res.status)));
+      }
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
   };
 
   window.deleteSubscriber = async function(id, email) {

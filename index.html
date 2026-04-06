@@ -626,6 +626,7 @@
       var btn = form.querySelector('button[type="submit"]');
       var emailInput = form.querySelector('input[type="email"]');
       btn.disabled = true; btn.textContent = 'Checking...';
+      function resetBtn() { btn.disabled = false; btn.textContent = 'Subscribe'; }
       try {
         var token = await grecaptcha.execute('6LfamqcsAAAAD5o9slSmCpOzVk3KCyblc8dezG8', { action: 'signup' });
         var verifyRes = await fetch('https://wilddeals-production.up.railway.app/api/verify-recaptcha', {
@@ -633,7 +634,11 @@
           body: JSON.stringify({ token: token })
         });
         var verifyData = await verifyRes.json();
-        if (!verifyData.passed) { btn.disabled = false; btn.textContent = 'Subscribe'; alert('Please try again.'); return; }
+        if (!verifyData.passed) {
+          resetBtn();
+          alert('reCAPTCHA verification failed (score: ' + (verifyData.score != null ? verifyData.score : 'n/a') + '). Please try again.');
+          return;
+        }
 
         // Also submit to Netlify for backup
         fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
@@ -643,10 +648,24 @@
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: emailInput.value })
         });
+        if (!apiRes.ok) {
+          var errData = {};
+          try { errData = await apiRes.json(); } catch (_) {}
+          resetBtn();
+          alert('Signup failed: ' + (errData.error || ('HTTP ' + apiRes.status)) + '. Please try again.');
+          return;
+        }
         var apiData = await apiRes.json();
 
         form.style.display = 'none';
-        if (apiData.isFirst100) {
+        if (apiData.alreadySubscribed) {
+          document.getElementById('signup-success').style.display = 'block';
+          var msgEl = document.getElementById('signup-success');
+          if (msgEl) {
+            var p = msgEl.querySelector('p');
+            if (p) p.textContent = apiData.message || "You're already on the list!";
+          }
+        } else if (apiData.isFirst100) {
           document.getElementById('sub-number').textContent = apiData.subscriberNumber;
           document.getElementById('signup-promo-success').style.display = 'block';
           var badge = document.getElementById('promo-badge');
@@ -655,9 +674,9 @@
           document.getElementById('signup-success').style.display = 'block';
         }
       } catch (err) {
-        // Fallback: still show success if Netlify form worked
-        form.style.display = 'none';
-        document.getElementById('signup-success').style.display = 'block';
+        console.error('[Signup] Error:', err);
+        resetBtn();
+        alert('Sorry, something went wrong: ' + (err && err.message ? err.message : 'network error') + '. Please try again.');
       }
     });
 
