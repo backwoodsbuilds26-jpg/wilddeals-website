@@ -156,6 +156,7 @@
           <option value="without">Without Image</option>
         </select>
         <button class="btn btn-primary" onclick="openDealModal()">+ Add Deal</button>
+        <button class="btn" style="background:#e8b84b;color:#1a3a2a;font-weight:700" onclick="backfillImages()" id="backfill-btn">🔍 Backfill Images</button>
       </div>
       <div class="table-wrap">
         <table>
@@ -268,11 +269,15 @@
     </div>
     <div class="form-group">
       <label>Product URL</label>
-      <input type="url" id="deal-url" placeholder="https://amazon.ca/dp/B00..." />
+      <div style="display:flex;gap:8px">
+        <input type="url" id="deal-url" placeholder="https://amazon.ca/dp/B00..." style="flex:1" />
+        <button class="btn" style="background:#2a5a3a;color:#fff;white-space:nowrap;padding:10px 16px" onclick="fetchOgImage()" title="Auto-fetch product image from URL">🔍 Fetch Image</button>
+      </div>
     </div>
     <div class="form-group">
-      <label>Image URL</label>
+      <label>Image URL <span id="og-status" style="font-size:12px;color:#888"></span></label>
       <input type="url" id="deal-image" placeholder="https://..." />
+      <img id="deal-image-preview" style="display:none;max-height:80px;margin-top:8px;border-radius:8px;border:1px solid #e0e0e0" />
     </div>
     <div class="form-group">
       <label>Expiry</label>
@@ -640,6 +645,109 @@
       result.className = 'notif-result notif-error';
       result.textContent = 'Network error: ' + e.message;
     }
+  };
+
+  // ── OG Image Fetching ──
+
+  // Fetch og:image when adding/editing a deal — the "Fetch Image" button
+  window.fetchOgImage = async function() {
+    const url = document.getElementById('deal-url').value.trim();
+    const status = document.getElementById('og-status');
+    const imageInput = document.getElementById('deal-image');
+    const preview = document.getElementById('deal-image-preview');
+
+    if (!url) { status.textContent = '(enter a product URL first)'; status.style.color = '#c0392b'; return; }
+
+    status.textContent = 'Fetching...';
+    status.style.color = '#e8b84b';
+
+    try {
+      const res = await fetch(`${API_URL}/api/og-image`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-App-Key': APP_SECRET },
+        body: JSON.stringify({ url }),
+      });
+      const data = await res.json();
+
+      if (data.success && data.image) {
+        imageInput.value = data.image;
+        preview.src = data.image;
+        preview.style.display = 'block';
+        status.textContent = '(auto-fetched from product page)';
+        status.style.color = '#2a7d3a';
+      } else {
+        status.textContent = '(no image found on that page)';
+        status.style.color = '#c0392b';
+        preview.style.display = 'none';
+      }
+    } catch (e) {
+      status.textContent = '(fetch failed: ' + e.message + ')';
+      status.style.color = '#c0392b';
+    }
+  };
+
+  // Show preview when image URL changes manually
+  document.getElementById('deal-image').addEventListener('input', function() {
+    const preview = document.getElementById('deal-image-preview');
+    if (this.value.trim()) {
+      preview.src = this.value.trim();
+      preview.style.display = 'block';
+    } else {
+      preview.style.display = 'none';
+    }
+  });
+
+  // Backfill: fetch og:images for all deals that have a URL but no image
+  window.backfillImages = async function() {
+    const btn = document.getElementById('backfill-btn');
+    const dealsWithoutImage = allDeals.filter(d => d.url && d.url.trim() && (!d.image || !d.image.trim()));
+
+    if (dealsWithoutImage.length === 0) {
+      alert('All deals with URLs already have images!');
+      return;
+    }
+
+    if (!confirm(`Fetch images for ${dealsWithoutImage.length} deals without images?\n\nThis will call each product URL and grab the og:image tag. Deals are processed in batches of 20.`)) return;
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Working...';
+    let totalFound = 0;
+    let totalProcessed = 0;
+
+    // Process in batches of 20
+    for (let i = 0; i < dealsWithoutImage.length; i += 20) {
+      const batch = dealsWithoutImage.slice(i, i + 20).map(d => ({ id: d.id, url: d.url }));
+      btn.textContent = `⏳ ${totalProcessed}/${dealsWithoutImage.length}...`;
+
+      try {
+        const res = await fetch(`${API_URL}/api/og-image-batch`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-App-Key': APP_SECRET },
+          body: JSON.stringify({ deals: batch }),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          for (const result of data.results) {
+            if (result.image) {
+              await updateDoc(doc(db, 'deals', result.id), {
+                image: result.image,
+                updatedAt: new Date().toISOString(),
+              });
+              totalFound++;
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Backfill batch error:', e);
+      }
+      totalProcessed += batch.length;
+    }
+
+    btn.disabled = false;
+    btn.textContent = '🔍 Backfill Images';
+    alert(`Done! Found images for ${totalFound} out of ${dealsWithoutImage.length} deals.`);
+    await loadData();
   };
 
   // ── Tabs ──
