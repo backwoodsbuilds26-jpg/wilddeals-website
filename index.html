@@ -18,212 +18,404 @@
   <meta name="twitter:title" content="WildDeals — Best Outdoor Gear Deals in Canada" />
   <meta name="twitter:description" content="Find the best deals on camping, hunting, fishing, hiking, and outdoor gear from top Canadian retailers." />
   <meta name="twitter:image" content="https://wilddeals.ca/images/wd.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: #0c1a12; color: #e8f0e4; overflow-x: hidden; }
 
-    nav { background: #1a3a2a; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; color: #e8f5e0; font-size: 24px; font-weight: bold; text-decoration: none; }
-    .nav-logo img { height: 40px; width: auto; border-radius: 8px; }
-    .nav-btn { background: #e8b84b; color: #2a1800; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+    /* ── Animations ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes countUp { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
 
+    .fade-up { animation: fadeUp 0.8s ease-out both; }
+    .fade-up-d1 { animation-delay: 0.1s; }
+    .fade-up-d2 { animation-delay: 0.2s; }
+    .fade-up-d3 { animation-delay: 0.3s; }
+    .fade-up-d4 { animation-delay: 0.4s; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(12,26,18,0.8);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(232,184,75,0.08);
+      transition: all 0.3s ease;
+    }
+    nav.scrolled { background: rgba(12,26,18,0.95); padding: 12px 40px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 22px; font-weight: 800; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo img { height: 38px; width: 38px; border-radius: 10px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #e8b84b; }
+    .nav-cta {
+      background: linear-gradient(135deg, #e8b84b 0%, #d4a43d 100%);
+      color: #1a2a10 !important; padding: 10px 24px; border-radius: 10px;
+      font-weight: 700 !important; font-size: 14px !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+      box-shadow: 0 2px 12px rgba(232,184,75,0.2);
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(232,184,75,0.35) !important; }
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 16px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+
+    /* ── Hero ── */
     .hero {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 48px;
-      padding: 60px 40px;
-      background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(74,93,60,0.5) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 30%, rgba(58,77,48,0.5) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 80%, rgba(42,62,35,0.5) 0%, transparent 50%),
-        radial-gradient(ellipse at 10% 20%, rgba(85,100,65,0.4) 0%, transparent 40%),
-        radial-gradient(ellipse at 90% 70%, rgba(65,82,52,0.4) 0%, transparent 40%),
-        radial-gradient(ellipse at 40% 10%, rgba(50,68,40,0.5) 0%, transparent 35%),
-        radial-gradient(ellipse at 70% 90%, rgba(38,55,30,0.5) 0%, transparent 35%),
-        linear-gradient(135deg, #2a3a25 0%, #3b4a30 20%, #2d3d26 40%, #4a5a3a 60%, #2a3a25 80%, #3b4a30 100%);
-      background-color: #2d3d26;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      gap: 64px; padding: 120px 60px 80px;
       position: relative;
-      max-width: 100%;
     }
-    .hero-text {
-      flex: 1;
-      max-width: 480px;
-      color: #e8f5e0;
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(46,125,50,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 30%, rgba(232,184,75,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 50% at 50% 90%, rgba(46,125,50,0.08) 0%, transparent 50%);
     }
-    .hero-tagline {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #e8b84b;
-      font-weight: 600;
-      margin-bottom: 12px;
+    /* Subtle grid pattern */
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                         linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
+    .hero-text { flex: 1; max-width: 560px; position: relative; z-index: 2; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(232,184,75,0.1); border: 1px solid rgba(232,184,75,0.2);
+      padding: 8px 16px; border-radius: 50px;
+      font-size: 13px; font-weight: 600; color: #e8b84b;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease-out both;
+    }
+    .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4CAF50; animation: pulse 2s infinite; }
     .hero-heading {
-      font-size: 42px;
-      font-weight: 800;
-      line-height: 1.15;
-      margin-bottom: 16px;
-      color: #ffffff;
+      font-size: 56px; font-weight: 800; line-height: 1.08;
+      color: #ffffff; letter-spacing: -2px; margin-bottom: 20px;
+      animation: fadeUp 0.7s ease-out 0.1s both;
     }
+    .hero-heading .gold { color: #e8b84b; }
     .hero-desc {
-      font-size: 17px;
-      line-height: 1.6;
-      color: #b8d4b0;
-      margin-bottom: 28px;
+      font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.55);
+      margin-bottom: 36px; max-width: 460px;
+      animation: fadeUp 0.7s ease-out 0.2s both;
     }
-    .hero-buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp 0.7s ease-out 0.3s both; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, #e8b84b 0%, #d4a43d 100%);
+      color: #1a2a10; padding: 16px 32px; border-radius: 14px;
+      text-decoration: none; font-weight: 700; font-size: 16px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(232,184,75,0.25);
     }
-    .hero-btn-primary {
-      background: #e8b84b;
-      color: #2a1800;
-      padding: 14px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      transition: background 0.2s;
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,184,75,0.4); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.06); color: #fff;
+      padding: 16px 32px; border-radius: 14px;
+      text-decoration: none; font-weight: 600; font-size: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.25s ease;
     }
-    .hero-btn-primary:hover { background: #d4a43d; }
-    .hero-btn-secondary {
-      background: transparent;
-      color: #e8f5e0;
-      padding: 14px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      border: 2px solid #e8f5e0;
-      transition: background 0.2s, color 0.2s;
-    }
-    .hero-btn-secondary:hover { background: #e8f5e0; color: #1a3a2a; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
     .hero-banner {
-      flex: 1;
-      max-width: 520px;
+      flex: 1; max-width: 480px; position: relative; z-index: 2;
+      animation: slideInRight 0.9s ease-out 0.2s both;
     }
     .hero-banner img {
-      width: 100%;
-      height: auto;
-      display: block;
-      filter: drop-shadow(0 8px 32px rgba(0,0,0,0.4));
+      width: 100%; height: auto; border-radius: 20px;
+      filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5));
     }
-    @media (max-width: 768px) {
-      .hero { flex-direction: column; padding: 40px 20px; gap: 32px; text-align: center; }
-      .hero-text { max-width: 100%; }
-      .hero-heading { font-size: 32px; }
+    /* Glow behind banner */
+    .hero-banner::before {
+      content: ''; position: absolute; inset: -20%;
+      background: radial-gradient(circle, rgba(46,125,50,0.15) 0%, transparent 60%);
+      z-index: -1;
+    }
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; padding: 120px 24px 60px; gap: 40px; text-align: center; min-height: auto; }
+      .hero-heading { font-size: 38px; letter-spacing: -1px; }
+      .hero-desc { max-width: 100%; }
       .hero-buttons { justify-content: center; }
-      .hero-banner { max-width: 100%; }
+      .hero-banner { max-width: 320px; }
     }
 
-    .stats { background: #fff; padding: 40px; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; border-bottom: 1px solid #e8e8e8; }
-    .stat { text-align: center; }
-    .stat-number { font-size: 36px; font-weight: bold; color: #1a3a2a; }
-    .stat-label { font-size: 14px; color: #888; margin-top: 4px; }
+    /* ── Stats ── */
+    .stats {
+      display: flex; justify-content: center; gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+    .stat {
+      flex: 1; text-align: center; padding: 40px 24px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.3s;
+    }
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: rgba(232,184,75,0.04); }
+    .stat-number {
+      font-size: 40px; font-weight: 800; letter-spacing: -1px;
+      background: linear-gradient(135deg, #e8b84b 0%, #f0d078 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 6px; font-weight: 500; }
+    @media (max-width: 600px) {
+      .stats { flex-wrap: wrap; }
+      .stat { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .stat:nth-child(2) { border-right: none; }
+    }
 
-    .features { padding: 80px 40px; max-width: 1000px; margin: 0 auto; }
-    .features h2 { text-align: center; font-size: 36px; font-weight: bold; margin-bottom: 50px; color: #1a3a2a; }
-    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-    .feature-card { background: #fff; border-radius: 16px; padding: 28px; border: 1px solid #e8e8e8; }
-    .feature-emoji { font-size: 36px; margin-bottom: 16px; }
-    .feature-title { font-size: 18px; font-weight: bold; color: #1a1a1a; margin-bottom: 8px; }
-    .feature-desc { font-size: 14px; color: #888; line-height: 1.6; }
+    /* ── Features ── */
+    .features { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600; color: #e8b84b;
+      text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px;
+    }
+    .section-label::before { content: ''; width: 24px; height: 2px; background: #e8b84b; }
+    .section-title {
+      font-size: 42px; font-weight: 800; letter-spacing: -1.5px;
+      color: #ffffff; margin-bottom: 16px; line-height: 1.1;
+    }
+    .section-desc { font-size: 17px; color: rgba(255,255,255,0.45); max-width: 520px; line-height: 1.6; margin-bottom: 56px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .feature-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px; padding: 32px 28px;
+      transition: all 0.35s ease;
+      position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(232,184,75,0.3), transparent);
+      opacity: 0; transition: opacity 0.35s;
+    }
+    .feature-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(232,184,75,0.15); transform: translateY(-4px); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 20px;
+      background: rgba(46,125,50,0.1); border: 1px solid rgba(46,125,50,0.15);
+    }
+    .feature-title { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+    .feature-desc { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+    @media (max-width: 900px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } .features { padding: 60px 20px; } }
 
-    .deals { background: #1a3a2a; padding: 80px 40px; text-align: center; }
-    .deals h2 { color: #e8f5e0; font-size: 36px; font-weight: bold; margin-bottom: 12px; }
-    .deals p { color: #7db88a; font-size: 18px; margin-bottom: 40px; }
-    .deal-cards { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; max-width: 900px; margin: 0 auto; }
-    .deal-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
-    .deal-card { background: #fff; border-radius: 16px; padding: 0; text-align: left; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
-    .deal-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-    .deal-card-img { width: 100%; height: 180px; object-fit: contain; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
+    /* ── Live Deals ── */
+    .deals { padding: 100px 40px; position: relative; }
+    .deals::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(46,125,50,0.04) 0%, transparent 40%, rgba(46,125,50,0.04) 100%);
+    }
+    .deals-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+    .deals-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+    .deal-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .deal-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px; overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .deal-card:hover { transform: translateY(-6px); border-color: rgba(232,184,75,0.15); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
+    .deal-card-img {
+      width: 100%; height: 200px; background: rgba(255,255,255,0.02);
+      display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
     .deal-card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
-    .deal-card-img .deal-emoji-fallback { font-size: 64px; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-    .deal-card-body { padding: 16px 20px 20px; }
-    .deal-badge { background: #1a7a3a; color: #fff; border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 8px; }
-    .deal-name { font-size: 15px; font-weight: bold; color: #1a1a1a; margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .deal-store { font-size: 13px; color: #888; margin-bottom: 10px; }
-    .deal-prices { display: flex; gap: 8px; align-items: baseline; margin-bottom: 12px; }
-    .deal-now { font-size: 22px; font-weight: bold; color: #1a7a3a; }
-    .deal-was { font-size: 13px; color: #aaa; text-decoration: line-through; }
-    .deal-view-btn { display: inline-block; background: #1a3a2a; color: #e8f5e0; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: background 0.2s; width: 100%; text-align: center; }
-    .deal-view-btn:hover { background: #2a5a3a; }
-    .view-all-btn { display: inline-block; background: #e8b84b; color: #2a1800; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 16px; margin-top: 32px; transition: background 0.2s; }
-    .view-all-btn:hover { background: #d4a43d; }
-    .deal-loading { color: #7db88a; font-size: 16px; padding: 40px; }
+    .deal-emoji-fallback { font-size: 56px; }
+    .deal-card-body { padding: 20px; }
+    .deal-badge {
+      display: inline-block; padding: 4px 12px; border-radius: 8px;
+      font-size: 12px; font-weight: 700; margin-bottom: 10px;
+      background: rgba(76,175,80,0.15); color: #4CAF50; border: 1px solid rgba(76,175,80,0.2);
+    }
+    .deal-name { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .deal-store { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 12px; }
+    .deal-prices { display: flex; gap: 10px; align-items: baseline; margin-bottom: 16px; }
+    .deal-now { font-size: 24px; font-weight: 800; color: #4CAF50; }
+    .deal-was { font-size: 14px; color: rgba(255,255,255,0.25); text-decoration: line-through; }
+    .deal-view-btn {
+      display: block; text-align: center;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+      color: #fff; padding: 12px 20px; border-radius: 12px;
+      text-decoration: none; font-weight: 600; font-size: 14px;
+      transition: all 0.25s;
+    }
+    .deal-view-btn:hover { background: rgba(232,184,75,0.15); border-color: rgba(232,184,75,0.3); color: #e8b84b; }
+    .view-all-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: #e8b84b; text-decoration: none; font-weight: 700; font-size: 15px;
+      padding: 12px 0; border-bottom: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .view-all-btn:hover { border-color: #e8b84b; }
+    .deal-loading { color: rgba(255,255,255,0.35); font-size: 16px; padding: 60px; text-align: center; grid-column: 1 / -1; }
     @media (max-width: 900px) { .deal-cards { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .deal-cards { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .deal-cards { grid-template-columns: 1fr; } .deals { padding: 60px 20px; } }
 
-    .signup { padding: 80px 40px; text-align: center; background: #fff; border-bottom: 1px solid #e8e8e8; }
-    .signup h2 { font-size: 36px; font-weight: bold; color: #1a3a2a; margin-bottom: 12px; }
-    .signup p { font-size: 18px; color: #888; margin-bottom: 32px; }
-    .signup-form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; max-width: 500px; margin: 0 auto; }
-    .signup-form input[type="email"] { flex: 1; min-width: 240px; padding: 14px 20px; border-radius: 12px; border: 2px solid #ddd; font-size: 16px; outline: none; transition: border-color 0.2s; }
-    .signup-form input[type="email"]:focus { border-color: #1a3a2a; }
-    .signup-form button { background: #e8b84b; color: #2a1800; padding: 14px 28px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; transition: background 0.2s; }
-    .signup-form button:hover { background: #d4a43d; }
-    .signup-success { display: none; color: #1a7a3a; font-weight: bold; font-size: 18px; margin-top: 16px; }
+    /* ── Signup ── */
+    .signup {
+      padding: 100px 40px;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+    .signup h2 { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -1px; }
+    .signup p { font-size: 17px; color: rgba(255,255,255,0.4); margin-bottom: 36px; }
+    .signup-form {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      max-width: 480px; margin: 0 auto;
+    }
+    .signup-form input[type="email"] {
+      flex: 1; min-width: 240px; padding: 16px 20px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
+      font-size: 16px; color: #fff; font-family: inherit;
+      outline: none; transition: border-color 0.2s;
+    }
+    .signup-form input[type="email"]::placeholder { color: rgba(255,255,255,0.3); }
+    .signup-form input[type="email"]:focus { border-color: #e8b84b; }
+    .signup-form button {
+      background: linear-gradient(135deg, #e8b84b 0%, #d4a43d 100%);
+      color: #1a2a10; padding: 16px 28px; border-radius: 14px; border: none;
+      font-weight: 700; font-size: 16px; cursor: pointer; font-family: inherit;
+      transition: all 0.25s;
+      box-shadow: 0 2px 12px rgba(232,184,75,0.2);
+    }
+    .signup-form button:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(232,184,75,0.35); }
+    .signup-success { display: none; color: #4CAF50; font-weight: 700; font-size: 18px; margin-top: 20px; }
 
-    .cta { padding: 80px 40px; text-align: center; background: #f5f5f5; }
-    .cta h2 { font-size: 36px; font-weight: bold; color: #1a3a2a; margin-bottom: 16px; }
-    .cta p { font-size: 18px; color: #888; margin-bottom: 40px; }
-    .store-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .store-btn { background: #1a3a2a; color: #e8f5e0; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 16px; }
+    /* ── CTA / Download ── */
+    .cta {
+      padding: 100px 40px; text-align: center;
+      position: relative;
+    }
+    .cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,184,75,0.06) 0%, transparent 60%);
+    }
+    .cta h2 { font-size: 42px; font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -1.5px; position: relative; }
+    .cta p { font-size: 17px; color: rgba(255,255,255,0.4); margin-bottom: 44px; position: relative; }
+    .store-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .store-btn {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: #fff; padding: 18px 32px; border-radius: 16px;
+      text-decoration: none; font-weight: 600; font-size: 16px;
+      transition: all 0.3s;
+    }
+    .store-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(232,184,75,0.2); transform: translateY(-2px); }
+    .store-btn-icon { font-size: 28px; }
+    .store-btn-text { text-align: left; }
+    .store-btn-text small { display: block; font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 500; }
+    .store-btn-text span { display: block; font-size: 17px; font-weight: 700; }
 
-    footer { background: #1a3a2a; padding: 40px; text-align: center; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; justify-content: center; color: #e8f5e0; font-size: 24px; font-weight: bold; margin-bottom: 16px; }
-    .footer-logo img { height: 36px; width: auto; border-radius: 8px; }
-    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
-    .footer-links a { color: #7db88a; text-decoration: none; font-size: 14px; }
-    .footer-copy { color: #7db88a; font-size: 12px; }
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 60px 40px 40px;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; }
+    .footer-brand { max-width: 300px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+    .footer-logo img { height: 34px; width: 34px; border-radius: 8px; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+    .footer-links-group h4 { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+    .footer-links-group a { display: block; color: rgba(255,255,255,0.4); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+    .footer-links-group a:hover { color: #e8b84b; }
+    .footer-bottom {
+      max-width: 1100px; margin: 40px auto 0;
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+    .footer-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.25); }
+    @media (max-width: 600px) {
+      footer { padding: 40px 20px 32px; }
+      .footer-inner { flex-direction: column; }
+    }
 
-    .cookie-banner { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1a3a2a; color: #e8f5e0; padding: 16px 40px; z-index: 1000; }
-    .cookie-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-    .cookie-inner p { font-size: 14px; flex: 1; min-width: 200px; }
-    .cookie-inner a { color: #e8b84b; }
+    /* ── Cookie Banner ── */
+    .cookie-banner {
+      display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 1000;
+      max-width: 480px;
+      background: rgba(26,58,42,0.95); backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+      padding: 20px 24px; color: #e8f5e0;
+    }
+    .cookie-banner p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; margin-bottom: 14px; }
+    .cookie-banner a { color: #e8b84b; }
     .cookie-buttons { display: flex; gap: 10px; }
-    .cookie-btn { padding: 8px 20px; border-radius: 8px; border: none; font-weight: bold; font-size: 14px; cursor: pointer; }
-    .cookie-accept { background: #e8b84b; color: #2a1800; }
-    .cookie-decline { background: transparent; color: #e8f5e0; border: 2px solid #e8f5e0; }
+    .cookie-btn {
+      padding: 10px 20px; border-radius: 10px; border: none;
+      font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .cookie-accept { background: #e8b84b; color: #1a2a10; }
+    .cookie-accept:hover { background: #f0c860; }
+    .cookie-decline { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); }
+    .cookie-decline:hover { background: rgba(255,255,255,0.1); }
   </style>
 </head>
 <body>
 
-  <nav>
-    <div class="nav-logo"><img src="/images/WD.png" alt="WildDeals logo" /> WildDeals</div>
-    <a href="#download" class="nav-btn">Download App</a>
+  <nav id="nav">
+    <a href="/" class="nav-logo"><img src="/images/wd.png" alt="WildDeals" /> WildDeals</a>
+    <div class="nav-links">
+      <a href="/deals">Deals</a>
+      <a href="#features">Features</a>
+      <a href="/contact">Contact</a>
+      <a href="#download" class="nav-cta">Download App</a>
+    </div>
   </nav>
 
   <section class="hero">
     <div class="hero-text">
-      <div class="hero-tagline">The Best Deals in the Wild</div>
-      <h1 class="hero-heading">Save Big on Outdoor Gear You Love</h1>
-      <p class="hero-desc">Discover hundreds of deals on top outdoor brands — updated daily so you never miss a discount on hiking, camping, and adventure gear.</p>
+      <div class="hero-badge"><div class="hero-badge-dot"></div> Updated daily with fresh deals</div>
+      <h1 class="hero-heading">Never pay full price for <span class="gold">outdoor gear</span> again.</h1>
+      <p class="hero-desc">WildDeals tracks hundreds of sales across Canada's top outdoor retailers so you don't have to. Camping, hunting, fishing, hiking — all in one app.</p>
       <div class="hero-buttons">
-        <a href="#download" class="hero-btn-primary">Download the App</a>
-        <a href="#features" class="hero-btn-secondary">Learn More</a>
+        <a href="#download" class="btn-primary">Download Free &#8594;</a>
+        <a href="/deals" class="btn-secondary">Browse Deals</a>
       </div>
     </div>
     <div class="hero-banner">
-      <img src="/images/wild-deals-banner.png" alt="Wild Deals — The Best Deals in the Wild" />
+      <img src="/images/wild-deals-banner.png" alt="WildDeals App" />
     </div>
   </section>
 
   <section class="stats">
     <div class="stat">
-      <div class="stat-number">300+</div>
-      <div class="stat-label">Deals available</div>
+      <div class="stat-number">1,200+</div>
+      <div class="stat-label">Active deals</div>
     </div>
     <div class="stat">
-      <div class="stat-number">50%</div>
-      <div class="stat-label">Average savings</div>
+      <div class="stat-number">43%</div>
+      <div class="stat-label">Average discount</div>
     </div>
     <div class="stat">
-      <div class="stat-number">24/7</div>
-      <div class="stat-label">Live deal updates</div>
+      <div class="stat-number">12</div>
+      <div class="stat-label">Categories</div>
     </div>
     <div class="stat">
       <div class="stat-number">Free</div>
@@ -232,230 +424,220 @@
   </section>
 
   <section class="features" id="features">
-    <h2>Everything you need to save big</h2>
+    <div class="section-label">Features</div>
+    <div class="section-title">Built for deal hunters.</div>
+    <div class="section-desc">Every feature designed to help you find better deals faster, from smart search to real-time alerts.</div>
     <div class="feature-grid">
       <div class="feature-card">
-        <div class="feature-emoji">🔍</div>
-        <div class="feature-title">Smart Deal Search</div>
-        <div class="feature-desc">Search and filter thousands of deals by category, store, discount percentage and more.</div>
+        <div class="feature-icon">🔍</div>
+        <div class="feature-title">Smart Search & Filters</div>
+        <div class="feature-desc">Filter by category, store, price range, and discount. Sort by biggest savings or newest arrivals.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-emoji">🔔</div>
-        <div class="feature-title">Price Drop Alerts</div>
-        <div class="feature-desc">Get instant notifications the moment your favourite gear goes on sale. Never miss a deal again.</div>
+        <div class="feature-icon">🔔</div>
+        <div class="feature-title">Deal Alerts</div>
+        <div class="feature-desc">Push notifications the moment your favourite gear drops in price. Set alerts by category.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-emoji">🔖</div>
-        <div class="feature-title">Save Deals</div>
-        <div class="feature-desc">Bookmark deals you love and come back to them later. Your saved deals are always waiting for you.</div>
+        <div class="feature-icon">💾</div>
+        <div class="feature-title">Save & Track</div>
+        <div class="feature-desc">Bookmark deals, view your recently browsed items, and track deals before they expire.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-emoji">📤</div>
+        <div class="feature-icon">👍</div>
+        <div class="feature-title">Community Rated</div>
+        <div class="feature-desc">Vote on deals and report expired listings. The community keeps deals honest.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📤</div>
         <div class="feature-title">Share Deals</div>
-        <div class="feature-desc">Found an amazing deal? Share it with your hiking buddies, family or social media in one tap.</div>
+        <div class="feature-desc">Deep links open deals right in the app. Share with friends in one tap.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-emoji">🏪</div>
-        <div class="feature-title">Top Outdoor Stores</div>
-        <div class="feature-desc">Deals from REI, MEC, Backcountry, Patagonia, Amazon, Moosejaw, Steep & Cheap and hundreds more.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-emoji">⚡</div>
-        <div class="feature-title">Pro Alerts</div>
-        <div class="feature-desc">Upgrade to Pro for $4/month and get instant alerts 4 hours before free users. First in line for the best deals.</div>
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">WildDeals Pro</div>
+        <div class="feature-desc">$4/month for early access, ad-free browsing, and exclusive Pro-only deals.</div>
       </div>
     </div>
   </section>
 
   <section class="deals">
-    <h2>🔥 Live Deals Right Now</h2>
-    <p>Updated every 6 hours from hundreds of retailers</p>
-    <div class="deal-cards" id="live-deals">
-      <div class="deal-loading">Loading live deals...</div>
+    <div class="deals-inner">
+      <div class="deals-header">
+        <div>
+          <div class="section-label">Live Deals</div>
+          <div class="section-title" style="margin-bottom:0">Top deals right now</div>
+        </div>
+        <a href="/deals" class="view-all-btn">View all deals &#8594;</a>
+      </div>
+      <div class="deal-cards" id="live-deals">
+        <div class="deal-loading">Loading live deals...</div>
+      </div>
     </div>
-    <a href="/deals" class="view-all-btn">View All Deals →</a>
   </section>
 
   <section class="signup" id="signup">
-    <h2>Get the Best Deals in Your Inbox</h2>
-    <p>Sign up for weekly deal alerts — no spam, just savings.</p>
+    <h2>Get deals in your inbox</h2>
+    <p>Weekly roundup of the best discounts. No spam, just savings.</p>
     <form class="signup-form" name="email-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="email-signup" />
       <p style="display:none"><label>Don't fill this: <input name="bot-field" /></label></p>
       <input type="email" name="email" placeholder="you@example.com" required />
-      <button type="submit">Sign Me Up</button>
+      <button type="submit">Subscribe</button>
     </form>
-    <div class="signup-success" id="signup-success">Thanks! You're on the list.</div>
+    <div class="signup-success" id="signup-success">You're in! Check your inbox.</div>
   </section>
 
   <section class="cta" id="download">
-    <h2>Start saving today</h2>
+    <h2>Start saving today.</h2>
     <p>Free to download. No credit card required.</p>
     <div class="store-btns">
-      <a href="#" class="store-btn">🍎 Download on App Store</a>
-      <a href="#" class="store-btn">🤖 Get it on Google Play</a>
+      <a href="#" class="store-btn">
+        <div class="store-btn-icon">&#63743;</div>
+        <div class="store-btn-text"><small>Download on the</small><span>App Store</span></div>
+      </a>
+      <a href="#" class="store-btn">
+        <div class="store-btn-icon">&#9654;</div>
+        <div class="store-btn-text"><small>Get it on</small><span>Google Play</span></div>
+      </a>
     </div>
   </section>
 
   <footer>
-    <div class="footer-logo"><img src="/images/WD.png" alt="WildDeals logo" /> WildDeals</div>
-    <div class="footer-links">
-      <a href="/deals">Deals</a>
-      <a href="/privacy">Privacy Policy</a>
-      <a href="/terms">Terms of Service</a>
-      <a href="/contact">Contact</a>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo"><img src="/images/wd.png" alt="WildDeals" /> WildDeals</div>
+        <div class="footer-tagline">Canada's outdoor gear deal hunter. Tracking the best discounts from top retailers so you never pay full price.</div>
+      </div>
+      <div class="footer-links-group">
+        <h4>Product</h4>
+        <a href="/deals">All Deals</a>
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+        <a href="/media-kit">Media Kit</a>
+      </div>
+      <div class="footer-links-group">
+        <h4>Company</h4>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+      </div>
     </div>
-    <div class="footer-copy">© 2026 WildDeals. All rights reserved.</div>
-    <div style="color: #5a8a6a; font-size: 11px; margin-top: 12px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">WildDeals participates in affiliate programs. We may earn a commission when you click links and make purchases at no extra cost to you.</div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 WildDeals. All rights reserved. WildDeals participates in affiliate programs.</div>
+      <div class="footer-badge">🇨🇦 Made in Canada</div>
+    </div>
   </footer>
 
   <div class="cookie-banner" id="cookie-banner">
-    <div class="cookie-inner">
-      <p>We use analytics cookies to understand how you use our site and improve your experience. No tracking occurs unless you opt in. See our <a href="/privacy">Privacy Policy</a>.</p>
-      <div class="cookie-buttons">
-        <button class="cookie-btn cookie-accept" onclick="acceptCookies()">Accept</button>
-        <button class="cookie-btn cookie-decline" onclick="declineCookies()">Decline</button>
-      </div>
+    <p>We use analytics cookies to understand how you use our site. No tracking unless you opt in. <a href="/privacy">Privacy Policy</a></p>
+    <div class="cookie-buttons">
+      <button class="cookie-btn cookie-accept" onclick="acceptCookies()">Accept</button>
+      <button class="cookie-btn cookie-decline" onclick="declineCookies()">Decline</button>
     </div>
   </div>
 
+  <!-- Nav scroll effect -->
+  <script>
+    window.addEventListener('scroll', function() {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
+
+  <!-- Firebase Live Deals -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const firebaseConfig = {
+    const app = initializeApp({
       apiKey: "AIzaSyD9camycSTUupt53zINg2g4Xf0HPGJQweE",
       authDomain: "wilddeals-b8ba1.firebaseapp.com",
       projectId: "wilddeals-b8ba1"
-    };
-
-    const app = initializeApp(firebaseConfig);
+    });
     const db = getFirestore(app);
 
     function createDealCard(deal) {
-      const discount = deal.discount ? Math.round(deal.discount) : 0;
+      const discount = deal.discount ? parseInt(String(deal.discount).replace('%','')) : (deal.priceWas > 0 ? Math.round(((deal.priceWas - deal.priceNow) / deal.priceWas) * 100) : 0);
       const imageHTML = deal.image
-        ? '<img src="' + deal.image + '" alt="' + (deal.name || '') + '" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=deal-emoji-fallback>' + (deal.emoji || '🏷️') + '</div>\'" />'
-        : '<div class="deal-emoji-fallback">' + (deal.emoji || '🏷️') + '</div>';
+        ? '<img src="' + deal.image + '" alt="' + (deal.name || '').replace(/"/g, '&quot;') + '" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=deal-emoji-fallback>' + (deal.emoji || '&#127991;') + '</div>\'" />'
+        : '<div class="deal-emoji-fallback">' + (deal.emoji || '&#127991;') + '</div>';
       return '<div class="deal-card">' +
         '<div class="deal-card-img">' + imageHTML + '</div>' +
         '<div class="deal-card-body">' +
-          '<span class="deal-badge">-' + discount + '%</span>' +
+          '<span class="deal-badge">-' + discount + '% OFF</span>' +
           '<div class="deal-name">' + (deal.name || 'Outdoor Deal') + '</div>' +
           '<div class="deal-store">' + (deal.store || '') + '</div>' +
           '<div class="deal-prices">' +
             '<div class="deal-now">$' + (deal.priceNow != null ? Number(deal.priceNow).toFixed(2) : '--') + '</div>' +
             '<div class="deal-was">$' + (deal.priceWas != null ? Number(deal.priceWas).toFixed(2) : '--') + '</div>' +
           '</div>' +
-          '<a href="' + (deal.url || '#') + '" target="_blank" rel="noopener" class="deal-view-btn">View Deal →</a>' +
+          '<a href="' + (deal.url || '#') + '" target="_blank" rel="noopener" class="deal-view-btn">View Deal &#8594;</a>' +
         '</div></div>';
     }
 
     async function loadDeals() {
       const container = document.getElementById('live-deals');
       try {
-        const q = query(collection(db, 'deals'), orderBy('discount', 'desc'), limit(6));
-        const snapshot = await getDocs(q);
+        const snapshot = await getDocs(collection(db, 'deals'));
         if (snapshot.empty) {
-          container.innerHTML = '<div class="deal-loading">No deals available right now. Check back soon!</div>';
+          container.innerHTML = '<div class="deal-loading">No deals available right now.</div>';
           return;
         }
-        let html = '';
-        snapshot.forEach(function(doc) { html += createDealCard(doc.data()); });
-        container.innerHTML = html;
+        let deals = [];
+        snapshot.forEach(function(doc) { deals.push(doc.data()); });
+        deals.sort(function(a, b) {
+          return (parseInt(String(b.discount||'0').replace('%',''))||0) - (parseInt(String(a.discount||'0').replace('%',''))||0);
+        });
+        container.innerHTML = deals.slice(0, 6).map(createDealCard).join('');
       } catch (err) {
         console.error('Error loading deals:', err);
-        container.innerHTML = '<div class="deal-loading">Unable to load deals. Please try again later.</div>';
+        container.innerHTML = '<div class="deal-loading">Unable to load deals right now.</div>';
       }
     }
-
     loadDeals();
   </script>
 
+  <!-- Signup Form -->
   <script>
     document.querySelector('.signup-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       var form = e.target;
       var btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      btn.textContent = 'Checking...';
+      btn.disabled = true; btn.textContent = 'Checking...';
       try {
-        // 1. Get reCAPTCHA v3 token
         var token = await grecaptcha.execute('6LfamqcsAAAAD5o9slSmCpOzVk3KCyblc8dezG8', { action: 'signup' });
-
-        // 2. Verify token via Railway backend
         var verifyRes = await fetch('https://wilddeals-production.up.railway.app/api/verify-recaptcha', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token: token })
         });
         var verifyData = await verifyRes.json();
-
-        if (!verifyData.passed) {
-          btn.disabled = false;
-          btn.textContent = 'Sign Me Up';
-          alert('Submission blocked. If you are human, please try again.');
-          return;
-        }
-
-        // 3. Submit to Netlify
-        var res = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(form)).toString()
-        });
-        if (res.ok) {
-          form.style.display = 'none';
-          document.getElementById('signup-success').style.display = 'block';
-        }
-      } catch (err) {
-        btn.disabled = false;
-        btn.textContent = 'Sign Me Up';
-        /* allow default submit as fallback */
-      }
+        if (!verifyData.passed) { btn.disabled = false; btn.textContent = 'Subscribe'; alert('Please try again.'); return; }
+        var res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
+        if (res.ok) { form.style.display = 'none'; document.getElementById('signup-success').style.display = 'block'; }
+      } catch (err) { btn.disabled = false; btn.textContent = 'Subscribe'; }
     });
 
     // Cookie consent
-    (function() {
-      if (!localStorage.getItem('cookie_consent')) {
-        document.getElementById('cookie-banner').style.display = 'block';
-      }
-    })();
-    function acceptCookies() {
-      localStorage.setItem('cookie_consent', 'accepted');
-      document.getElementById('cookie-banner').style.display = 'none';
-      if (typeof loadGA4 === 'function') loadGA4();
-    }
-    function declineCookies() {
-      localStorage.setItem('cookie_consent', 'declined');
-      document.getElementById('cookie-banner').style.display = 'none';
-    }
+    (function() { if (!localStorage.getItem('cookie_consent')) { document.getElementById('cookie-banner').style.display = 'block'; } })();
+    function acceptCookies() { localStorage.setItem('cookie_consent', 'accepted'); document.getElementById('cookie-banner').style.display = 'none'; if (typeof loadGA4 === 'function') loadGA4(); }
+    function declineCookies() { localStorage.setItem('cookie_consent', 'declined'); document.getElementById('cookie-banner').style.display = 'none'; }
   </script>
 
-  <!-- Google Analytics GA4 — only loads if user has accepted cookies (CASL) -->
+  <!-- GA4 — CASL compliant -->
   <script>
     function loadGA4() {
       if (document.getElementById('ga4-script')) return;
-      var s = document.createElement('script');
-      s.id = 'ga4-script';
-      s.async = true;
+      var s = document.createElement('script'); s.id = 'ga4-script'; s.async = true;
       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EG7RPF2LYX';
       document.head.appendChild(s);
       s.onload = function() {
         window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        window.gtag = gtag;
+        function gtag(){ dataLayer.push(arguments); } window.gtag = gtag;
         gtag('js', new Date());
-        gtag('config', 'G-EG7RPF2LYX', {
-          anonymize_ip: true,
-          cookie_flags: 'SameSite=None;Secure'
-        });
+        gtag('config', 'G-EG7RPF2LYX', { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
       };
     }
-    // Auto-load if user already consented
-    if (localStorage.getItem('cookie_consent') === 'accepted') {
-      loadGA4();
-    }
+    if (localStorage.getItem('cookie_consent') === 'accepted') { loadGA4(); }
   </script>
 
   <script type="text/javascript" src="https://s.skimresources.com/js/301040X1788941.skimlinks.js"></script>
