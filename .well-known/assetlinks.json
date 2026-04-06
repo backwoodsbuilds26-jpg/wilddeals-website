@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.wilddeals.app",
+      "sha256_cert_fingerprints": ["F2:34:88:77:D3:B9:0A:42:49:69:2D:CE:BC:D3:AB:1E:13:4B:4E:DF:EA:D5:E8:F8:E8:B1:FE:42:9F:D7:C8:97"]
+    }
+  }
+]

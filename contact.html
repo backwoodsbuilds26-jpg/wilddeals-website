@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — WildDeals</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+    nav { background: #1a3a2a; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; color: #e8f5e0; font-size: 24px; font-weight: bold; text-decoration: none; }
+    .nav-logo img { height: 40px; width: auto; border-radius: 8px; }
+    .nav-btn { background: #e8b84b; color: #2a1800; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+
+    .page-header { background: #1a3a2a; padding: 60px 40px; text-align: center; }
+    .page-header h1 { color: #ffffff; font-size: 36px; font-weight: 800; margin-bottom: 12px; }
+    .page-header p { color: #b8d4b0; font-size: 17px; }
+
+    .contact-section { max-width: 700px; margin: 0 auto; padding: 60px 40px; }
+    .contact-info { margin-bottom: 40px; text-align: center; }
+    .contact-info p { font-size: 16px; color: #555; line-height: 1.8; }
+    .contact-info a { color: #1a3a2a; font-weight: bold; text-decoration: none; }
+    .contact-info a:hover { text-decoration: underline; }
+
+    .contact-form { background: #fff; border-radius: 16px; padding: 36px; border: 1px solid #e8e8e8; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 14px; font-weight: 600; color: #1a3a2a; margin-bottom: 6px; }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: #1a3a2a; }
+    .form-group textarea { min-height: 150px; resize: vertical; }
+    .form-submit {
+      background: #e8b84b;
+      color: #2a1800;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: none;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+    .form-submit:hover { background: #d4a43d; }
+    .form-success { display: none; text-align: center; color: #1a7a3a; font-weight: bold; font-size: 18px; padding: 40px 0; }
+
+    footer { background: #1a3a2a; padding: 40px; text-align: center; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; justify-content: center; color: #e8f5e0; font-size: 24px; font-weight: bold; margin-bottom: 16px; }
+    .footer-logo img { height: 36px; width: auto; border-radius: 8px; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .footer-links a { color: #7db88a; text-decoration: none; font-size: 14px; }
+    .footer-copy { color: #7db88a; font-size: 12px; }
+
+    .cookie-banner { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1a3a2a; color: #e8f5e0; padding: 16px 40px; z-index: 1000; }
+    .cookie-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .cookie-inner p { font-size: 14px; flex: 1; min-width: 200px; }
+    .cookie-inner a { color: #e8b84b; }
+    .cookie-buttons { display: flex; gap: 10px; }
+    .cookie-btn { padding: 8px 20px; border-radius: 8px; border: none; font-weight: bold; font-size: 14px; cursor: pointer; }
+    .cookie-accept { background: #e8b84b; color: #2a1800; }
+    .cookie-decline { background: transparent; color: #e8f5e0; border: 2px solid #e8f5e0; }
+
+    @media (max-width: 768px) {
+      .contact-section { padding: 40px 20px; }
+      .contact-form { padding: 24px; }
+      .page-header { padding: 40px 20px; }
+      .page-header h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><img src="/images/WD.png" alt="WildDeals logo" /> WildDeals</a>
+    <a href="/#download" class="nav-btn">Download App</a>
+  </nav>
+
+  <div class="page-header">
+    <h1>Contact Us</h1>
+    <p>Have a question or feedback? We'd love to hear from you.</p>
+  </div>
+
+  <div class="contact-section">
+    <div class="contact-info">
+      <p>Email us directly at <a href="mailto:support@wilddeals.ca">support@wilddeals.ca</a></p>
+    </div>
+
+    <form class="contact-form" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact" />
+      <p style="display:none"><label>Don't fill this: <input name="bot-field" /></label></p>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="How can we help?" required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Message</button>
+    </form>
+    <div class="form-success" id="form-success">Thank you! Your message has been sent. We'll get back to you soon.</div>
+  </div>
+
+  <footer>
+    <div class="footer-logo"><img src="/images/WD.png" alt="WildDeals logo" /> WildDeals</div>
+    <div class="footer-links">
+      <a href="/deals">Deals</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 WildDeals. All rights reserved.</div>
+    <div style="color: #5a8a6a; font-size: 11px; margin-top: 12px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">WildDeals participates in affiliate programs. We may earn a commission when you click links and make purchases at no extra cost to you.</div>
+  </footer>
+
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-inner">
+      <p>We use cookies to improve your experience. By using our site, you agree to our <a href="/privacy">Privacy Policy</a>.</p>
+      <div class="cookie-buttons">
+        <button class="cookie-btn cookie-accept" onclick="acceptCookies()">Accept</button>
+        <button class="cookie-btn cookie-decline" onclick="declineCookies()">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var form = e.target;
+      try {
+        var res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+        }
+      } catch (err) { /* allow default submit as fallback */ }
+    });
+
+    // Cookie consent
+    (function() {
+      if (!localStorage.getItem('cookie_consent')) {
+        document.getElementById('cookie-banner').style.display = 'block';
+      }
+    })();
+    function acceptCookies() {
+      localStorage.setItem('cookie_consent', 'accepted');
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+    function declineCookies() {
+      localStorage.setItem('cookie_consent', 'declined');
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+  </script>
+
+  <script type="text/javascript" src="https://s.skimresources.com/js/301040X1788941.skimlinks.js"></script>
+
+</body>
+</html>

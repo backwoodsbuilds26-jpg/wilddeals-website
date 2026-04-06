@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WildDeals Media Kit</title>
+  <style>
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .no-print { display: none !important; }
+      @page { size: letter; margin: 0; }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #1a1a1a; }
+
+    .print-btn-bar {
+      position: fixed; top: 0; left: 0; right: 0; background: #1a3a2a; padding: 12px 24px;
+      display: flex; align-items: center; justify-content: center; gap: 16px; z-index: 100;
+    }
+    .print-btn-bar button {
+      background: #e8b84b; color: #2a1800; border: none; padding: 10px 24px; border-radius: 8px;
+      font-weight: bold; font-size: 15px; cursor: pointer;
+    }
+    .print-btn-bar span { color: #7db88a; font-size: 13px; }
+
+    .page { width: 8.5in; min-height: 11in; margin: 60px auto 40px; padding: 0; background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.08); overflow: hidden; }
+    @media print { .page { margin: 0; box-shadow: none; } }
+
+    /* ── Cover Page ── */
+    .cover { background: #1a3a2a; color: #e8f5e0; padding: 80px 60px; min-height: 11in; display: flex; flex-direction: column; justify-content: center; }
+    .cover-badge { display: inline-block; background: rgba(232,184,75,0.15); color: #e8b84b; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 32px; }
+    .cover h1 { font-size: 52px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
+    .cover h1 span { color: #e8b84b; }
+    .cover-sub { font-size: 20px; color: #7db88a; line-height: 1.5; margin-bottom: 40px; max-width: 500px; }
+    .cover-meta { display: flex; gap: 32px; flex-wrap: wrap; margin-top: auto; padding-top: 60px; }
+    .cover-meta-item { }
+    .cover-meta-label { font-size: 11px; color: #5a8a6a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .cover-meta-value { font-size: 16px; font-weight: bold; color: #e8f5e0; }
+
+    /* ── Content Pages ── */
+    .content-page { padding: 60px; }
+    .section-label { font-size: 11px; color: #e8b84b; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px; }
+    .section-title { font-size: 28px; font-weight: 800; color: #1a3a2a; margin-bottom: 8px; }
+    .section-desc { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 32px; }
+    .divider { height: 3px; width: 48px; background: #e8b84b; border-radius: 2px; margin-bottom: 32px; }
+
+    /* Stats grid */
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+    .stat-card { background: #f8faf7; border-radius: 12px; padding: 24px; text-align: center; border: 1px solid #e8e8e8; }
+    .stat-number { font-size: 32px; font-weight: 800; color: #1a3a2a; }
+    .stat-label { font-size: 13px; color: #888; margin-top: 4px; }
+
+    /* Categories */
+    .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 40px; }
+    .cat-item { background: #f8faf7; border-radius: 10px; padding: 16px; text-align: center; border: 1px solid #e8e8e8; }
+    .cat-emoji { font-size: 28px; margin-bottom: 6px; }
+    .cat-name { font-size: 13px; font-weight: 600; color: #1a3a2a; }
+
+    /* Opportunity section */
+    .opp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+    .opp-card { background: #1a3a2a; border-radius: 14px; padding: 28px; color: #e8f5e0; }
+    .opp-card h3 { font-size: 18px; margin-bottom: 8px; }
+    .opp-card p { font-size: 14px; color: #7db88a; line-height: 1.6; }
+    .opp-card.gold { background: linear-gradient(135deg, #e8b84b, #d4a43d); color: #2a1800; }
+    .opp-card.gold p { color: #5a4010; }
+
+    /* Pro section */
+    .pro-box { background: #1a3a2a; border-radius: 16px; padding: 32px; color: #e8f5e0; margin-bottom: 40px; }
+    .pro-box h3 { font-size: 22px; margin-bottom: 12px; }
+    .pro-box .price { color: #e8b84b; font-size: 28px; font-weight: 800; }
+    .pro-features { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+    .pro-features li { list-style: none; font-size: 14px; color: #7db88a; padding-left: 20px; position: relative; }
+    .pro-features li::before { content: '✓'; position: absolute; left: 0; color: #e8b84b; font-weight: bold; }
+
+    /* Contact */
+    .contact-bar { background: #f8faf7; border-radius: 12px; padding: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border: 1px solid #e8e8e8; }
+    .contact-info h3 { font-size: 18px; color: #1a3a2a; margin-bottom: 4px; }
+    .contact-info p { font-size: 14px; color: #666; }
+    .contact-cta { background: #e8b84b; color: #2a1800; padding: 12px 28px; border-radius: 10px; font-weight: bold; font-size: 15px; text-decoration: none; }
+
+    /* Footer */
+    .kit-footer { text-align: center; padding: 24px; color: #aaa; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+  <div class="print-btn-bar no-print">
+    <button onclick="window.print()">Save as PDF</button>
+    <span>Use your browser's print dialog → Save as PDF</span>
+  </div>
+
+  <!-- ════════ PAGE 1: COVER ════════ -->
+  <div class="page">
+    <div class="cover">
+      <div class="cover-badge">Media Kit 2026</div>
+      <h1>Wild<span>Deals</span></h1>
+      <p class="cover-sub">Canada's #1 app for outdoor gear deals. Hunting, fishing, camping, hiking — updated daily from hundreds of retailers.</p>
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Website</div>
+          <div class="cover-meta-value">wilddeals.ca</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Contact</div>
+          <div class="cover-meta-value">support@wilddeals.ca</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Platform</div>
+          <div class="cover-meta-value">Android &amp; iOS</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Based In</div>
+          <div class="cover-meta-value">Canada 🇨🇦</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 2: OVERVIEW + STATS ════════ -->
+  <div class="page">
+    <div class="content-page">
+      <div class="section-label">About WildDeals</div>
+      <h2 class="section-title">The Best Deals in the Wild</h2>
+      <div class="divider"></div>
+      <p class="section-desc">
+        WildDeals is a Canadian mobile app that aggregates the best outdoor gear deals from Amazon.ca and hundreds of other retailers. We help outdoor enthusiasts find deep discounts on hunting, fishing, camping, hiking, and adventure gear — updated daily so users never miss a sale.
+      </p>
+      <p class="section-desc">
+        Our audience is passionate about the outdoors. They are active buyers who research gear, compare prices, and act quickly on deals. WildDeals puts the right products in front of the right audience at the right time.
+      </p>
+
+      <div class="section-label">Key Metrics</div>
+      <h2 class="section-title">By the Numbers</h2>
+      <div class="divider"></div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">300+</div>
+          <div class="stat-label">Active Deals Daily</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">12</div>
+          <div class="stat-label">Deal Categories</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">50%</div>
+          <div class="stat-label">Avg. Discount</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Live Updates</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">6h</div>
+          <div class="stat-label">Refresh Cycle</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Platforms (Android/iOS)</div>
+        </div>
+      </div>
+
+      <div class="section-label">Categories</div>
+      <h2 class="section-title">What We Cover</h2>
+      <div class="divider"></div>
+      <div class="cat-grid">
+        <div class="cat-item"><div class="cat-emoji">🦌</div><div class="cat-name">Hunting</div></div>
+        <div class="cat-item"><div class="cat-emoji">🎣</div><div class="cat-name">Fishing</div></div>
+        <div class="cat-item"><div class="cat-emoji">⛺</div><div class="cat-name">Camping</div></div>
+        <div class="cat-item"><div class="cat-emoji">🥾</div><div class="cat-name">Hiking</div></div>
+        <div class="cat-item"><div class="cat-emoji">📷</div><div class="cat-name">Filming</div></div>
+        <div class="cat-item"><div class="cat-emoji">🐕</div><div class="cat-name">Dog Gear</div></div>
+        <div class="cat-item"><div class="cat-emoji">🧥</div><div class="cat-name">Clothing</div></div>
+        <div class="cat-item"><div class="cat-emoji">🔧</div><div class="cat-name">Survival</div></div>
+        <div class="cat-item"><div class="cat-emoji">🧗</div><div class="cat-name">Climbing</div></div>
+        <div class="cat-item"><div class="cat-emoji">❄️</div><div class="cat-name">Winter</div></div>
+        <div class="cat-item"><div class="cat-emoji">🚣</div><div class="cat-name">Water Sports</div></div>
+        <div class="cat-item"><div class="cat-emoji">🚵</div><div class="cat-name">Cycling</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 3: PARTNERSHIP + CONTACT ════════ -->
+  <div class="page">
+    <div class="content-page">
+      <div class="section-label">Partnership Opportunity</div>
+      <h2 class="section-title">Affiliate &amp; Sponsorship</h2>
+      <div class="divider"></div>
+      <p class="section-desc">
+        WildDeals drives high-intent traffic from Canadian outdoor enthusiasts directly to retailer product pages. Our users are actively looking to buy — they've already decided they want the gear, they're just looking for the best price.
+      </p>
+
+      <div class="opp-grid">
+        <div class="opp-card">
+          <h3>Affiliate Integration</h3>
+          <p>We support Amazon Associates, SkimLinks, ShareASale, CJ Affiliate, and direct affiliate programs. Integration is seamless — we link directly to your product pages with proper attribution.</p>
+        </div>
+        <div class="opp-card">
+          <h3>Sponsored Deals</h3>
+          <p>Feature your products as promoted deals within the app. Sponsored placements appear at the top of relevant categories and reach users who are actively browsing for discounts.</p>
+        </div>
+        <div class="opp-card gold">
+          <h3>Brand Partnerships</h3>
+          <p>Run exclusive flash sales, bundle deals, or seasonal promotions through WildDeals. We'll feature your brand with push notifications to subscribed users in your category.</p>
+        </div>
+        <div class="opp-card">
+          <h3>Data &amp; Insights</h3>
+          <p>Understand what Canadian outdoor enthusiasts are searching for, saving, and buying. We provide anonymized trend reports and category insights to help optimize your promotions.</p>
+        </div>
+      </div>
+
+      <div class="section-label">WildDeals Pro</div>
+      <h2 class="section-title">Premium Tier — $4/month</h2>
+      <div class="divider"></div>
+      <div class="pro-box">
+        <h3>WildDeals Pro Subscribers</h3>
+        <div class="price">$4/month</div>
+        <ul class="pro-features">
+          <li>Instant price drop alerts</li>
+          <li>Unlimited saved deals</li>
+          <li>Exclusive Pro-only deals</li>
+          <li>Priority notifications (4hr early)</li>
+          <li>Advanced filters</li>
+          <li>Ad-free experience</li>
+        </ul>
+      </div>
+      <p class="section-desc">
+        Pro subscribers are our most engaged users. They receive notifications first, save more deals, and convert at a significantly higher rate. Sponsored deals shown to Pro users benefit from this higher engagement.
+      </p>
+
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Let's Work Together</h2>
+      <div class="divider"></div>
+      <div class="contact-bar">
+        <div class="contact-info">
+          <h3>WildDeals Partnerships</h3>
+          <p>support@wilddeals.ca · wilddeals.ca</p>
+        </div>
+        <a href="mailto:support@wilddeals.ca" class="contact-cta">Contact Us →</a>
+      </div>
+
+      <div class="kit-footer" style="margin-top: 60px;">
+        <p>© 2026 WildDeals. All rights reserved. · Canada 🇨🇦</p>
+        <p style="margin-top: 8px; color: #ccc;">Confidential — for prospective partners only.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

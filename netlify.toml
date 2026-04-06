@@ -1,0 +1,30 @@
+[build]
+  publish = "."
+
+# ── .well-known files: correct content-type headers for universal/app links ──
+[[headers]]
+  for = "/.well-known/apple-app-site-association"
+  [headers.values]
+    Content-Type = "application/json"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/.well-known/assetlinks.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Access-Control-Allow-Origin = "*"
+
+# ── Security headers ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# ── Redirect www to apex ──
+[[redirects]]
+  from = "https://www.wilddeals.ca/*"
+  to = "https://wilddeals.ca/:splat"
+  status = 301
+  force = true

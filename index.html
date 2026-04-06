@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WildDeals — Best Outdoor Gear Deals</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+    nav { background: #1a3a2a; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; color: #e8f5e0; font-size: 24px; font-weight: bold; text-decoration: none; }
+    .nav-logo img { height: 40px; width: auto; border-radius: 8px; }
+    .nav-btn { background: #e8b84b; color: #2a1800; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+
+    .hero {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 60px 40px;
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(74,93,60,0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 30%, rgba(58,77,48,0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(42,62,35,0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 20%, rgba(85,100,65,0.4) 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 70%, rgba(65,82,52,0.4) 0%, transparent 40%),
+        radial-gradient(ellipse at 40% 10%, rgba(50,68,40,0.5) 0%, transparent 35%),
+        radial-gradient(ellipse at 70% 90%, rgba(38,55,30,0.5) 0%, transparent 35%),
+        linear-gradient(135deg, #2a3a25 0%, #3b4a30 20%, #2d3d26 40%, #4a5a3a 60%, #2a3a25 80%, #3b4a30 100%);
+      background-color: #2d3d26;
+      position: relative;
+      max-width: 100%;
+    }
+    .hero-text {
+      flex: 1;
+      max-width: 480px;
+      color: #e8f5e0;
+    }
+    .hero-tagline {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #e8b84b;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .hero-heading {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+    .hero-desc {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #b8d4b0;
+      margin-bottom: 28px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .hero-btn-primary {
+      background: #e8b84b;
+      color: #2a1800;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+    .hero-btn-primary:hover { background: #d4a43d; }
+    .hero-btn-secondary {
+      background: transparent;
+      color: #e8f5e0;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      border: 2px solid #e8f5e0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .hero-btn-secondary:hover { background: #e8f5e0; color: #1a3a2a; }
+    .hero-banner {
+      flex: 1;
+      max-width: 520px;
+    }
+    .hero-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 8px 32px rgba(0,0,0,0.4));
+    }
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; padding: 40px 20px; gap: 32px; text-align: center; }
+      .hero-text { max-width: 100%; }
+      .hero-heading { font-size: 32px; }
+      .hero-buttons { justify-content: center; }
+      .hero-banner { max-width: 100%; }
+    }
+
+    .stats { background: #fff; padding: 40px; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; border-bottom: 1px solid #e8e8e8; }
+    .stat { text-align: center; }
+    .stat-number { font-size: 36px; font-weight: bold; color: #1a3a2a; }
+    .stat-label { font-size: 14px; color: #888; margin-top: 4px; }
+
+    .features { padding: 80px 40px; max-width: 1000px; margin: 0 auto; }
+    .features h2 { text-align: center; font-size: 36px; font-weight: bold; margin-bottom: 50px; color: #1a3a2a; }
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .feature-card { background: #fff; border-radius: 16px; padding: 28px; border: 1px solid #e8e8e8; }
+    .feature-emoji { font-size: 36px; margin-bottom: 16px; }
+    .feature-title { font-size: 18px; font-weight: bold; color: #1a1a1a; margin-bottom: 8px; }
+    .feature-desc { font-size: 14px; color: #888; line-height: 1.6; }
+
+    .deals { background: #1a3a2a; padding: 80px 40px; text-align: center; }
+    .deals h2 { color: #e8f5e0; font-size: 36px; font-weight: bold; margin-bottom: 12px; }
+    .deals p { color: #7db88a; font-size: 18px; margin-bottom: 40px; }
+    .deal-cards { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; max-width: 900px; margin: 0 auto; }
+    .deal-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
+    .deal-card { background: #fff; border-radius: 16px; padding: 0; text-align: left; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+    .deal-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .deal-card-img { width: 100%; height: 180px; object-fit: contain; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
+    .deal-card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .deal-card-img .deal-emoji-fallback { font-size: 64px; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+    .deal-card-body { padding: 16px 20px 20px; }
+    .deal-badge { background: #1a7a3a; color: #fff; border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 8px; }
+    .deal-name { font-size: 15px; font-weight: bold; color: #1a1a1a; margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .deal-store { font-size: 13px; color: #888; margin-bottom: 10px; }
+    .deal-prices { display: flex; gap: 8px; align-items: baseline; margin-bottom: 12px; }
+    .deal-now { font-size: 22px; font-weight: bold; color: #1a7a3a; }
+    .deal-was { font-size: 13px; color: #aaa; text-decoration: line-through; }
+    .deal-view-btn { display: inline-block; background: #1a3a2a; color: #e8f5e0; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: background 0.2s; width: 100%; text-align: center; }
+    .deal-view-btn:hover { background: #2a5a3a; }
+    .view-all-btn { display: inline-block; background: #e8b84b; color: #2a1800; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 16px; margin-top: 32px; transition: background 0.2s; }
+    .view-all-btn:hover { background: #d4a43d; }
+    .deal-loading { color: #7db88a; font-size: 16px; padding: 40px; }
+    @media (max-width: 900px) { .deal-cards { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .deal-cards { grid-template-columns: 1fr; } }
+
+    .signup { padding: 80px 40px; text-align: center; background: #fff; border-bottom: 1px solid #e8e8e8; }
+    .signup h2 { font-size: 36px; font-weight: bold; color: #1a3a2a; margin-bottom: 12px; }
+    .signup p { font-size: 18px; color: #888; margin-bottom: 32px; }
+    .signup-form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; max-width: 500px; margin: 0 auto; }
+    .signup-form input[type="email"] { flex: 1; min-width: 240px; padding: 14px 20px; border-radius: 12px; border: 2px solid #ddd; font-size: 16px; outline: none; transition: border-color 0.2s; }
+    .signup-form input[type="email"]:focus { border-color: #1a3a2a; }
+    .signup-form button { background: #e8b84b; color: #2a1800; padding: 14px 28px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; transition: background 0.2s; }
+    .signup-form button:hover { background: #d4a43d; }
+    .signup-success { display: none; color: #1a7a3a; font-weight: bold; font-size: 18px; margin-top: 16px; }
+
+    .cta { padding: 80px 40px; text-align: center; background: #f5f5f5; }
+    .cta h2 { font-size: 36px; font-weight: bold; color: #1a3a2a; margin-bottom: 16px; }
+    .cta p { font-size: 18px; color: #888; margin-bottom: 40px; }
+    .store-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .store-btn { background: #1a3a2a; color: #e8f5e0; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 16px; }
+
+    footer { background: #1a3a2a; padding: 40px; text-align: center; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; justify-content: center; color: #e8f5e0; font-size: 24px; font-weight: bold; margin-bottom: 16px; }
+    .footer-logo img { height: 36px; width: auto; border-radius: 8px; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .footer-links a { color: #7db88a; text-decoration: none; font-size: 14px; }
+    .footer-copy { color: #7db88a; font-size: 12px; }
+
+    .cookie-banner { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1a3a2a; color: #e8f5e0; padding: 16px 40px; z-index: 1000; }
+    .cookie-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .cookie-inner p { font-size: 14px; flex: 1; min-width: 200px; }
+    .cookie-inner a { color: #e8b84b; }
+    .cookie-buttons { display: flex; gap: 10px; }
+    .cookie-btn { padding: 8px 20px; border-radius: 8px; border: none; font-weight: bold; font-size: 14px; cursor: pointer; }
+    .cookie-accept { background: #e8b84b; color: #2a1800; }
+    .cookie-decline { background: transparent; color: #e8f5e0; border: 2px solid #e8f5e0; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo"><img src="/images/WD.png" alt="WildDeals logo" /> WildDeals</div>
+    <a href="#download" class="nav-btn">Download App</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <div class="hero-tagline">The Best Deals in the Wild</div>
+      <h1 class="hero-heading">Save Big on Outdoor Gear You Love</h1>
+      <p class="hero-desc">Discover hundreds of deals on top outdoor brands — updated daily so you never miss a discount on hiking, camping, and adventure gear.</p>
+      <div class="hero-buttons">
+        <a href="#download" class="hero-btn-primary">Download the App</a>
+        <a href="#features" class="hero-btn-secondary">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-banner">
+      <img src="/images/wild-deals-banner.png" alt="Wild Deals — The Best Deals in the Wild" />
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-number">300+</div>
+      <div class="stat-label">Deals available</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">50%</div>
+      <div class="stat-label">Average savings</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Live deal updates</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">Free</div>
+      <div class="stat-label">Always free to use</div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <h2>Everything you need to save big</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-emoji">🔍</div>
+        <div class="feature-title">Smart Deal Search</div>
+        <div class="feature-desc">Search and filter thousands of deals by category, store, discount percentage and more.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">🔔</div>
+        <div class="feature-title">Price Drop Alerts</div>
+        <div class="feature-desc">Get instant notifications the moment your favourite gear goes on sale. Never miss a deal again.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">🔖</div>
+        <div class="feature-title">Save Deals</div>
+        <div class="feature-desc">Bookmark deals you love and come back to them later. Your saved deals are always waiting for you.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">📤</div>
+        <div class="feature-title">Share Deals</div>
+        <div class="feature-desc">Found an amazing deal? Share it with your hiking buddies, family or social media in one tap.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">🏪</div>
+        <div class="feature-title">Top Outdoor Stores</div>
+        <div class="feature-desc">Deals from REI, MEC, Backcountry, Patagonia, Amazon, Moosejaw, Steep & Cheap and hundreds more.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">⚡</div>
+        <div class="feature-title">Pro Alerts</div>
+        <div class="feature-desc">Upgrade to Pro for $4/month and get instant alerts 4 hours before free users. First in line for the best deals.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="deals">
+    <h2>🔥 Live Deals Right Now</h2>
+    <p>Updated every 6 hours from hundreds of retailers</p>
+    <div class="deal-cards" id="live-deals">
+      <div class="deal-loading">Loading live deals...</div>
+    </div>
+    <a href="/deals" class="view-all-btn">View All Deals →</a>
+  </section>
+
+  <section class="signup" id="signup">
+    <h2>Get the Best Deals in Your Inbox</h2>
+    <p>Sign up for weekly deal alerts — no spam, just savings.</p>
+    <form class="signup-form" name="email-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="email-signup" />
+      <p style="display:none"><label>Don't fill this: <input name="bot-field" /></label></p>
+      <input type="email" name="email" placeholder="you@example.com" required />
+      <button type="submit">Sign Me Up</button>
+    </form>
+    <div class="signup-success" id="signup-success">Thanks! You're on the list.</div>
+  </section>
+
+  <section class="cta" id="download">
+    <h2>Start saving today</h2>
+    <p>Free to download. No credit card required.</p>
+    <div class="store-btns">
+      <a href="#" class="store-btn">🍎 Download on App Store</a>
+      <a href="#" class="store-btn">🤖 Get it on Google Play</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo"><img src="/images/WD.png" alt="WildDeals logo" /> WildDeals</div>
+    <div class="footer-links">
+      <a href="/deals">Deals</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 WildDeals. All rights reserved.</div>
+    <div style="color: #5a8a6a; font-size: 11px; margin-top: 12px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">WildDeals participates in affiliate programs. We may earn a commission when you click links and make purchases at no extra cost to you.</div>
+  </footer>
+
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-inner">
+      <p>We use analytics cookies to understand how you use our site and improve your experience. No tracking occurs unless you opt in. See our <a href="/privacy">Privacy Policy</a>.</p>
+      <div class="cookie-buttons">
+        <button class="cookie-btn cookie-accept" onclick="acceptCookies()">Accept</button>
+        <button class="cookie-btn cookie-decline" onclick="declineCookies()">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD9camycSTUupt53zINg2g4Xf0HPGJQweE",
+      authDomain: "wilddeals-b8ba1.firebaseapp.com",
+      projectId: "wilddeals-b8ba1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function createDealCard(deal) {
+      const discount = deal.discount ? Math.round(deal.discount) : 0;
+      const imageHTML = deal.image
+        ? '<img src="' + deal.image + '" alt="' + (deal.name || '') + '" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=deal-emoji-fallback>' + (deal.emoji || '🏷️') + '</div>\'" />'
+        : '<div class="deal-emoji-fallback">' + (deal.emoji || '🏷️') + '</div>';
+      return '<div class="deal-card">' +
+        '<div class="deal-card-img">' + imageHTML + '</div>' +
+        '<div class="deal-card-body">' +
+          '<span class="deal-badge">-' + discount + '%</span>' +
+          '<div class="deal-name">' + (deal.name || 'Outdoor Deal') + '</div>' +
+          '<div class="deal-store">' + (deal.store || '') + '</div>' +
+          '<div class="deal-prices">' +
+            '<div class="deal-now">$' + (deal.priceNow != null ? Number(deal.priceNow).toFixed(2) : '--') + '</div>' +
+            '<div class="deal-was">$' + (deal.priceWas != null ? Number(deal.priceWas).toFixed(2) : '--') + '</div>' +
+          '</div>' +
+          '<a href="' + (deal.url || '#') + '" target="_blank" rel="noopener" class="deal-view-btn">View Deal →</a>' +
+        '</div></div>';
+    }
+
+    async function loadDeals() {
+      const container = document.getElementById('live-deals');
+      try {
+        const q = query(collection(db, 'deals'), orderBy('discount', 'desc'), limit(6));
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) {
+          container.innerHTML = '<div class="deal-loading">No deals available right now. Check back soon!</div>';
+          return;
+        }
+        let html = '';
+        snapshot.forEach(function(doc) { html += createDealCard(doc.data()); });
+        container.innerHTML = html;
+      } catch (err) {
+        console.error('Error loading deals:', err);
+        container.innerHTML = '<div class="deal-loading">Unable to load deals. Please try again later.</div>';
+      }
+    }
+
+    loadDeals();
+  </script>
+
+  <script>
+    document.querySelector('.signup-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var form = e.target;
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Checking...';
+      try {
+        // 1. Get reCAPTCHA v3 token
+        var token = await grecaptcha.execute('6LfamqcsAAAAD5o9slSmCpOzVk3KCyblc8dezG8', { action: 'signup' });
+
+        // 2. Verify token via Railway backend
+        var verifyRes = await fetch('https://wilddeals-production.up.railway.app/api/verify-recaptcha', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: token })
+        });
+        var verifyData = await verifyRes.json();
+
+        if (!verifyData.passed) {
+          btn.disabled = false;
+          btn.textContent = 'Sign Me Up';
+          alert('Submission blocked. If you are human, please try again.');
+          return;
+        }
+
+        // 3. Submit to Netlify
+        var res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('signup-success').style.display = 'block';
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Sign Me Up';
+        /* allow default submit as fallback */
+      }
+    });
+
+    // Cookie consent
+    (function() {
+      if (!localStorage.getItem('cookie_consent')) {
+        document.getElementById('cookie-banner').style.display = 'block';
+      }
+    })();
+    function acceptCookies() {
+      localStorage.setItem('cookie_consent', 'accepted');
+      document.getElementById('cookie-banner').style.display = 'none';
+      if (typeof loadGA4 === 'function') loadGA4();
+    }
+    function declineCookies() {
+      localStorage.setItem('cookie_consent', 'declined');
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+  </script>
+
+  <!-- Google Analytics GA4 — only loads if user has accepted cookies (CASL) -->
+  <script>
+    function loadGA4() {
+      if (document.getElementById('ga4-script')) return;
+      var s = document.createElement('script');
+      s.id = 'ga4-script';
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EG7RPF2LYX';
+      document.head.appendChild(s);
+      s.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-EG7RPF2LYX', {
+          anonymize_ip: true,
+          cookie_flags: 'SameSite=None;Secure'
+        });
+      };
+    }
+    // Auto-load if user already consented
+    if (localStorage.getItem('cookie_consent') === 'accepted') {
+      loadGA4();
+    }
+  </script>
+
+  <script type="text/javascript" src="https://s.skimresources.com/js/301040X1788941.skimlinks.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LfamqcsAAAAD5o9slSmCpOzVk3KCyblc8dezG8"></script>
+
+</body>
+</html>
