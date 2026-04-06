@@ -1096,7 +1096,7 @@
           <td>${date}</td>
           <td>${isFirst100 ? '<span class="nl-badge-yes">Early Bird</span>' : '<span class="nl-badge-no">No</span>'}</td>
           <td style="font-family:monospace;font-size:12px">${s.promoCode || '-'}</td>
-          <td><button class="btn btn-sm" style="background:#f0f0f0;color:#888;font-size:11px;" onclick="copyEmail('${(s.email||'').replace(/'/g,"\\'")}')">Copy</button></td>
+          <td><button class="btn btn-sm" style="background:#f0f0f0;color:#888;font-size:11px;" onclick="copyEmail('${(s.email||'').replace(/'/g,"\\'")}')">Copy</button> <button class="btn btn-sm" style="background:transparent;color:#c0392b;font-size:11px;" onclick="deleteSubscriber('${s.id}', '${(s.email||'').replace(/'/g,"\\'")}')">Remove</button></td>
         </tr>`;
       }).join('');
     document.getElementById('nl-subscriber-count').textContent = `Showing ${subs.length} subscriber${subs.length !== 1 ? 's' : ''}`;
@@ -1110,6 +1110,26 @@
 
   window.copyEmail = function(email) {
     navigator.clipboard.writeText(email);
+  };
+
+  window.deleteSubscriber = async function(id, email) {
+    if (!confirm('Remove ' + email + ' from the newsletter list?')) return;
+    try {
+      const res = await fetch(`${API_URL}/api/newsletter-subscribers/${id}`, {
+        method: 'DELETE',
+        headers: { 'X-App-Key': APP_SECRET },
+      });
+      const data = await res.json();
+      if (data.success) {
+        nlSubscribersList = nlSubscribersList.filter(s => s.id !== id);
+        renderSubscribers(nlSubscribersList);
+        document.getElementById('nl-stat-subscribers').textContent = nlSubscribersList.length;
+      } else {
+        alert(data.error || 'Failed to remove subscriber.');
+      }
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
   };
 
   window.exportSubscribers = function() {
