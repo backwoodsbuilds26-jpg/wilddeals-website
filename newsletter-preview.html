@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WildDeals Newsletter Previews</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; font-family: 'Segoe UI', sans-serif; color: #fff; }
+    .preview-nav {
+      position: sticky; top: 0; z-index: 100; background: #0c1a12; border-bottom: 2px solid #e8b84b;
+      padding: 16px 32px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+    .preview-nav h1 { color: #e8b84b; font-size: 18px; margin-right: 20px; }
+    .preview-btn {
+      padding: 8px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
+      background: transparent; color: #fff; cursor: pointer; font-size: 13px; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .preview-btn:hover, .preview-btn.active { background: #e8b84b; color: #0c1a12; border-color: #e8b84b; }
+    .preview-container { max-width: 640px; margin: 40px auto; padding: 0 20px; }
+    .preview-label {
+      background: #e8b84b; color: #0c1a12; display: inline-block; padding: 6px 16px;
+      border-radius: 8px 8px 0 0; font-size: 13px; font-weight: 700;
+    }
+    .preview-frame { border-radius: 0 12px 12px 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .email-preview { display: none; }
+    .email-preview.active { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="preview-nav">
+  <h1>Newsletter Previews</h1>
+  <button class="preview-btn active" onclick="showPreview('weekly')">Weekly Deals</button>
+  <button class="preview-btn" onclick="showPreview('milestone')">Milestone (100)</button>
+  <button class="preview-btn" onclick="showPreview('seasonal')">Seasonal</button>
+  <button class="preview-btn" onclick="showPreview('flash')">Flash Sale</button>
+  <button class="preview-btn" onclick="showPreview('feature')">New Feature</button>
+  <button class="preview-btn" onclick="showPreview('reengagement')">Re-engagement</button>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- WEEKLY DEALS ROUNDUP                                           -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-preview active" id="preview-weekly">
+<div class="preview-container">
+  <div class="preview-label">Subject: This Week's Best Outdoor Deals — April 6, 2026</div>
+  <div class="preview-frame">
+    <div style="max-width:600px;margin:0 auto;background:#0c1a12;">
+
+      <!-- Header -->
+      <div style="background:linear-gradient(135deg,#1a3a2a,#0c1a12);padding:32px;text-align:center;border-bottom:2px solid rgba(232,184,75,0.2);">
+        <img src="/images/wd.png" alt="WildDeals" style="width:50px;height:50px;border-radius:10px;margin-bottom:12px;" />
+        <div style="color:#e8b84b;font-size:22px;font-weight:800;">WildDeals</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px;">Canada's Outdoor Gear Deal Hunter</div>
+      </div>
+
+      <!-- Content -->
+      <div style="padding:32px;">
+        <div style="text-align:center;margin-bottom:32px;">
+          <div style="color:#e8b84b;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin-bottom:8px;">WEEKLY ROUNDUP</div>
+          <div style="color:#fff;font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:8px;">This Week's Best Deals</div>
+          <div style="color:rgba(255,255,255,0.4);font-size:14px;">April 6, 2026</div>
+        </div>
+
+        <!-- Deal 1 -->
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&h=300&fit=crop" alt="Camping Tent" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:4px;">Coleman Sundome 4-Person Tent</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Cabela's Canada</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">40% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$189.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$113.99</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#e8b84b;color:#0c1a12;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">View Deal</a>
+          </div>
+        </div>
+
+        <!-- Deal 2 -->
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=300&fit=crop" alt="Hiking Boots" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:4px;">Merrell Moab 3 Mid Waterproof Boots</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Sport Chek</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">35% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$179.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$116.99</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#e8b84b;color:#0c1a12;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">View Deal</a>
+          </div>
+        </div>
+
+        <!-- Deal 3 -->
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1532456745960-b400e50f7bcf?w=600&h=300&fit=crop" alt="Fishing Rod" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:4px;">Shimano SLX Casting Rod & Reel Combo</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Bass Pro Shops</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">28% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$249.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$179.97</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#e8b84b;color:#0c1a12;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">View Deal</a>
+          </div>
+        </div>
+
+        <!-- Deal 4 -->
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1510672981848-a1c4f1cb5ccf?w=600&h=300&fit=crop" alt="Backpack" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:4px;">Osprey Atmos AG 65L Pack</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Atmosphere</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">25% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$399.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$299.99</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#e8b84b;color:#0c1a12;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">View Deal</a>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:24px;">
+          <a href="https://wilddeals.ca/deals" style="display:inline-block;background:#e8b84b;color:#0c1a12;padding:14px 40px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:800;">See All Deals &rarr;</a>
+        </div>
+      </div>
+
+      <!-- App Promo -->
+      <div style="background:linear-gradient(135deg,rgba(232,184,75,0.1),rgba(232,184,75,0.02));padding:24px 32px;text-align:center;border-top:1px solid rgba(232,184,75,0.1);">
+        <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:4px;">Get instant deal alerts on your phone</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:12px;">Download the WildDeals app for real-time notifications</div>
+        <a href="#" style="display:inline-block;background:#1a3a2a;color:#e8b84b;padding:10px 28px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:700;border:1px solid rgba(232,184,75,0.3);">Download Free</a>
+      </div>
+
+      <!-- Footer -->
+      <div style="padding:24px 32px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="margin-bottom:16px;">
+          <a href="https://wilddeals.ca" style="color:#e8b84b;text-decoration:none;font-size:13px;margin:0 12px;">Website</a>
+          <a href="https://wilddeals.ca/deals" style="color:#e8b84b;text-decoration:none;font-size:13px;margin:0 12px;">Deals</a>
+          <a href="#" style="color:#e8b84b;text-decoration:none;font-size:13px;margin:0 12px;">Get the App</a>
+        </div>
+        <div style="color:rgba(255,255,255,0.2);font-size:11px;">WildDeals &mdash; Finding the best outdoor gear deals across Canada<br/><a href="#" style="color:rgba(255,255,255,0.3);">Unsubscribe</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- MILESTONE (100 SUBSCRIBERS)                                    -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-preview" id="preview-milestone">
+<div class="preview-container">
+  <div class="preview-label">Subject: 100 Strong! — Thank you!</div>
+  <div class="preview-frame">
+    <div style="max-width:600px;margin:0 auto;background:#0c1a12;">
+      <div style="background:linear-gradient(135deg,#1a3a2a,#0c1a12);padding:32px;text-align:center;border-bottom:2px solid rgba(232,184,75,0.2);">
+        <img src="/images/wd.png" alt="WildDeals" style="width:50px;height:50px;border-radius:10px;margin-bottom:12px;" />
+        <div style="color:#e8b84b;font-size:22px;font-weight:800;">WildDeals</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px;">Canada's Outdoor Gear Deal Hunter</div>
+      </div>
+
+      <div style="padding:40px 32px;text-align:center;">
+        <div style="font-size:64px;margin-bottom:16px;">💯</div>
+        <div style="color:#e8b84b;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:12px;">100 Strong!</div>
+        <div style="color:rgba(255,255,255,0.6);font-size:16px;line-height:1.6;max-width:440px;margin:0 auto 32px;">
+          We just hit triple digits! That's 100 outdoor enthusiasts who refuse to pay full price. The first 100 free Pro promo is now closed — you're part of an exclusive group.
+        </div>
+        <div style="background:linear-gradient(135deg,#132a1a,#0a1a0e);border:2px solid rgba(232,184,75,0.3);border-radius:16px;padding:32px;display:inline-block;margin-bottom:32px;">
+          <div style="color:#e8b84b;font-size:56px;font-weight:900;letter-spacing:-2px;">100</div>
+          <div style="color:rgba(255,255,255,0.4);font-size:14px;text-transform:uppercase;letter-spacing:3px;">subscribers</div>
+        </div>
+      </div>
+
+      <div style="padding:0 32px 32px;">
+        <div style="color:#fff;font-size:18px;font-weight:700;margin-bottom:16px;text-align:center;">Celebrating with today's top deals:</div>
+
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1564769625905-50e93615e769?w=600&h=300&fit=crop" alt="Kayak" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">Pelican Mustang 100X Kayak</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Canadian Tire</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">45% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$549.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$299.99</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1547483238-f400e65ccd56?w=600&h=300&fit=crop" alt="Binoculars" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">Vortex Diamondback HD 10x42 Binoculars</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Cabela's Canada</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">30% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$299.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$209.97</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:rgba(232,184,75,0.05);padding:24px 32px;text-align:center;border-top:1px solid rgba(232,184,75,0.1);">
+        <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:8px;">Help us grow! Share WildDeals with a friend</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:12px;">Every outdoor enthusiast deserves better prices</div>
+        <a href="https://wilddeals.ca" style="display:inline-block;background:#e8b84b;color:#0c1a12;padding:10px 28px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:700;">Share WildDeals &rarr;</a>
+      </div>
+
+      <div style="padding:24px 32px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="color:rgba(255,255,255,0.2);font-size:11px;">WildDeals &mdash; Finding the best outdoor gear deals across Canada<br/><a href="#" style="color:rgba(255,255,255,0.3);">Unsubscribe</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- SEASONAL (SPRING)                                              -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-preview" id="preview-seasonal">
+<div class="preview-container">
+  <div class="preview-label">Subject: Spring Gear Sale Season — Don't Miss These Prices</div>
+  <div class="preview-frame">
+    <div style="max-width:600px;margin:0 auto;background:#0c1a12;">
+      <div style="background:linear-gradient(135deg,#1a3a2a,#0c1a12);padding:32px;text-align:center;border-bottom:2px solid rgba(232,184,75,0.2);">
+        <img src="/images/wd.png" alt="WildDeals" style="width:50px;height:50px;border-radius:10px;margin-bottom:12px;" />
+        <div style="color:#e8b84b;font-size:22px;font-weight:800;">WildDeals</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px;">Canada's Outdoor Gear Deal Hunter</div>
+      </div>
+
+      <div style="padding:40px 32px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:12px;">🌿</div>
+        <div style="color:#4CAF50;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin-bottom:8px;">SEASONAL ALERT</div>
+        <div style="color:#fff;font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:8px;">Spring Gear Sale Season</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:15px;">Hiking boots, trail gear, and camping essentials at their lowest prices</div>
+      </div>
+
+      <div style="padding:0 32px 32px;">
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=300&fit=crop" alt="Hiking" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">Salomon X Ultra 4 GTX Trail Shoes</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Atmosphere</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">38% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$219.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$135.99</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#e8b84b;color:#0c1a12;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">View Deal</a>
+          </div>
+        </div>
+
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1478827536114-da961b7f86d2?w=600&h=300&fit=crop" alt="Camping" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">Woods Cascade 2-Burner Camping Stove</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Canadian Tire</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">50% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$89.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$44.99</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#e8b84b;color:#0c1a12;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">View Deal</a>
+          </div>
+        </div>
+
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1525811902-f2342640856e?w=600&h=300&fit=crop" alt="Climbing" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">The North Face Jester Backpack 28L</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Sport Chek</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">33% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$89.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$59.99</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#e8b84b;color:#0c1a12;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">View Deal</a>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:24px;">
+          <a href="https://wilddeals.ca/deals" style="display:inline-block;background:#4CAF50;color:#fff;padding:14px 40px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:800;">Shop All Spring Deals &rarr;</a>
+        </div>
+      </div>
+
+      <div style="padding:24px 32px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="color:rgba(255,255,255,0.2);font-size:11px;">WildDeals &mdash; Finding the best outdoor gear deals across Canada<br/><a href="#" style="color:rgba(255,255,255,0.3);">Unsubscribe</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- FLASH SALE                                                     -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-preview" id="preview-flash">
+<div class="preview-container">
+  <div class="preview-label">Subject: FLASH SALE — 24hrs left! Outdoor gear at insane prices</div>
+  <div class="preview-frame">
+    <div style="max-width:600px;margin:0 auto;background:#0c1a12;">
+      <div style="background:linear-gradient(135deg,#1a3a2a,#0c1a12);padding:32px;text-align:center;border-bottom:2px solid rgba(232,184,75,0.2);">
+        <img src="/images/wd.png" alt="WildDeals" style="width:50px;height:50px;border-radius:10px;margin-bottom:12px;" />
+        <div style="color:#e8b84b;font-size:22px;font-weight:800;">WildDeals</div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#3a1a0a,#1a0a0a);padding:40px 32px;text-align:center;border-bottom:2px solid #e8b84b;">
+        <div style="font-size:48px;margin-bottom:12px;">⚡</div>
+        <div style="color:#ff6b35;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin-bottom:8px;">FLASH SALE ALERT</div>
+        <div style="color:#fff;font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:8px;">Deals Ending Soon!</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:15px;">These prices won't last — only <strong style="color:#ff6b35;">24 hours left</strong></div>
+      </div>
+
+      <div style="padding:24px 32px;">
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=600&h=300&fit=crop" alt="Yeti Cooler" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">YETI Tundra 45 Hard Cooler</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Cabela's Canada</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#5a1a1a,#3a0a0a);color:#ff6b35;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">55% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$449.99</span>
+              <span style="color:#ff6b35;font-size:16px;font-weight:800;margin-left:8px;">$199.99</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#ff6b35;color:#fff;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">Grab This Deal</a>
+          </div>
+        </div>
+
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=300&fit=crop" alt="Fishing" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">Garmin Striker Vivid 5cv Fish Finder</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Bass Pro Shops</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#5a1a1a,#3a0a0a);color:#ff6b35;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">42% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$349.99</span>
+              <span style="color:#ff6b35;font-size:16px;font-weight:800;margin-left:8px;">$199.97</span>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:12px;background:#ff6b35;color:#fff;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700;">Grab This Deal</a>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:24px;">
+          <a href="https://wilddeals.ca/deals" style="display:inline-block;background:#ff6b35;color:#fff;padding:14px 40px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:800;">Don't Miss Out &rarr;</a>
+        </div>
+      </div>
+
+      <div style="padding:24px 32px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="color:rgba(255,255,255,0.2);font-size:11px;">WildDeals &mdash; Finding the best outdoor gear deals across Canada<br/><a href="#" style="color:rgba(255,255,255,0.3);">Unsubscribe</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- NEW FEATURE                                                    -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-preview" id="preview-feature">
+<div class="preview-container">
+  <div class="preview-label">Subject: New in WildDeals: Price Drop Alerts Are Here!</div>
+  <div class="preview-frame">
+    <div style="max-width:600px;margin:0 auto;background:#0c1a12;">
+      <div style="background:linear-gradient(135deg,#1a3a2a,#0c1a12);padding:32px;text-align:center;border-bottom:2px solid rgba(232,184,75,0.2);">
+        <img src="/images/wd.png" alt="WildDeals" style="width:50px;height:50px;border-radius:10px;margin-bottom:12px;" />
+        <div style="color:#e8b84b;font-size:22px;font-weight:800;">WildDeals</div>
+      </div>
+
+      <div style="padding:40px 32px;text-align:center;">
+        <div style="display:inline-block;background:rgba(232,184,75,0.15);border:1px solid rgba(232,184,75,0.3);border-radius:50px;padding:6px 20px;margin-bottom:20px;">
+          <span style="color:#e8b84b;font-size:13px;font-weight:700;">NEW UPDATE</span>
+        </div>
+        <div style="color:#fff;font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:12px;">Price Drop Alerts Are Here!</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:16px;line-height:1.6;max-width:440px;margin:0 auto;">
+          Set a target price on any deal and we'll notify you the instant it drops. Never miss a sale again.
+        </div>
+      </div>
+
+      <div style="padding:0 32px 32px;">
+        <div style="background:#132a1a;border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-size:28px;">🔔</div>
+          <div>
+            <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:4px;">Smart Price Alerts</div>
+            <div style="color:rgba(255,255,255,0.5);font-size:13px;line-height:1.5;">Set your target price and get notified instantly when deals hit your budget</div>
+          </div>
+        </div>
+        <div style="background:#132a1a;border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-size:28px;">📊</div>
+          <div>
+            <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:4px;">Price History Charts</div>
+            <div style="color:rgba(255,255,255,0.5);font-size:13px;line-height:1.5;">See how prices have changed over time so you know when it's truly a great deal</div>
+          </div>
+        </div>
+        <div style="background:#132a1a;border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-size:28px;">⭐</div>
+          <div>
+            <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:4px;">Pro Exclusive Filters</div>
+            <div style="color:rgba(255,255,255,0.5);font-size:13px;line-height:1.5;">Filter by exact discount %, store, and category to find precisely what you need</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:24px;">
+          <a href="#" style="display:inline-block;background:#e8b84b;color:#0c1a12;padding:14px 40px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:800;">Update the App &rarr;</a>
+        </div>
+      </div>
+
+      <div style="padding:24px 32px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="color:rgba(255,255,255,0.2);font-size:11px;">WildDeals &mdash; Finding the best outdoor gear deals across Canada<br/><a href="#" style="color:rgba(255,255,255,0.3);">Unsubscribe</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- RE-ENGAGEMENT                                                  -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-preview" id="preview-reengagement">
+<div class="preview-container">
+  <div class="preview-label">Subject: We saved these deals for you — up to 60% off outdoor gear</div>
+  <div class="preview-frame">
+    <div style="max-width:600px;margin:0 auto;background:#0c1a12;">
+      <div style="background:linear-gradient(135deg,#1a3a2a,#0c1a12);padding:32px;text-align:center;border-bottom:2px solid rgba(232,184,75,0.2);">
+        <img src="/images/wd.png" alt="WildDeals" style="width:50px;height:50px;border-radius:10px;margin-bottom:12px;" />
+        <div style="color:#e8b84b;font-size:22px;font-weight:800;">WildDeals</div>
+      </div>
+
+      <div style="padding:40px 32px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">👋</div>
+        <div style="color:#fff;font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:12px;">We miss you!</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:16px;line-height:1.6;max-width:440px;margin:0 auto;">
+          It's been a while since you checked out WildDeals. Here's what you've been missing — some of the best outdoor gear deals we've ever found.
+        </div>
+      </div>
+
+      <div style="padding:0 32px 32px;">
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1517824806704-9040b037703b?w=600&h=300&fit=crop" alt="Mountain gear" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">Arc'teryx Beta LT Gore-Tex Jacket</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">Altitude Sports</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">40% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$599.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$359.99</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#132a1a;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=300&fit=crop" alt="Headlamp" style="width:100%;height:160px;object-fit:cover;" />
+          <div style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="color:#fff;font-size:15px;font-weight:700;">Petzl Actik Core 600 Headlamp</div>
+                <div style="color:rgba(255,255,255,0.4);font-size:12px;">MEC</div>
+              </div>
+              <div style="background:linear-gradient(135deg,#1a5a1a,#0a3a0a);color:#4CAF50;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800;">35% OFF</div>
+            </div>
+            <div style="margin-top:10px;">
+              <span style="color:rgba(255,255,255,0.3);text-decoration:line-through;font-size:13px;">$79.99</span>
+              <span style="color:#e8b84b;font-size:16px;font-weight:800;margin-left:8px;">$51.99</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:24px;">
+          <a href="https://wilddeals.ca/deals" style="display:inline-block;background:#e8b84b;color:#0c1a12;padding:14px 40px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:800;">See What You're Missing &rarr;</a>
+        </div>
+      </div>
+
+      <div style="background:rgba(232,184,75,0.05);padding:24px 32px;text-align:center;border-top:1px solid rgba(232,184,75,0.1);">
+        <div style="color:rgba(255,255,255,0.4);font-size:13px;">
+          Not interested anymore? No hard feelings.<br/>
+          <a href="#" style="color:rgba(255,255,255,0.3);text-decoration:underline;">Unsubscribe</a>
+        </div>
+      </div>
+
+      <div style="padding:24px 32px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="color:rgba(255,255,255,0.2);font-size:11px;">WildDeals &mdash; Finding the best outdoor gear deals across Canada</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  function showPreview(id) {
+    document.querySelectorAll('.email-preview').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.preview-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('preview-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

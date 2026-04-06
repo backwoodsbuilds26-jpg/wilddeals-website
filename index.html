@@ -18,7 +18,36 @@
   <meta name="twitter:title" content="WildDeals — Best Outdoor Gear Deals in Canada" />
   <meta name="twitter:description" content="Find the best deals on camping, hunting, fishing, hiking, and outdoor gear from top Canadian retailers." />
   <meta name="twitter:image" content="https://wilddeals.ca/images/wd.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://wilddeals.ca/#organization",
+        "name": "WildDeals",
+        "url": "https://wilddeals.ca/",
+        "logo": "https://wilddeals.ca/images/wd.png",
+        "description": "WildDeals finds the best outdoor gear deals from top Canadian retailers."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://wilddeals.ca/#website",
+        "url": "https://wilddeals.ca/",
+        "name": "WildDeals",
+        "publisher": { "@id": "https://wilddeals.ca/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://wilddeals.ca/deals?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://s.skimresources.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
   <style>
@@ -411,7 +440,7 @@
       </div>
     </div>
     <div class="hero-banner">
-      <img src="/images/wild-deals-banner.png" alt="WildDeals App" />
+      <img src="/images/wild-deals-banner.png" alt="WildDeals App" width="1200" height="600" fetchpriority="high" />
     </div>
   </section>
 
@@ -527,7 +556,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="footer-logo"><img src="/images/wd.png" alt="WildDeals" /> WildDeals</div>
+        <div class="footer-logo"><img src="/images/wd.png" alt="WildDeals" width="38" height="38" loading="lazy" /> WildDeals</div>
         <div class="footer-tagline">Canada's outdoor gear deal hunter. Tracking the best discounts from top retailers so you never pay full price.</div>
       </div>
       <div class="footer-links-group">

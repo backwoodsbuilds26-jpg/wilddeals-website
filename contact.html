@@ -11,7 +11,13 @@
   <meta property="og:title" content="Contact Us — WildDeals" />
   <meta property="og:description" content="Get in touch with the WildDeals team." />
   <meta property="og:image" content="https://wilddeals.ca/images/wd.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wilddeals.ca/contact" />
+  <meta property="og:site_name" content="WildDeals" />
   <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Contact Us — WildDeals" />
+  <meta name="twitter:description" content="Get in touch with the WildDeals team." />
+  <meta name="twitter:image" content="https://wilddeals.ca/images/wd.png" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
@@ -125,7 +131,7 @@
   </div>
 
   <footer>
-    <div class="footer-logo"><img src="/images/WD.png" alt="WildDeals logo" /> WildDeals</div>
+    <div class="footer-logo"><img src="/images/WD.png" alt="WildDeals logo" width="40" height="40" loading="lazy" /> WildDeals</div>
     <div class="footer-links">
       <a href="/deals">Deals</a>
       <a href="/privacy">Privacy Policy</a>
@@ -208,11 +214,29 @@
     function acceptCookies() {
       localStorage.setItem('cookie_consent', 'accepted');
       document.getElementById('cookie-banner').style.display = 'none';
+      if (typeof loadGA4 === 'function') loadGA4();
     }
     function declineCookies() {
       localStorage.setItem('cookie_consent', 'declined');
       document.getElementById('cookie-banner').style.display = 'none';
     }
+  </script>
+
+  <!-- GA4 — CASL compliant -->
+  <script>
+    function loadGA4() {
+      if (document.getElementById('ga4-script')) return;
+      var s = document.createElement('script'); s.id = 'ga4-script'; s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EG7RPF2LYX';
+      document.head.appendChild(s);
+      s.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); } window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-EG7RPF2LYX', { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
+      };
+    }
+    if (localStorage.getItem('cookie_consent') === 'accepted') { loadGA4(); }
   </script>
 
   <script type="text/javascript" src="https://s.skimresources.com/js/301040X1788941.skimlinks.js"></script>
