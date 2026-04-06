@@ -264,6 +264,31 @@
       </div>
 
     </div>
+    <div style="margin-top:16px;padding:14px 18px;background:#f0f7ec;border:1px solid #1a3a2a;border-radius:10px;">
+      <strong style="color:#1a3a2a;">IndexNow (Bing/Yandex/DuckDuckGo)</strong> &mdash; instant indexing API
+      <button id="indexnow-btn" onclick="submitIndexNow()" style="margin-left:12px;background:#1a3a2a;color:#e8b84b;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;">Ping IndexNow</button>
+      <span id="indexnow-status" style="margin-left:10px;font-size:13px;color:#666;"></span>
+    </div>
+    <script>
+      async function submitIndexNow() {
+        var btn = document.getElementById('indexnow-btn');
+        var status = document.getElementById('indexnow-status');
+        btn.disabled = true; status.textContent = 'Submitting...';
+        try {
+          var res = await fetch('https://wilddeals-production.up.railway.app/api/indexnow-submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-App-Key': 'wilddeals-sk-a7f2k9x3m1' },
+            body: JSON.stringify({})
+          });
+          var data = await res.json();
+          status.textContent = data.ok ? ('\u2713 Submitted ' + data.count + ' URLs (HTTP ' + data.status + ')') : ('\u2717 Failed: ' + (data.error || data.status));
+          status.style.color = data.ok ? '#1a7a3a' : '#c0392b';
+        } catch (e) {
+          status.textContent = '\u2717 ' + e.message; status.style.color = '#c0392b';
+        }
+        btn.disabled = false;
+      }
+    </script>
   </div>
 
   <!-- ═══════════════════════════════════ -->
