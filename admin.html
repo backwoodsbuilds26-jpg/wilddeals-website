@@ -92,6 +92,11 @@
     .notif-error { background: #ffeaea; color: #c0392b; }
 
     .loading { text-align: center; padding: 40px; color: #888; }
+
+    /* ── Newsletter ── */
+    .nl-badge-yes { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; background: #fff8e0; color: #8a6d1b; }
+    .nl-badge-no { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; background: #f0f0f0; color: #888; }
+    #nl-subscribers-loading, #nl-history-loading { display: none; }
   </style>
 </head>
 <body>
@@ -134,6 +139,7 @@
     <div class="tab" data-tab="deals" onclick="switchTab('deals')">Deals</div>
     <div class="tab" data-tab="users" onclick="switchTab('users')">Users</div>
     <div class="tab" data-tab="notifications" onclick="switchTab('notifications')">Push Notifications</div>
+    <div class="tab" data-tab="newsletters" onclick="switchTab('newsletters')">Newsletters</div>
   </div>
 
   <div class="main">
@@ -243,6 +249,79 @@
         <button class="btn btn-primary" onclick="sendNotification()">Send Notification</button>
         <div id="notif-result"></div>
       </div>
+    </div>
+
+    <!-- ── Newsletters ── -->
+    <div class="panel" id="panel-newsletters">
+      <h2 style="font-size:22px;color:#1a3a2a;margin-bottom:20px">Newsletters</h2>
+
+      <!-- Stats -->
+      <div class="stats-grid" id="nl-stats-grid">
+        <div class="stat-card"><div class="stat-value" id="nl-stat-subscribers">-</div><div class="stat-label">Total Subscribers</div></div>
+        <div class="stat-card"><div class="stat-value" id="nl-stat-first100">-</div><div class="stat-label">First 100 Promo Spots Left</div></div>
+      </div>
+
+      <!-- Subscriber List -->
+      <h3 style="color:#1a3a2a;margin-bottom:12px">Subscribers</h3>
+      <div class="table-wrap" style="margin-bottom:24px">
+        <table>
+          <thead><tr><th>#</th><th>Email</th><th>Subscribed Date</th><th>First 100?</th><th>Promo Code</th></tr></thead>
+          <tbody id="nl-subscribers-table"></tbody>
+        </table>
+      </div>
+      <div class="loading" id="nl-subscribers-loading">Loading subscribers...</div>
+
+      <!-- Send Newsletter -->
+      <h3 style="color:#1a3a2a;margin-bottom:12px">Send Newsletter</h3>
+      <div class="notif-card" style="margin-bottom:24px;max-width:100%">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Template Type</label>
+            <select id="nl-template" onchange="nlTemplateChanged()">
+              <option value="">Select template...</option>
+              <option value="weekly_deals">Weekly Deals</option>
+              <option value="milestone">Milestone</option>
+              <option value="seasonal_spring">Seasonal - Spring</option>
+              <option value="seasonal_summer">Seasonal - Summer</option>
+              <option value="seasonal_fall">Seasonal - Fall</option>
+              <option value="seasonal_winter">Seasonal - Winter</option>
+              <option value="seasonal_black_friday">Seasonal - Black Friday</option>
+              <option value="seasonal_boxing_day">Seasonal - Boxing Day</option>
+              <option value="flash_sale">Flash Sale</option>
+              <option value="new_feature">New Feature</option>
+              <option value="re_engagement">Re-engagement</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Subject Line</label>
+            <input type="text" id="nl-subject" placeholder="Newsletter subject..." />
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px">
+          <button class="btn btn-gold" onclick="previewNewsletter()">Preview</button>
+          <button class="btn btn-primary" onclick="sendNewsletter()">Send to All Subscribers</button>
+        </div>
+        <div id="nl-send-result" style="margin-top:12px"></div>
+      </div>
+
+      <!-- Preview Area -->
+      <div id="nl-preview-area" style="display:none;margin-bottom:24px">
+        <h3 style="color:#1a3a2a;margin-bottom:12px">Email Preview</h3>
+        <div style="background:#fff;border-radius:12px;border:2px solid #e8b84b;padding:24px;max-height:500px;overflow-y:auto">
+          <div id="nl-preview-content"></div>
+        </div>
+        <button class="btn btn-sm" style="background:#f0f0f0;color:#666;margin-top:8px" onclick="document.getElementById('nl-preview-area').style.display='none'">Close Preview</button>
+      </div>
+
+      <!-- Newsletter History -->
+      <h3 style="color:#1a3a2a;margin-bottom:12px">Newsletter History</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date Sent</th><th>Template Type</th><th>Subject</th><th>Recipients Count</th></tr></thead>
+          <tbody id="nl-history-table"></tbody>
+        </table>
+      </div>
+      <div class="loading" id="nl-history-loading">Loading history...</div>
     </div>
   </div>
 </div>
@@ -779,10 +858,181 @@
     await loadData();
   };
 
+  // ── Newsletters ──
+  let nlDataLoaded = false;
+
+  const NL_SUBJECT_DEFAULTS = {
+    weekly_deals: 'This Week\'s Wildest Deals Are Here!',
+    milestone: 'WildDeals Milestone - Thank You!',
+    seasonal_spring: 'Spring Into Savings - New Outdoor Deals!',
+    seasonal_summer: 'Summer Adventure Deals Are Live!',
+    seasonal_fall: 'Fall Gear Deals - Get Ready for the Season!',
+    seasonal_winter: 'Winter Wonderland Deals - Stay Warm & Save!',
+    seasonal_black_friday: 'Black Friday Blowout - WildDeals Style!',
+    seasonal_boxing_day: 'Boxing Day Bonanza - Massive Outdoor Deals!',
+    flash_sale: 'FLASH SALE - Limited Time Only!',
+    new_feature: 'New on WildDeals - Check This Out!',
+    re_engagement: 'We Miss You! Come See What\'s New on WildDeals',
+  };
+
+  window.nlTemplateChanged = function() {
+    const template = document.getElementById('nl-template').value;
+    if (template && NL_SUBJECT_DEFAULTS[template]) {
+      document.getElementById('nl-subject').value = NL_SUBJECT_DEFAULTS[template];
+    }
+  };
+
+  async function loadNewsletterData() {
+    if (nlDataLoaded) return;
+    nlDataLoaded = true;
+
+    // Load stats from API
+    try {
+      const res = await fetch(`${API_URL}/api/newsletter-stats`, {
+        headers: { 'X-App-Key': APP_SECRET },
+      });
+      const data = await res.json();
+      document.getElementById('nl-stat-subscribers').textContent = data.totalSubscribers ?? '-';
+      document.getElementById('nl-stat-first100').textContent = data.first100Remaining ?? '-';
+    } catch (e) {
+      console.error('Newsletter stats error:', e);
+    }
+
+    // Load subscribers from Firestore
+    const subLoading = document.getElementById('nl-subscribers-loading');
+    subLoading.style.display = 'block';
+    try {
+      const snap = await getDocs(query(collection(db, 'newsletter_subscribers'), orderBy('subscriberNumber', 'asc')));
+      const subs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const tbody = document.getElementById('nl-subscribers-table');
+      tbody.innerHTML = subs.map(s => {
+        const date = s.subscribedAt?.toDate ? s.subscribedAt.toDate().toLocaleDateString() : (s.subscribedAt || '-');
+        const isFirst100 = s.isFirst100 || s.subscriberNumber <= 100;
+        return `<tr>
+          <td>${s.subscriberNumber ?? '-'}</td>
+          <td>${s.email || '-'}</td>
+          <td>${date}</td>
+          <td>${isFirst100 ? '<span class="nl-badge-yes">Yes</span>' : '<span class="nl-badge-no">No</span>'}</td>
+          <td style="font-family:monospace;font-size:12px">${s.promoCode || '-'}</td>
+        </tr>`;
+      }).join('');
+      document.getElementById('nl-stat-subscribers').textContent = subs.length;
+    } catch (e) {
+      console.error('Subscribers load error:', e);
+    }
+    subLoading.style.display = 'none';
+
+    // Load history from Firestore
+    const histLoading = document.getElementById('nl-history-loading');
+    histLoading.style.display = 'block';
+    try {
+      const histSnap = await getDocs(query(collection(db, 'newsletter_history'), orderBy('sentAt', 'desc')));
+      const history = histSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const htbody = document.getElementById('nl-history-table');
+      htbody.innerHTML = history.length === 0
+        ? '<tr><td colspan="4" style="text-align:center;color:#888;padding:20px">No newsletters sent yet.</td></tr>'
+        : history.map(h => {
+          const date = h.sentAt?.toDate ? h.sentAt.toDate().toLocaleString() : (h.sentAt || '-');
+          return `<tr>
+            <td>${date}</td>
+            <td><span class="badge badge-green">${(h.template || '-').replace(/_/g, ' ')}</span></td>
+            <td>${h.subject || '-'}</td>
+            <td>${h.recipientCount ?? '-'}</td>
+          </tr>`;
+        }).join('');
+    } catch (e) {
+      console.error('Newsletter history error:', e);
+    }
+    histLoading.style.display = 'none';
+  }
+
+  window.previewNewsletter = async function() {
+    const template = document.getElementById('nl-template').value;
+    const subject = document.getElementById('nl-subject').value.trim();
+    const result = document.getElementById('nl-send-result');
+    const previewArea = document.getElementById('nl-preview-area');
+    const previewContent = document.getElementById('nl-preview-content');
+
+    if (!template) {
+      result.className = 'notif-result notif-error';
+      result.textContent = 'Please select a template type.';
+      return;
+    }
+
+    previewContent.innerHTML = '<p style="color:#888">Loading preview...</p>';
+    previewArea.style.display = 'block';
+    result.textContent = '';
+
+    try {
+      const res = await fetch(`${API_URL}/api/send-newsletter`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-App-Key': APP_SECRET },
+        body: JSON.stringify({ template, subject, preview: true }),
+      });
+      const data = await res.json();
+      if (data.html) {
+        previewContent.innerHTML = data.html;
+      } else {
+        previewContent.innerHTML = `<div style="padding:20px;text-align:center">
+          <p style="font-size:16px;font-weight:bold;color:#1a3a2a">Template: ${template.replace(/_/g, ' ')}</p>
+          <p style="color:#666">Subject: ${subject || NL_SUBJECT_DEFAULTS[template] || 'No subject'}</p>
+          <p style="color:#888;margin-top:12px;font-size:13px">Full preview not available from server. Send to dispatch the email.</p>
+        </div>`;
+      }
+    } catch (e) {
+      previewContent.innerHTML = `<p style="color:#c0392b">Preview failed: ${e.message}</p>`;
+    }
+  };
+
+  window.sendNewsletter = async function() {
+    const template = document.getElementById('nl-template').value;
+    const subject = document.getElementById('nl-subject').value.trim();
+    const result = document.getElementById('nl-send-result');
+
+    if (!template) {
+      result.className = 'notif-result notif-error';
+      result.textContent = 'Please select a template type.';
+      return;
+    }
+    if (!subject) {
+      result.className = 'notif-result notif-error';
+      result.textContent = 'Please enter a subject line.';
+      return;
+    }
+
+    if (!confirm(`Send "${subject}" newsletter to ALL subscribers?\n\nTemplate: ${template.replace(/_/g, ' ')}\n\nThis cannot be undone.`)) return;
+
+    result.className = 'notif-result';
+    result.textContent = 'Sending newsletter...';
+
+    try {
+      const res = await fetch(`${API_URL}/api/send-newsletter`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-App-Key': APP_SECRET },
+        body: JSON.stringify({ template, subject }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        result.className = 'notif-result notif-success';
+        result.textContent = `Newsletter sent successfully to ${data.recipientCount ?? 'all'} subscriber(s)!`;
+        // Reload history
+        nlDataLoaded = false;
+        loadNewsletterData();
+      } else {
+        result.className = 'notif-result notif-error';
+        result.textContent = data.error || 'Failed to send newsletter.';
+      }
+    } catch (e) {
+      result.className = 'notif-result notif-error';
+      result.textContent = 'Network error: ' + e.message;
+    }
+  };
+
   // ── Tabs ──
   window.switchTab = function(name) {
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
     document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+    if (name === 'newsletters') loadNewsletterData();
   };
 </script>
 
