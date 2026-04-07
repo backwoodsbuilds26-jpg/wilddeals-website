@@ -209,6 +209,8 @@
         </select>
         <button class="btn btn-primary" onclick="openDealModal()">+ Add Deal</button>
         <button class="btn" style="background:#e8b84b;color:#1a3a2a;font-weight:700" onclick="backfillImages()" id="backfill-btn">🔍 Backfill Images</button>
+        <button class="btn" style="background:#2a7a4a;color:#fff;font-weight:700" onclick="quickAddDeal()" id="quick-add-btn">⚡ Quick Add (auto-resolve)</button>
+        <button class="btn" style="background:#c0392b;color:#fff;font-weight:700" onclick="importRfd()" id="rfd-btn">📡 Import RedFlagDeals</button>
       </div>
       <div class="table-wrap">
         <table>
@@ -858,6 +860,55 @@
       preview.style.display = 'none';
     }
   });
+
+  // Quick Add: type a product, backend resolves to real Amazon ASIN + image
+  window.quickAddDeal = async function() {
+    const query = prompt('Product name (e.g., "MSR PocketRocket 2 stove"):');
+    if (!query || !query.trim()) return;
+    const category = prompt('Category (camping, hiking, fishing, hunting, biking, etc.):', 'outdoor') || 'outdoor';
+    const btn = document.getElementById('quick-add-btn');
+    const orig = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Resolving...';
+    try {
+      const res = await fetch('https://wilddeals-production.up.railway.app/api/ingest-deals', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-App-Key': 'wilddeals-sk-a7f2k9x3m1' },
+        body: JSON.stringify({ queries: [{ query: query.trim(), category: category.trim() }] }),
+      });
+      const data = await res.json();
+      if (data.saved > 0) {
+        alert(`Added: ${data.savedDeals[0].title}\nASIN: ${data.savedDeals[0].asin}`);
+        if (typeof loadDealsData === 'function') await loadDealsData();
+      } else {
+        alert(`Could not resolve "${query}". Try different wording or add manually.`);
+      }
+    } catch (e) {
+      alert('Error: ' + e.message);
+    } finally {
+      btn.disabled = false; btn.textContent = orig;
+    }
+  };
+
+  // Import from RedFlagDeals RSS
+  window.importRfd = async function() {
+    if (!confirm('Import latest outdoor deals from RedFlagDeals? This may take 30-60 seconds.')) return;
+    const btn = document.getElementById('rfd-btn');
+    const orig = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Importing...';
+    try {
+      const res = await fetch('https://wilddeals-production.up.railway.app/api/import-rfd', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-App-Key': 'wilddeals-sk-a7f2k9x3m1' },
+      });
+      const data = await res.json();
+      alert(`RedFlagDeals import:\n✓ Saved: ${data.saved}\n✗ Skipped: ${data.skipped}\nTotal feed items: ${data.totalItems}`);
+      if (data.saved > 0 && typeof loadDealsData === 'function') await loadDealsData();
+    } catch (e) {
+      alert('Error: ' + e.message);
+    } finally {
+      btn.disabled = false; btn.textContent = orig;
+    }
+  };
 
   // Backfill: fetch og:images for all deals that have a URL but no image
   window.backfillImages = async function() {
