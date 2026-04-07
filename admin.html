@@ -503,12 +503,22 @@
 
   async function updateDashboard() {
     const u = document.getElementById('stat-users'); if (u) u.textContent = allUsers.length;
+    const el = document.getElementById('stat-subs-quick');
+    if (!el) return;
     try {
-      const res = await fetch(`${API_URL}/api/newsletter-stats`, { headers: { 'X-App-Key': APP_SECRET } });
+      // Public endpoint — no auth header (avoids CORS preflight)
+      const res = await fetch(`${API_URL}/api/newsletter-stats`);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      const el = document.getElementById('stat-subs-quick');
-      if (el) el.textContent = data.totalSubscribers ?? '-';
-    } catch (e) { console.error('Dashboard newsletter count error:', e); }
+      el.textContent = (data.totalSubscribers != null) ? data.totalSubscribers : '-';
+    } catch (e) {
+      console.error('Dashboard newsletter count error:', e);
+      // Fallback: count Firestore directly
+      try {
+        const snap = await getDocs(collection(db, 'newsletter_subscribers'));
+        el.textContent = snap.size;
+      } catch (e2) { console.error('Fallback count error:', e2); }
+    }
   }
 
   function populateFilters() {
