@@ -501,8 +501,14 @@
     }
   }
 
-  function updateDashboard() {
+  async function updateDashboard() {
     const u = document.getElementById('stat-users'); if (u) u.textContent = allUsers.length;
+    try {
+      const res = await fetch(`${API_URL}/api/newsletter-stats`, { headers: { 'X-App-Key': APP_SECRET } });
+      const data = await res.json();
+      const el = document.getElementById('stat-subs-quick');
+      if (el) el.textContent = data.totalSubscribers ?? '-';
+    } catch (e) { console.error('Dashboard newsletter count error:', e); }
   }
 
   function populateFilters() {
