@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # Static site has no package.json — track GitHub Actions only
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "ci"
+    commit-message:
+      prefix: "ci"
