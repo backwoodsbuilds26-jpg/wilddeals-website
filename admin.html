@@ -540,7 +540,7 @@
     const el = document.getElementById('stat-users');
     if (!el) return;
     try {
-      const res = await fetch(`${API_URL}/api/user-count`);
+      const res = await adminFetch(`${API_URL}/api/user-count`);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
       el.textContent = (data.totalUsers != null) ? data.totalUsers : '-';
