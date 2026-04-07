@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/images/wd.png" />
+  <link rel="apple-touch-icon" href="/images/wd.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — WildDeals</title>
+  <meta name="description" content="WildDeals is a Canadian-built newsletter and upcoming app that hunts down the best outdoor gear deals so you never pay full price again." />
+  <link rel="canonical" href="https://wilddeals.ca/about" />
+  <meta property="og:title" content="About — WildDeals" />
+  <meta property="og:description" content="The story behind WildDeals, Canada's outdoor gear deal hunter." />
+  <meta property="og:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
+  <meta property="og:url" content="https://wilddeals.ca/about" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WildDeals" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About — WildDeals" />
+  <meta name="twitter:description" content="The story behind WildDeals, Canada's outdoor gear deal hunter." />
+  <meta name="twitter:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: #0c1a12; color: #e8f5e0; line-height: 1.6; }
+
+    nav {
+      background: rgba(12,26,18,0.95); backdrop-filter: blur(10px);
+      padding: 16px 40px; display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(232,184,75,0.15);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; color: #e8f5e0; font-size: 22px; font-weight: bold; text-decoration: none; }
+    .nav-logo img { height: 38px; width: auto; border-radius: 8px; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #e8b84b; }
+    .nav-cta { background: #e8b84b; color: #1a0c00 !important; padding: 8px 18px; border-radius: 8px; font-weight: 700; }
+    .nav-cta:hover { color: #1a0c00 !important; background: #f5c85c; }
+    @media (max-width: 700px) {
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 14px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+
+    .hero {
+      padding: 80px 24px 60px; text-align: center;
+      background: radial-gradient(ellipse at top, rgba(232,184,75,0.12), transparent 60%);
+      border-bottom: 1px solid rgba(232,184,75,0.12);
+    }
+    .hero .kicker {
+      display: inline-block; color: #e8b84b; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 3px; margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: 44px; font-weight: 800; color: #fff; max-width: 780px; margin: 0 auto 16px;
+      line-height: 1.15; letter-spacing: -1px;
+    }
+    .hero h1 .gold { color: #e8b84b; }
+    .hero p { color: rgba(255,255,255,0.65); font-size: 17px; max-width: 640px; margin: 0 auto; }
+    @media (max-width: 700px) { .hero { padding: 56px 20px 44px; } .hero h1 { font-size: 32px; } }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    section.block { padding: 64px 0; border-bottom: 1px solid rgba(232,184,75,0.08); }
+    section.block:last-of-type { border-bottom: none; }
+
+    h2 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.5px; }
+    h3 { font-size: 18px; font-weight: 700; color: #e8b84b; margin-bottom: 8px; }
+    p.lead { color: rgba(255,255,255,0.75); font-size: 16px; margin-bottom: 16px; }
+    p.lead strong { color: #fff; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; margin-top: 24px; }
+    .value-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(232,184,75,0.18);
+      border-radius: 14px; padding: 24px;
+    }
+    .value-card .icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .value-card p { color: rgba(255,255,255,0.6); font-size: 14px; }
+
+    /* Media kit section */
+    .media-kit { background: rgba(255,255,255,0.03); border: 1px solid rgba(232,184,75,0.18); border-radius: 18px; padding: 36px; margin-top: 24px; }
+    .mk-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+    .mk-head h2 { margin-bottom: 4px; }
+    .mk-head p { color: rgba(255,255,255,0.55); font-size: 14px; }
+    .mk-btn {
+      background: #e8b84b; color: #1a0c00; padding: 12px 22px; border-radius: 10px;
+      text-decoration: none; font-weight: 800; font-size: 14px; display: inline-block;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .mk-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(232,184,75,0.35); }
+
+    .mk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 28px; }
+    .mk-stat {
+      background: rgba(12,26,18,0.7); border: 1px solid rgba(232,184,75,0.12);
+      border-radius: 12px; padding: 18px; text-align: center;
+    }
+    .mk-stat-value { color: #e8b84b; font-size: 24px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.5px; }
+    .mk-stat-label { color: rgba(255,255,255,0.5); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+    .brand-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 600px) { .brand-grid { grid-template-columns: 1fr; } }
+    .brand-tile {
+      background: rgba(12,26,18,0.7); border: 1px solid rgba(232,184,75,0.12);
+      border-radius: 12px; padding: 20px; text-align: center;
+    }
+    .brand-tile img { max-width: 140px; height: auto; margin-bottom: 12px; border-radius: 8px; }
+    .brand-tile .label { color: rgba(255,255,255,0.55); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+    .color-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .color-chip { flex: 1; min-width: 110px; border-radius: 10px; padding: 14px; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+    .chip-green { background: #0c1a12; color: #e8f5e0; border: 1px solid rgba(232,184,75,0.2); }
+    .chip-gold { background: #e8b84b; color: #1a0c00; }
+    .chip-forest { background: #1a3a2a; color: #e8f5e0; }
+    .chip-dark { background: #0a0a0a; color: #e8b84b; border: 1px solid rgba(232,184,75,0.3); }
+
+    .press-contact {
+      background: rgba(232,184,75,0.08); border: 1px solid rgba(232,184,75,0.25);
+      border-radius: 12px; padding: 22px; margin-top: 20px; text-align: center;
+    }
+    .press-contact a { color: #e8b84b; font-weight: 700; text-decoration: none; }
+    .press-contact a:hover { text-decoration: underline; }
+
+    .cta {
+      text-align: center; padding: 72px 24px;
+      background: radial-gradient(ellipse at bottom, rgba(232,184,75,0.14), transparent 60%);
+    }
+    .cta h2 { font-size: 32px; margin-bottom: 14px; }
+    .cta p { color: rgba(255,255,255,0.65); margin-bottom: 26px; font-size: 16px; }
+    .cta a {
+      display: inline-block; background: #e8b84b; color: #1a0c00;
+      padding: 16px 38px; border-radius: 10px; text-decoration: none;
+      font-weight: 800; font-size: 16px;
+    }
+
+    footer { background: #0a1510; padding: 40px 24px; text-align: center; border-top: 1px solid rgba(232,184,75,0.12); }
+    .footer-logo { display: flex; align-items: center; gap: 10px; justify-content: center; color: #e8f5e0; font-size: 22px; font-weight: bold; margin-bottom: 16px; }
+    .footer-logo img { height: 36px; width: auto; border-radius: 8px; }
+    .footer-links { display: flex; gap: 22px; justify-content: center; margin-bottom: 14px; flex-wrap: wrap; }
+    .footer-links a { color: #7db88a; text-decoration: none; font-size: 14px; }
+    .footer-links a:hover { color: #e8b84b; }
+    .footer-copy { color: #5a8a6a; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><img src="/images/wd.png" alt="WildDeals" /> WildDeals</a>
+    <div class="nav-links">
+      <a href="/shop">Shop</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/#signup" class="nav-cta">Join Newsletter</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="kicker">OUR STORY</div>
+    <h1>We're on a mission to make sure Canadians <span class="gold">never pay full price</span> for outdoor gear.</h1>
+    <p>WildDeals is an independent, Canadian-built project — a weekly newsletter and an upcoming mobile app that hunts down the best deals on camping, fishing, hiking, hunting and outdoor gear from across the country.</p>
+  </section>
+
+  <div class="container">
+
+    <!-- Story -->
+    <section class="block">
+      <h2>Why WildDeals exists</h2>
+      <p class="lead">Outdoor gear in Canada is expensive. Really expensive. A decent tent runs $400, a pair of hiking boots runs $300, and by the time you've kitted out a weekend camping trip you're looking at four figures — before you've even filled the cooler.</p>
+      <p class="lead">The deals are out there. Retailers run major sales every week. The problem is nobody has time to check 15 websites every morning to find them. <strong>So we built a tool that does the hunting for you.</strong></p>
+      <p class="lead">WildDeals started as a spreadsheet for personal use, turned into a weekly email for friends, and is now becoming a full mobile app with real-time deal alerts — so you'll know the moment that tent you've been eyeing drops 40%.</p>
+    </section>
+
+    <!-- What we do -->
+    <section class="block">
+      <h2>What we do</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="icon">📬</span>
+          <h3>Weekly Newsletter</h3>
+          <p>A free, hand-picked roundup of the week's best outdoor gear deals in Canada. No spam, no fluff.</p>
+        </div>
+        <div class="value-card">
+          <span class="icon">📱</span>
+          <h3>Mobile App (Soon)</h3>
+          <p>Real-time push alerts the second prices drop on gear you care about. Launching soon.</p>
+        </div>
+        <div class="value-card">
+          <span class="icon">🛒</span>
+          <h3>Curated Shop</h3>
+          <p>A lean, no-nonsense shop page with our favourite Amazon finds for the wild at heart.</p>
+        </div>
+        <div class="value-card">
+          <span class="icon">🇨🇦</span>
+          <h3>Built in Canada</h3>
+          <p>Independent, founder-operated, and focused on Canadian retailers, prices, and shipping.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="block">
+      <h2>What we stand for</h2>
+      <p class="lead"><strong>No paywalls on the basics.</strong> The weekly newsletter will always be free. We make money through affiliate links and an optional Pro tier on the upcoming app — never by charging for access to deals.</p>
+      <p class="lead"><strong>Honesty over hype.</strong> We only share deals we'd buy ourselves, and we'll always tell you when a "sale" is fake or when a cheaper version is actually better.</p>
+      <p class="lead"><strong>Support the outdoors.</strong> We believe the outdoors should be accessible to everyone, and saving money on gear is a huge part of that.</p>
+    </section>
+
+    <!-- Press & Media Kit -->
+    <section class="block" id="press">
+      <h2 style="margin-bottom:8px;">Press &amp; Media</h2>
+      <p class="lead" style="margin-bottom:0;">Writing about WildDeals? Below is a quick media kit. For the full printable press pack including screenshots, bios and high-resolution assets, view the full media kit.</p>
+
+      <div class="media-kit">
+        <div class="mk-head">
+          <div>
+            <h2>Media Kit</h2>
+            <p>Brand assets, key stats and press contact.</p>
+          </div>
+          <a href="/media-kit" class="mk-btn" target="_blank">Open Full Media Kit →</a>
+        </div>
+
+        <h3 style="margin-bottom:12px;">Key Facts</h3>
+        <div class="mk-grid">
+          <div class="mk-stat">
+            <div class="mk-stat-value">2026</div>
+            <div class="mk-stat-label">Founded</div>
+          </div>
+          <div class="mk-stat">
+            <div class="mk-stat-value">🇨🇦</div>
+            <div class="mk-stat-label">Canadian-owned</div>
+          </div>
+          <div class="mk-stat">
+            <div class="mk-stat-value">Free</div>
+            <div class="mk-stat-label">Weekly newsletter</div>
+          </div>
+          <div class="mk-stat">
+            <div class="mk-stat-value">Soon</div>
+            <div class="mk-stat-label">App launch</div>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom:12px;">Brand Assets</h3>
+        <div class="brand-grid">
+          <div class="brand-tile">
+            <img src="/images/wd.png" alt="WildDeals logo mark" />
+            <div class="label">Logo Mark (PNG)</div>
+          </div>
+          <div class="brand-tile">
+            <img src="/images/wild-deals-banner.png" alt="WildDeals banner" style="max-width:100%;" />
+            <div class="label">Full Banner</div>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom:6px;">Brand Colours</h3>
+        <div class="color-row">
+          <div class="color-chip chip-forest">FOREST<br/>#1A3A2A</div>
+          <div class="color-chip chip-gold">GOLD<br/>#E8B84B</div>
+          <div class="color-chip chip-green">DEEP GREEN<br/>#0C1A12</div>
+          <div class="color-chip chip-dark">CHARCOAL<br/>#0A0A0A</div>
+        </div>
+
+        <h3 style="margin:22px 0 6px;">Boilerplate</h3>
+        <p class="lead" style="font-size:14px;">WildDeals is an independent, Canadian-built weekly newsletter and upcoming mobile app that tracks the best deals on outdoor gear — camping, fishing, hiking, hunting and more — so Canadians never pay full price again.</p>
+
+        <div class="press-contact">
+          <div style="color:#fff;font-weight:700;margin-bottom:6px;">Press inquiries</div>
+          <a href="mailto:support@wilddeals.ca">support@wilddeals.ca</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Join the hunt</h2>
+    <p>Free weekly newsletter. First 100 signups get 1 month of Pro free when the app launches.</p>
+    <a href="/#signup">Join the Newsletter →</a>
+  </section>
+
+  <footer>
+    <div class="footer-logo"><img src="/images/wd.png" alt="WildDeals" /> WildDeals</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/shop">Shop</a>
+      <a href="/about">About</a>
+      <a href="/media-kit">Media Kit</a>
+      <a href="/contact">Contact</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 WildDeals. Made in 🇨🇦 · WildDeals participates in affiliate programs.</div>
+  </footer>
+
+</body>
+</html>
