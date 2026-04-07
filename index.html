@@ -132,6 +132,14 @@
       font-size: 13px; font-weight: 600; color: #e8b84b;
       margin-bottom: 24px;
       animation: fadeUp 0.6s ease-out both;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    a.hero-badge:hover {
+      background: rgba(232,184,75,0.22);
+      border-color: rgba(232,184,75,0.55);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(232,184,75,0.35);
     }
     .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4CAF50; animation: pulse 2s infinite; }
     .hero-heading {
