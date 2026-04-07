@@ -166,6 +166,7 @@
       <div class="stats-grid" id="stats-grid">
         <div class="stat-card"><div class="stat-value" id="stat-users">-</div><div class="stat-label">Registered Users</div></div>
         <div class="stat-card"><div class="stat-value" id="stat-subs-quick">-</div><div class="stat-label">Newsletter Subscribers</div></div>
+        <div class="stat-card"><div class="stat-value" id="stat-welcome">-</div><div class="stat-label">Welcome Emails</div></div>
       </div>
       <!-- Quick Links -->
       <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
@@ -525,6 +526,7 @@
     allDeals = [];
     updateNewsletterCount();
     updateUserCount();
+    updateWelcomeEmailStats();
     // Still try Firestore read for the Users tab table (may fail silently)
     try {
       const userSnap = await getDocs(collection(db, 'users'));
@@ -546,6 +548,25 @@
       el.textContent = (data.totalUsers != null) ? data.totalUsers : '-';
     } catch (e) {
       console.error('User count error:', e);
+      el.textContent = '!';
+    }
+  }
+
+  async function updateWelcomeEmailStats() {
+    const el = document.getElementById('stat-welcome');
+    if (!el) return;
+    try {
+      const res = await adminFetch(`${API_URL}/api/welcome-email-stats`);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      el.innerHTML = `${data.sent}<span style="font-size:14px;color:#888;font-weight:normal">/${data.total}</span>`;
+      if (data.failed > 0) {
+        el.innerHTML += ` <span title="${data.failed} failed — check Subscribers tab" style="color:#c0392b;font-size:14px;">⚠ ${data.failed}</span>`;
+      } else if (data.total > 0) {
+        el.innerHTML += ` <span style="color:#2a7a4a;font-size:14px;">✓</span>`;
+      }
+    } catch (e) {
+      console.error('Welcome stats error:', e);
       el.textContent = '!';
     }
   }
