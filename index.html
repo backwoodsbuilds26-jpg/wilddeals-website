@@ -660,7 +660,7 @@
       btn.disabled = true; btn.textContent = 'Checking...';
       function resetBtn() { btn.disabled = false; btn.textContent = 'Subscribe'; }
       try {
-        var token = await grecaptcha.execute('6LfamqcsAAAAD5o9slSmCpOzVk3KCybIc8dezG8', { action: 'signup' });
+        var token = await grecaptcha.execute('6LfamqcsAAAAAD5o9slSmCpOzVk3KCybIc8dezG8', { action: 'signup' });
         var verifyRes = await fetch('https://wilddeals-production.up.railway.app/api/verify-recaptcha', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token: token })
@@ -753,7 +753,7 @@
   </script>
 
   <script type="text/javascript" src="https://s.skimresources.com/js/301040X1788941.skimlinks.js"></script>
-  <script src="https://www.google.com/recaptcha/api.js?render=6LfamqcsAAAAD5o9slSmCpOzVk3KCybIc8dezG8"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LfamqcsAAAAAD5o9slSmCpOzVk3KCybIc8dezG8"></script>
 
 </body>
 </html>
