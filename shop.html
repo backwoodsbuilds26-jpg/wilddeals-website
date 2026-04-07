@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/images/wd.png" />
+  <link rel="apple-touch-icon" href="/images/wd.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — WildDeals</title>
+  <meta name="description" content="Hand-picked outdoor gear deals updated hourly. Shop Canadian and US retailers — camping, hiking, fishing, hunting, and more." />
+  <link rel="canonical" href="https://wilddeals.ca/shop" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Shop — WildDeals" />
+  <meta property="og:description" content="Hand-picked outdoor gear deals updated hourly. Shop Canadian and US retailers." />
+  <meta property="og:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
+  <meta property="og:url" content="https://wilddeals.ca/shop" />
+  <meta property="og:site_name" content="WildDeals" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Shop — WildDeals" />
+  <meta name="twitter:description" content="Hand-picked outdoor gear deals updated hourly." />
+  <meta name="twitter:image" content="https://wilddeals.ca/images/wd.png" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0f1d14; color: #e8f5e0; min-height: 100vh; }
+
+    nav { background: #1a3a2a; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; color: #e8f5e0; font-size: 24px; font-weight: bold; text-decoration: none; }
+    .nav-logo img { height: 40px; width: auto; border-radius: 8px; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { color: #b8d4b0; text-decoration: none; font-weight: 600; font-size: 14px; }
+    .nav-links a:hover { color: #e8b84b; }
+    .nav-btn { background: #e8b84b; color: #2a1800; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+
+    .page-header { padding: 60px 40px 30px; text-align: center; max-width: 1200px; margin: 0 auto; }
+    .page-header h1 { font-size: 44px; font-weight: 800; margin-bottom: 12px; color: #fff; }
+    .page-header h1 span { color: #e8b84b; }
+    .page-header p { color: #b8d4b0; font-size: 17px; max-width: 600px; margin: 0 auto 30px; }
+
+    .country-toggle { display: inline-flex; background: rgba(255,255,255,0.05); border: 2px solid rgba(232,184,75,0.3); border-radius: 12px; padding: 4px; gap: 4px; }
+    .country-toggle button { background: none; border: none; color: #b8d4b0; padding: 12px 28px; font-size: 16px; font-weight: 700; cursor: pointer; border-radius: 8px; transition: all 0.2s; font-family: inherit; display: flex; align-items: center; gap: 8px; }
+    .country-toggle button.active { background: #e8b84b; color: #2a1800; }
+    .country-toggle button:not(.active):hover { color: #e8b84b; }
+
+    .deals-section { max-width: 1200px; margin: 0 auto; padding: 30px 40px 60px; }
+    .deals-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 16px; }
+    .deals-count { color: #b8d4b0; font-size: 14px; }
+    .refresh-btn { background: none; border: 2px solid #e8b84b; color: #e8b84b; padding: 10px 22px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+    .refresh-btn:hover { background: #e8b84b; color: #2a1800; }
+    .refresh-btn:disabled { opacity: 0.5; cursor: wait; }
+
+    .deal-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .deal-card { background: #1a3a2a; border: 1px solid rgba(232,184,75,0.1); border-radius: 16px; overflow: hidden; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+    .deal-card:hover { transform: translateY(-6px); border-color: rgba(232,184,75,0.4); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .deal-card-img { background: #fff; height: 220px; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .deal-card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .deal-card-img .emoji-fallback { font-size: 80px; }
+    .deal-card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+    .deal-badge { display: inline-block; background: #e8b84b; color: #2a1800; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; margin-bottom: 12px; align-self: flex-start; }
+    .deal-name { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; min-height: 44px; }
+    .deal-store { color: #7db88a; font-size: 13px; margin-bottom: 12px; }
+    .deal-prices { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+    .deal-now { color: #e8b84b; font-size: 22px; font-weight: 800; }
+    .deal-was { color: #7db88a; font-size: 14px; text-decoration: line-through; }
+    .deal-view-btn { display: block; background: #e8b84b; color: #2a1800; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 700; font-size: 14px; transition: background 0.2s; margin-top: auto; }
+    .deal-view-btn:hover { background: #f5c452; }
+
+    .loading { text-align: center; padding: 60px 20px; color: #7db88a; font-size: 16px; grid-column: 1 / -1; }
+    .empty { text-align: center; padding: 80px 20px; color: #7db88a; grid-column: 1 / -1; }
+
+    .affiliate-note { max-width: 800px; margin: 40px auto 0; padding: 20px; background: rgba(232,184,75,0.05); border: 1px solid rgba(232,184,75,0.15); border-radius: 12px; color: #b8d4b0; font-size: 13px; line-height: 1.6; text-align: center; }
+
+    footer { background: #1a3a2a; padding: 40px; text-align: center; margin-top: 60px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; justify-content: center; color: #e8f5e0; font-size: 24px; font-weight: bold; margin-bottom: 16px; }
+    .footer-logo img { height: 36px; width: auto; border-radius: 8px; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .footer-links a { color: #7db88a; text-decoration: none; font-size: 14px; }
+    .footer-copy { color: #7db88a; font-size: 12px; }
+
+    @media (max-width: 900px) { .deal-cards { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) {
+      .deal-cards { grid-template-columns: 1fr; }
+      .page-header h1 { font-size: 32px; }
+      .deals-section { padding: 20px; }
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><img src="/images/wd.png" alt="WildDeals logo" /> WildDeals</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/shop">Shop</a>
+      <a href="/#signup" class="nav-btn">Coming Soon</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>Shop the <span>Hottest</span> Outdoor Deals</h1>
+    <p>Hand-picked discounts on camping, hiking, fishing, hunting, and more. Updated hourly from top retailers.</p>
+    <div class="country-toggle">
+      <button id="btn-ca" class="active" onclick="setCountry('ca')">🇨🇦 Canada</button>
+      <button id="btn-us" onclick="setCountry('us')">🇺🇸 United States</button>
+    </div>
+  </div>
+
+  <section class="deals-section">
+    <div class="deals-controls">
+      <div class="deals-count" id="deals-count">Loading...</div>
+      <button class="refresh-btn" id="refresh-btn" onclick="loadMore()">🔄 Show me 6 more</button>
+    </div>
+    <div class="deal-cards" id="deals-grid">
+      <div class="loading">Loading deals...</div>
+    </div>
+    <div class="affiliate-note">
+      💡 WildDeals is reader-supported. When you click and buy through our links, we may earn a commission at no extra cost to you. Thanks for supporting our hunt for the best gear deals.
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo"><img src="/images/wd.png" alt="WildDeals logo" /> WildDeals</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/shop">Shop</a>
+      <a href="/contact">Contact</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 WildDeals. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const API = 'https://wilddeals-production.up.railway.app/api/featured-deals';
+    let country = 'ca';
+    let offset = 0;
+    let total = 0;
+
+    function setCountry(c) {
+      if (c === country) return;
+      country = c;
+      offset = 0;
+      document.getElementById('btn-ca').classList.toggle('active', c === 'ca');
+      document.getElementById('btn-us').classList.toggle('active', c === 'us');
+      document.getElementById('deals-grid').innerHTML = '<div class="loading">Loading deals...</div>';
+      loadDeals(true);
+    }
+
+    function createCard(deal) {
+      const discount = deal.discount ? parseInt(String(deal.discount).replace('%','')) : 0;
+      const img = deal.image
+        ? '<img src="' + deal.image + '" alt="' + (deal.name || '').replace(/"/g,'&quot;') + '" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=emoji-fallback>' + (deal.emoji || '🏷️') + '</div>\'" />'
+        : '<div class="emoji-fallback">' + (deal.emoji || '🏷️') + '</div>';
+      const badge = discount > 0 ? '<span class="deal-badge">-' + discount + '% OFF</span>' : '';
+      const priceNow = deal.priceNow != null ? '$' + Number(deal.priceNow).toFixed(2) : '';
+      const priceWas = deal.priceWas != null ? '$' + Number(deal.priceWas).toFixed(2) : '';
+      return '<div class="deal-card">' +
+        '<div class="deal-card-img">' + img + '</div>' +
+        '<div class="deal-card-body">' +
+          badge +
+          '<div class="deal-name">' + (deal.name || 'Outdoor Deal') + '</div>' +
+          '<div class="deal-store">' + (deal.store || '') + '</div>' +
+          '<div class="deal-prices">' +
+            (priceNow ? '<div class="deal-now">' + priceNow + '</div>' : '') +
+            (priceWas ? '<div class="deal-was">' + priceWas + '</div>' : '') +
+          '</div>' +
+          '<a href="' + (deal.url || '#') + '" target="_blank" rel="noopener sponsored" class="deal-view-btn">View Deal &#8594;</a>' +
+        '</div></div>';
+    }
+
+    async function loadDeals(replace) {
+      const grid = document.getElementById('deals-grid');
+      const btn = document.getElementById('refresh-btn');
+      btn.disabled = true;
+      try {
+        const res = await fetch(API + '?country=' + country + '&offset=' + offset + '&limit=6');
+        const data = await res.json();
+        if (!data.deals || data.deals.length === 0) {
+          if (offset === 0) {
+            grid.innerHTML = '<div class="empty">No deals available right now. Check back soon!</div>';
+            document.getElementById('deals-count').textContent = '0 deals';
+          } else {
+            offset = 0;
+            return loadDeals(true);
+          }
+          return;
+        }
+        total = data.total || 0;
+        grid.innerHTML = data.deals.map(createCard).join('');
+        document.getElementById('deals-count').textContent = 'Showing ' + (offset + 1) + '–' + (offset + data.deals.length) + ' of ' + total + ' hot deals';
+        offset += 6;
+        if (offset >= total) offset = 0;
+      } catch (e) {
+        grid.innerHTML = '<div class="empty">Unable to load deals. Please try again.</div>';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function loadMore() { loadDeals(); }
+
+    loadDeals(true);
+  </script>
+
+</body>
+</html>
+</content>
