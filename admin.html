@@ -864,6 +864,8 @@
     const btn = document.getElementById('backfill-btn');
     const dealsWithoutImage = allDeals.filter(d => d.url && d.url.trim() && (!d.image || !d.image.trim()));
 
+    console.log('[Backfill] Total deals:', allDeals.length, '| Missing images:', dealsWithoutImage.length);
+
     if (dealsWithoutImage.length === 0) {
       alert('All deals with URLs already have images!');
       return;
@@ -872,14 +874,18 @@
     if (!confirm(`Fetch images for ${dealsWithoutImage.length} deals without images?\n\nThis will call each product URL and grab the og:image tag. Deals are processed in batches of 20.`)) return;
 
     btn.disabled = true;
-    btn.textContent = '⏳ Working...';
+    const originalLabel = '🔍 Backfill Images';
     let totalFound = 0;
     let totalProcessed = 0;
+    let totalSaved = 0;
+    let totalSaveErrors = 0;
+    const batchErrors = [];
 
     // Process in batches of 20
     for (let i = 0; i < dealsWithoutImage.length; i += 20) {
       const batch = dealsWithoutImage.slice(i, i + 20).map(d => ({ id: d.id, url: d.url }));
-      btn.textContent = `⏳ ${totalProcessed}/${dealsWithoutImage.length}...`;
+      btn.textContent = `⏳ ${totalProcessed}/${dealsWithoutImage.length} (found ${totalFound})`;
+      console.log(`[Backfill] Sending batch ${Math.floor(i/20)+1}: ${batch.length} deals`);
 
       try {
         const res = await fetch(`${API_URL}/api/og-image-batch`, {
@@ -887,29 +893,62 @@
           headers: { 'Content-Type': 'application/json', 'X-App-Key': APP_SECRET },
           body: JSON.stringify({ deals: batch }),
         });
-        const data = await res.json();
 
-        if (data.success) {
+        if (!res.ok) {
+          const errText = await res.text().catch(() => '');
+          throw new Error(`HTTP ${res.status}: ${errText.slice(0, 120)}`);
+        }
+
+        const data = await res.json();
+        console.log('[Backfill] Batch response:', data);
+
+        if (data && data.success && Array.isArray(data.results)) {
           for (const result of data.results) {
-            if (result.image) {
-              await updateDoc(doc(db, 'deals', result.id), {
-                image: result.image,
-                updatedAt: new Date().toISOString(),
-              });
+            if (result && result.image) {
               totalFound++;
+              try {
+                await updateDoc(doc(db, 'deals', result.id), {
+                  image: result.image,
+                  updatedAt: new Date().toISOString(),
+                });
+                // Update in-memory cache so re-render reflects change immediately
+                const idx = allDeals.findIndex(d => d.id === result.id);
+                if (idx !== -1) allDeals[idx].image = result.image;
+                totalSaved++;
+                console.log('[Backfill] Saved image for', result.id);
+              } catch (saveErr) {
+                totalSaveErrors++;
+                console.error('[Backfill] Firestore save failed for', result.id, saveErr);
+              }
+            } else {
+              console.log('[Backfill] No image for', result && result.id, '(', result && result.url, ')');
             }
           }
+        } else {
+          throw new Error('Unexpected response shape');
         }
       } catch (e) {
-        console.error('Backfill batch error:', e);
+        console.error('[Backfill] Batch error:', e);
+        batchErrors.push(e.message || String(e));
       }
       totalProcessed += batch.length;
     }
 
     btn.disabled = false;
-    btn.textContent = '🔍 Backfill Images';
-    alert(`Done! Found images for ${totalFound} out of ${dealsWithoutImage.length} deals.`);
-    await loadData();
+    btn.textContent = originalLabel;
+
+    let summary = `Backfill complete.\n\nProcessed: ${totalProcessed}/${dealsWithoutImage.length}\nImages found: ${totalFound}\nSaved to Firestore: ${totalSaved}`;
+    if (totalSaveErrors) summary += `\nSave errors: ${totalSaveErrors}`;
+    if (batchErrors.length) summary += `\n\nBatch errors (${batchErrors.length}):\n- ` + batchErrors.slice(0, 5).join('\n- ');
+    console.log('[Backfill] Summary:', { totalProcessed, totalFound, totalSaved, totalSaveErrors, batchErrors });
+    alert(summary);
+
+    // Reload from Firestore to ensure full re-render with fresh data
+    try {
+      await loadData();
+    } catch (e) {
+      console.error('[Backfill] loadData after backfill failed:', e);
+    }
   };
 
   // ── Newsletters ──
