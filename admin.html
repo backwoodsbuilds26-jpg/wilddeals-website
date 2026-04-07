@@ -153,7 +153,6 @@
 
   <div class="tabs">
     <div class="tab active" data-tab="dashboard" onclick="switchTab('dashboard')">Dashboard</div>
-    <div class="tab" data-tab="deals" onclick="switchTab('deals')">Deals</div>
     <div class="tab" data-tab="users" onclick="switchTab('users')">Users</div>
     <div class="tab" data-tab="notifications" onclick="switchTab('notifications')">Push Notifications</div>
     <div class="tab" data-tab="newsletters" onclick="switchTab('newsletters')">Newsletters</div>
@@ -165,10 +164,8 @@
     <div class="panel active" id="panel-dashboard">
       <h2 style="font-size:22px;color:#1a3a2a;margin-bottom:20px">Dashboard</h2>
       <div class="stats-grid" id="stats-grid">
-        <div class="stat-card"><div class="stat-value" id="stat-deals">-</div><div class="stat-label">Total Deals</div></div>
         <div class="stat-card"><div class="stat-value" id="stat-users">-</div><div class="stat-label">Registered Users</div></div>
-        <div class="stat-card"><div class="stat-value" id="stat-categories">12</div><div class="stat-label">Categories</div></div>
-        <div class="stat-card"><div class="stat-value" id="stat-avg-discount">-</div><div class="stat-label">Avg Discount</div></div>
+        <div class="stat-card"><div class="stat-value" id="stat-subs-quick">-</div><div class="stat-label">Newsletter Subscribers</div></div>
       </div>
       <!-- Quick Links -->
       <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
@@ -178,53 +175,14 @@
         <a href="/media-kit" target="_blank" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1a3a2a;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
           <span style="font-size:28px">📋</span> Media Kit
         </a>
-        <a href="/deals" target="_blank" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1a3a2a;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
-          <span style="font-size:28px">🛒</span> Live Site Deals
+        <a href="/shop" target="_blank" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1a3a2a;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
+          <span style="font-size:28px">🛒</span> Shop Page
         </a>
-        <a href="https://analytics.google.com" target="_blank" rel="noopener" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1a3a2a;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
+<a href="https://analytics.google.com" target="_blank" rel="noopener" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1a3a2a;text-decoration:none;color:#1a3a2a;font-weight:700;font-size:15px;transition:transform 0.2s">
           <span style="font-size:28px">📊</span> Google Analytics
         </a>
       </div>
 
-      <h3 style="color:#1a3a2a;margin-bottom:12px">Deals by Category</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Category</th><th>Count</th><th>Avg Discount</th><th>With Images</th></tr></thead>
-          <tbody id="category-stats"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ── Deals ── -->
-    <div class="panel" id="panel-deals">
-      <div class="toolbar">
-        <input type="text" id="deal-search" placeholder="Search deals..." oninput="renderDeals()" />
-        <select id="deal-cat-filter" onchange="renderDeals()">
-          <option value="">All Categories</option>
-        </select>
-        <select id="deal-image-filter" onchange="renderDeals()">
-          <option value="">All Deals</option>
-          <option value="with">With Image</option>
-          <option value="without">Without Image</option>
-        </select>
-        <button class="btn btn-primary" onclick="openDealModal()">+ Add Deal</button>
-        <button class="btn" style="background:#e8b84b;color:#1a3a2a;font-weight:700" onclick="backfillImages()" id="backfill-btn">🔍 Backfill Images</button>
-        <button class="btn" style="background:#2a7a4a;color:#fff;font-weight:700" onclick="quickAddDeal()" id="quick-add-btn">⚡ Quick Add (auto-resolve)</button>
-        <button class="btn" style="background:#c0392b;color:#fff;font-weight:700" onclick="importRfd()" id="rfd-btn">📡 Import RedFlagDeals</button>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Was</th><th>Discount</th><th>Store</th><th>Image</th><th>Actions</th></tr></thead>
-          <tbody id="deals-table"></tbody>
-        </table>
-      </div>
-      <div class="pagination">
-        <span id="deals-count"></span>
-        <div>
-          <button class="btn btn-sm btn-primary" onclick="dealsPrev()">← Prev</button>
-          <button class="btn btn-sm btn-primary" onclick="dealsNext()">Next →</button>
-        </div>
-      </div>
     </div>
 
     <!-- ── Users ── -->
@@ -532,17 +490,11 @@
   // ── Data Loading ──
   async function loadData() {
     try {
-      // Load deals
-      const dealSnap = await getDocs(collection(db, 'deals'));
-      allDeals = dealSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-      // Load users
+      allDeals = [];
       const userSnap = await getDocs(collection(db, 'users'));
       allUsers = userSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
       updateDashboard();
-      populateFilters();
-      renderDeals();
       renderUsers();
     } catch (e) {
       console.error('Load error:', e);
@@ -550,32 +502,7 @@
   }
 
   function updateDashboard() {
-    document.getElementById('stat-deals').textContent = allDeals.length;
-    document.getElementById('stat-users').textContent = allUsers.length;
-
-    const discounts = allDeals.map(d => parseInt(String(d.discount || '0').replace(/\D/g,''))).filter(n => n > 0);
-    const avg = discounts.length ? Math.round(discounts.reduce((a,b) => a+b, 0) / discounts.length) : 0;
-    document.getElementById('stat-avg-discount').textContent = avg + '%';
-
-    // Category breakdown
-    const cats = {};
-    CATEGORIES.forEach(c => cats[c] = { count: 0, discounts: [], images: 0 });
-    allDeals.forEach(d => {
-      const cat = d.category || 'Uncategorized';
-      if (!cats[cat]) cats[cat] = { count: 0, discounts: [], images: 0 };
-      cats[cat].count++;
-      const disc = parseInt(String(d.discount || '0').replace(/\D/g,''));
-      if (disc > 0) cats[cat].discounts.push(disc);
-      if (d.image) cats[cat].images++;
-    });
-
-    const tbody = document.getElementById('category-stats');
-    tbody.innerHTML = Object.entries(cats)
-      .sort((a,b) => b[1].count - a[1].count)
-      .map(([name, data]) => {
-        const avgD = data.discounts.length ? Math.round(data.discounts.reduce((a,b)=>a+b,0)/data.discounts.length) : 0;
-        return `<tr><td><strong>${name}</strong></td><td>${data.count}</td><td>${avgD}%</td><td>${data.images} / ${data.count}</td></tr>`;
-      }).join('');
+    const u = document.getElementById('stat-users'); if (u) u.textContent = allUsers.length;
   }
 
   function populateFilters() {
