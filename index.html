@@ -729,23 +729,18 @@
       var form = e.target;
       var btn = form.querySelector('button[type="submit"]');
       var emailInput = form.querySelector('input[type="email"]');
-      btn.disabled = true; btn.textContent = 'Checking...';
+      btn.disabled = true; btn.textContent = 'Joining...';
       function resetBtn() { btn.disabled = false; btn.textContent = 'Subscribe'; }
-      try {
-        var token = await grecaptcha.execute('6LfamqcsAAAAAD5o9slSmCpOzVk3KCybIc8dezG8', { action: 'signup' });
-        var verifyRes = await fetch('https://wilddeals-production.up.railway.app/api/verify-recaptcha', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: token })
-        });
-        var verifyData = await verifyRes.json();
-        if (!verifyData.passed) {
-          resetBtn();
-          alert('reCAPTCHA verification failed (score: ' + (verifyData.score != null ? verifyData.score : 'n/a') + '). Please try again.');
-          return;
-        }
 
-        // Also submit to Netlify for backup
-        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
+      // Honeypot: if a bot filled the hidden bot-field, silently drop.
+      var honeypot = form.querySelector('input[name="bot-field"]');
+      if (honeypot && honeypot.value) { resetBtn(); return; }
+
+      try {
+        // Best-effort backup submit to Netlify Forms (doesn't block on failure)
+        try {
+          fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
+        } catch (_) {}
 
         // Submit to backend for newsletter + promo code
         var apiRes = await fetch('https://wilddeals-production.up.railway.app/api/newsletter-signup', {
@@ -825,7 +820,6 @@
   </script>
 
   <script type="text/javascript" src="https://s.skimresources.com/js/301040X1788941.skimlinks.js"></script>
-  <script src="https://www.google.com/recaptcha/api.js?render=6LfamqcsAAAAAD5o9slSmCpOzVk3KCybIc8dezG8"></script>
 
 </body>
 </html>
