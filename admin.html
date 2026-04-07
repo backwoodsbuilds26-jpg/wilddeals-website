@@ -490,16 +490,30 @@
   // ── Data Loading ──
   async function loadData() {
     allDeals = [];
-    // Fire newsletter count immediately, independent of Firestore reads
     updateNewsletterCount();
+    updateUserCount();
+    // Still try Firestore read for the Users tab table (may fail silently)
     try {
       const userSnap = await getDocs(collection(db, 'users'));
       allUsers = userSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-      const u = document.getElementById('stat-users'); if (u) u.textContent = allUsers.length;
       renderUsers();
     } catch (e) {
-      console.error('Users load error:', e);
-      const u = document.getElementById('stat-users'); if (u) u.textContent = '!';
+      console.warn('Users collection read blocked (expected if rules restrict it):', e.message);
+      allUsers = [];
+    }
+  }
+
+  async function updateUserCount() {
+    const el = document.getElementById('stat-users');
+    if (!el) return;
+    try {
+      const res = await fetch(`${API_URL}/api/user-count`);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      el.textContent = (data.totalUsers != null) ? data.totalUsers : '-';
+    } catch (e) {
+      console.error('User count error:', e);
+      el.textContent = '!';
     }
   }
 
