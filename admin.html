@@ -489,37 +489,35 @@
 
   // ── Data Loading ──
   async function loadData() {
+    allDeals = [];
+    // Fire newsletter count immediately, independent of Firestore reads
+    updateNewsletterCount();
     try {
-      allDeals = [];
       const userSnap = await getDocs(collection(db, 'users'));
       allUsers = userSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-      updateDashboard();
+      const u = document.getElementById('stat-users'); if (u) u.textContent = allUsers.length;
       renderUsers();
     } catch (e) {
-      console.error('Load error:', e);
+      console.error('Users load error:', e);
+      const u = document.getElementById('stat-users'); if (u) u.textContent = '!';
     }
   }
 
-  async function updateDashboard() {
-    const u = document.getElementById('stat-users'); if (u) u.textContent = allUsers.length;
+  async function updateNewsletterCount() {
     const el = document.getElementById('stat-subs-quick');
     if (!el) return;
     try {
-      // Public endpoint — no auth header (avoids CORS preflight)
       const res = await fetch(`${API_URL}/api/newsletter-stats`);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
       el.textContent = (data.totalSubscribers != null) ? data.totalSubscribers : '-';
     } catch (e) {
-      console.error('Dashboard newsletter count error:', e);
-      // Fallback: count Firestore directly
-      try {
-        const snap = await getDocs(collection(db, 'newsletter_subscribers'));
-        el.textContent = snap.size;
-      } catch (e2) { console.error('Fallback count error:', e2); }
+      console.error('Newsletter count error:', e);
+      el.textContent = '!';
     }
   }
+
+  function updateDashboard() { updateNewsletterCount(); }
 
   function populateFilters() {
     const catFilter = document.getElementById('deal-cat-filter');
