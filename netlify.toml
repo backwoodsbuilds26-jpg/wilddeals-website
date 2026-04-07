@@ -14,13 +14,46 @@
     Content-Type = "application/json"
     Access-Control-Allow-Origin = "*"
 
-# ── Security headers ──
+# ── Global Security Headers (applied to every page) ──
 [[headers]]
   for = "/*"
   [headers.values]
+    # Prevent clickjacking — site cannot be iframed anywhere
     X-Frame-Options = "DENY"
+    # Stop browsers from MIME-sniffing responses
     X-Content-Type-Options = "nosniff"
+    # Legacy XSS filter for old browsers
+    X-XSS-Protection = "1; mode=block"
+    # Force HTTPS for 2 years, include subdomains, eligible for preload list
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    # Only send referrer info on same-origin
     Referrer-Policy = "strict-origin-when-cross-origin"
+    # Disable powerful browser features we don't use
+    Permissions-Policy = "accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), xr-spatial-tracking=()"
+    # Opt into cross-origin isolation (safe defaults)
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-site"
+    # Content Security Policy — allowlists only what the site actually uses
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://s.skimresources.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: ; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://wilddeals-production.up.railway.app https://www.google-analytics.com https://region1.google-analytics.com https://s.skimresources.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wilddeals-production.up.railway.app; object-src 'none'; upgrade-insecure-requests"
+
+# ── Extra lockdown for the admin page ──
+[[headers]]
+  for = "/admin*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+    Cache-Control = "no-store, no-cache, must-revalidate, private"
+
+[[headers]]
+  for = "/growth*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store, no-cache, must-revalidate, private"
+
+# ── Cache static assets aggressively ──
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 # ── Redirect www to apex ──
 [[redirects]]
