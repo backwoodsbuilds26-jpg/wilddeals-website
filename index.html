@@ -510,7 +510,7 @@
           <div class="section-label">Live Deals</div>
           <div class="section-title" style="margin-bottom:0">Top deals right now</div>
         </div>
-        <a href="/deals" class="view-all-btn">View all deals &#8594;</a>
+        <button id="refresh-deals-btn" class="view-all-btn" style="background:none;border:2px solid #e8b84b;color:#e8b84b;cursor:pointer;font-weight:700;padding:8px 18px;border-radius:8px;">🔄 Show me 6 more</button>
       </div>
       <div class="deal-cards" id="live-deals">
         <div class="deal-loading">Loading live deals...</div>
@@ -556,7 +556,6 @@
       </div>
       <div class="footer-links-group">
         <h4>Product</h4>
-        <a href="/deals">All Deals</a>
         <a href="#features">Features</a>
         <a href="#signup">Coming Soon</a>
         <a href="/media-kit">Media Kit</a>
@@ -620,26 +619,42 @@
         '</div></div>';
     }
 
-    async function loadDeals() {
+    let featuredOffset = 0;
+    let featuredTotal = 0;
+    async function loadDeals(opts) {
+      opts = opts || {};
       const container = document.getElementById('live-deals');
+      const btn = document.getElementById('refresh-deals-btn');
+      if (opts.first) container.innerHTML = '<div class="deal-loading">Loading live deals...</div>';
+      if (btn) { btn.disabled = true; }
       try {
-        const snapshot = await getDocs(collection(db, 'deals'));
-        if (snapshot.empty) {
-          container.innerHTML = '<div class="deal-loading">No deals available right now.</div>';
+        const url = 'https://wilddeals-production.up.railway.app/api/featured-deals?offset=' + featuredOffset + '&limit=6';
+        const r = await fetch(url);
+        const data = await r.json();
+        if (!data.deals || data.deals.length === 0) {
+          if (featuredOffset === 0) {
+            container.innerHTML = '<div class="deal-loading">No deals available right now. Check back soon.</div>';
+          } else {
+            // Reached end — wrap around
+            featuredOffset = 0;
+            return loadDeals();
+          }
           return;
         }
-        let deals = [];
-        snapshot.forEach(function(doc) { deals.push(doc.data()); });
-        deals.sort(function(a, b) {
-          return (parseInt(String(b.discount||'0').replace('%',''))||0) - (parseInt(String(a.discount||'0').replace('%',''))||0);
-        });
-        container.innerHTML = deals.slice(0, 6).map(createDealCard).join('');
+        featuredTotal = data.total || 0;
+        container.innerHTML = data.deals.map(createDealCard).join('');
+        // Advance offset for next click; wrap at total
+        featuredOffset += 6;
+        if (featuredOffset >= featuredTotal) featuredOffset = 0;
       } catch (err) {
         console.error('Error loading deals:', err);
         container.innerHTML = '<div class="deal-loading">Unable to load deals right now.</div>';
+      } finally {
+        if (btn) { btn.disabled = false; }
       }
     }
-    loadDeals();
+    document.getElementById('refresh-deals-btn').addEventListener('click', function() { loadDeals(); });
+    loadDeals({ first: true });
   </script>
 
   <!-- Signup Form -->
