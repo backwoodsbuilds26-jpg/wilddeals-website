@@ -25,38 +25,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding: 84px 14px 8px;
+    justify-content: center;
+    padding: 14px 14px 8px;
   }
   .overlay { position: fixed; inset: 0; background: rgba(8,22,12,0.68); z-index: 0; }
-
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 14px 40px;
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(12,26,18,0.85);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(232,184,75,0.12);
-  }
-  .nav-logo { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 22px; font-weight: 800; text-decoration: none; letter-spacing: -0.5px; font-family: 'Lora', serif; }
-  .nav-logo img { height: 36px; width: 36px; border-radius: 10px; }
-  .nav-links { display: flex; align-items: center; gap: 28px; }
-  .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.2s; font-family: 'Lora', serif; }
-  .nav-links a:hover { color: #e8b84b; }
-  .nav-cta {
-    background: linear-gradient(135deg, #e8b84b 0%, #d4a43d 100%);
-    color: #1a2a10 !important; padding: 9px 20px; border-radius: 10px;
-    font-weight: 700 !important;
-    box-shadow: 0 2px 12px rgba(232,184,75,0.25);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(232,184,75,0.4); color: #1a2a10 !important; }
-  @media (max-width: 768px) {
-    nav { padding: 12px 18px; }
-    .nav-links { gap: 14px; }
-    .nav-links a:not(.nav-cta) { display: none; }
-    body { padding-top: 76px; }
-  }
 
   .card {
     position: relative;
@@ -139,12 +111,12 @@
   .disclosure { color: #4a5e4a; font-size: 10px; font-family: 'Lora', serif; line-height: 1.4; padding: 0 8px; }
 
   .footer {
-    position: relative; z-index: 1; margin-top: 10px; text-align: center;
-    color: #6a7e6a; font-family: 'Lora', serif; font-size: 11px;
+    position: relative; z-index: 1; margin-top: 14px; text-align: center;
+    color: #c8d8c0; font-family: 'Lora', serif; font-size: 14px;
   }
-  .footer a { color: #6a7e6a; text-decoration: none; margin: 0 6px; transition: color 0.2s; }
-  .footer a:hover { color: #a8bca0; }
-  .footer .copy { margin-top: 3px; opacity: 0.85; }
+  .footer a { color: #e8b84b; text-decoration: none; margin: 0 10px; font-weight: 600; transition: color 0.2s; }
+  .footer a:hover { color: #fff; }
+  .footer .copy { margin-top: 6px; font-size: 12px; color: #9ab090; }
 
   @media (max-width: 500px) {
     body { padding: 10px 10px 6px; }
@@ -155,16 +127,6 @@
 </head>
 <body>
 <div class="overlay"></div>
-
-<nav>
-  <a href="/" class="nav-logo"><img src="/images/wd.png" alt="WildDeals" /> WildDeals</a>
-  <div class="nav-links">
-    <a href="/">Home</a>
-    <a href="/shop">Shop</a>
-    <a href="/contact">Contact</a>
-    <a href="/#signup" class="nav-cta">Coming Soon</a>
-  </div>
-</nav>
 
 <div class="card">
   <div class="logo-banner">
