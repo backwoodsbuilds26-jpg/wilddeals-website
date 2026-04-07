@@ -1052,28 +1052,29 @@
     }
     subLoading.style.display = 'none';
 
-    // Load history from Firestore
+    // Load history via backend (Firestore rules block direct client reads)
     const histLoading = document.getElementById('nl-history-loading');
     histLoading.style.display = 'block';
     try {
-      const histSnap = await getDocs(query(collection(db, 'newsletter_history'), orderBy('sentAt', 'desc')));
-      const history = histSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const histRes = await adminFetch(`${API_URL}/api/newsletter-history`);
+      const histData = await histRes.json();
+      const history = histData.history || [];
       const htbody = document.getElementById('nl-history-table');
       htbody.innerHTML = history.length === 0
         ? '<tr><td colspan="4" style="text-align:center;color:#888;padding:20px">No newsletters sent yet.</td></tr>'
         : history.map(h => {
-          const date = h.sentAt?.toDate ? h.sentAt.toDate().toLocaleString() : (h.sentAt || '-');
+          const date = h.sentAt ? new Date(h.sentAt).toLocaleString() : '-';
           return `<tr>
-            <td>${date}</td>
-            <td><span class="badge badge-green">${(h.template || '-').replace(/_/g, ' ')}</span></td>
-            <td>${h.subject || '-'}</td>
-            <td>${h.recipientCount ?? '-'}</td>
+            <td>${esc(date)}</td>
+            <td><span class="badge badge-green">${esc((h.template || '-').replace(/_/g, ' '))}</span></td>
+            <td>${esc(h.subject || '-')}</td>
+            <td>${esc(h.recipientCount ?? '-')}</td>
           </tr>`;
         }).join('');
-      const totalSent = history.reduce((sum, h) => sum + (h.recipientCount || 0), 0);
-      document.getElementById('nl-stat-sent').textContent = totalSent || history.length;
+      document.getElementById('nl-stat-sent').textContent = histData.totalSent ?? 0;
     } catch (e) {
       console.error('Newsletter history error:', e);
+      document.getElementById('nl-stat-sent').textContent = '0';
     }
     histLoading.style.display = 'none';
   }
