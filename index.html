@@ -503,18 +503,12 @@
     </div>
   </section>
 
-  <section class="deals">
+  <section class="deals" style="text-align:center;padding:80px 40px;">
     <div class="deals-inner">
-      <div class="deals-header">
-        <div>
-          <div class="section-label">Live Deals</div>
-          <div class="section-title" style="margin-bottom:0">Top deals right now</div>
-        </div>
-        <button id="refresh-deals-btn" class="view-all-btn" style="background:none;border:2px solid #e8b84b;color:#e8b84b;cursor:pointer;font-weight:700;padding:8px 18px;border-radius:8px;">🔄 Show me 6 more</button>
-      </div>
-      <div class="deal-cards" id="live-deals">
-        <div class="deal-loading">Loading live deals...</div>
-      </div>
+      <div class="section-label" style="justify-content:center;">Shop Now</div>
+      <div class="section-title" style="text-align:center;">Hand-picked outdoor gear deals</div>
+      <p style="color:rgba(255,255,255,0.6);font-size:17px;max-width:560px;margin:16px auto 32px;">Browse curated camping, hiking, fishing, hunting, and outdoor deals from Amazon Canada and the US — updated regularly.</p>
+      <a href="/shop" class="btn-primary" style="display:inline-flex;">Browse the Shop &#8594;</a>
     </div>
   </section>
 
@@ -589,74 +583,6 @@
     });
   </script>
 
-  <!-- Firebase Live Deals -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const app = initializeApp({
-      apiKey: "AIzaSyD9camycSTUupt53zINg2g4Xf0HPGJQweE",
-      authDomain: "wilddeals-b8ba1.firebaseapp.com",
-      projectId: "wilddeals-b8ba1"
-    });
-    const db = getFirestore(app);
-
-    function createDealCard(deal) {
-      const discount = deal.discount ? parseInt(String(deal.discount).replace('%','')) : (deal.priceWas > 0 ? Math.round(((deal.priceWas - deal.priceNow) / deal.priceWas) * 100) : 0);
-      const imageHTML = deal.image
-        ? '<img src="' + deal.image + '" alt="' + (deal.name || '').replace(/"/g, '&quot;') + '" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=deal-emoji-fallback>' + (deal.emoji || '&#127991;') + '</div>\'" />'
-        : '<div class="deal-emoji-fallback">' + (deal.emoji || '&#127991;') + '</div>';
-      return '<div class="deal-card">' +
-        '<div class="deal-card-img">' + imageHTML + '</div>' +
-        '<div class="deal-card-body">' +
-          '<span class="deal-badge">-' + discount + '% OFF</span>' +
-          '<div class="deal-name">' + (deal.name || 'Outdoor Deal') + '</div>' +
-          '<div class="deal-store">' + (deal.store || '') + '</div>' +
-          '<div class="deal-prices">' +
-            '<div class="deal-now">$' + (deal.priceNow != null ? Number(deal.priceNow).toFixed(2) : '--') + '</div>' +
-            '<div class="deal-was">$' + (deal.priceWas != null ? Number(deal.priceWas).toFixed(2) : '--') + '</div>' +
-          '</div>' +
-          '<a href="' + (deal.url || '#') + '" target="_blank" rel="noopener" class="deal-view-btn">View Deal &#8594;</a>' +
-        '</div></div>';
-    }
-
-    let featuredOffset = 0;
-    let featuredTotal = 0;
-    async function loadDeals(opts) {
-      opts = opts || {};
-      const container = document.getElementById('live-deals');
-      const btn = document.getElementById('refresh-deals-btn');
-      if (opts.first) container.innerHTML = '<div class="deal-loading">Loading live deals...</div>';
-      if (btn) { btn.disabled = true; }
-      try {
-        const url = 'https://wilddeals-production.up.railway.app/api/featured-deals?offset=' + featuredOffset + '&limit=6';
-        const r = await fetch(url);
-        const data = await r.json();
-        if (!data.deals || data.deals.length === 0) {
-          if (featuredOffset === 0) {
-            container.innerHTML = '<div class="deal-loading">No deals available right now. Check back soon.</div>';
-          } else {
-            // Reached end — wrap around
-            featuredOffset = 0;
-            return loadDeals();
-          }
-          return;
-        }
-        featuredTotal = data.total || 0;
-        container.innerHTML = data.deals.map(createDealCard).join('');
-        // Advance offset for next click; wrap at total
-        featuredOffset += 6;
-        if (featuredOffset >= featuredTotal) featuredOffset = 0;
-      } catch (err) {
-        console.error('Error loading deals:', err);
-        container.innerHTML = '<div class="deal-loading">Unable to load deals right now.</div>';
-      } finally {
-        if (btn) { btn.disabled = false; }
-      }
-    }
-    document.getElementById('refresh-deals-btn').addEventListener('click', function() { loadDeals(); });
-    loadDeals({ first: true });
-  </script>
 
   <!-- Signup Form -->
   <script>
