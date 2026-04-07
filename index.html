@@ -664,7 +664,7 @@
         // (backend has dedupe + rate limiting). Re-enable strict mode once key is stable.
         try {
           if (typeof grecaptcha !== 'undefined' && grecaptcha.execute) {
-            var token = await grecaptcha.execute('6LfamqcsAAAAD5o9slSmCpOzVk3KCyblc8dezG8', { action: 'signup' });
+            var token = await grecaptcha.execute('6LfamqcsAAAAD5o9slSmCpOzVk3KCybIc8dezG8', { action: 'signup' });
             await fetch('https://wilddeals-production.up.railway.app/api/verify-recaptcha', {
               method: 'POST', headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ token: token })
@@ -755,7 +755,7 @@
   </script>
 
   <script type="text/javascript" src="https://s.skimresources.com/js/301040X1788941.skimlinks.js"></script>
-  <script src="https://www.google.com/recaptcha/api.js?render=6LfamqcsAAAAD5o9slSmCpOzVk3KCyblc8dezG8"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LfamqcsAAAAD5o9slSmCpOzVk3KCybIc8dezG8"></script>
 
 </body>
 </html>
