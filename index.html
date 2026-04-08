@@ -201,10 +201,12 @@
 
   .phone-wrap { display: flex; justify-content: center; perspective: 1500px; }
   .phone-img {
-    width: 320px; max-width: 100%;
-    filter: drop-shadow(0 50px 80px rgba(20,42,31,0.35)) drop-shadow(0 20px 40px rgba(20,42,31,0.25));
+    width: 320px; max-width: 100%; height: auto;
+    filter: drop-shadow(0 30px 50px rgba(20,42,31,0.32));
     transform: rotateY(-8deg) rotateX(2deg);
     transition: transform 0.6s ease;
+    will-change: transform;
+    -webkit-transform: rotateY(-8deg) rotateX(2deg);
   }
   .phone-img:hover { transform: rotateY(-4deg) rotateX(0deg); }
   @media (max-width: 880px) { .phone-img { transform: none; width: 280px; } }
@@ -415,7 +417,11 @@
         </div>
 
         <div class="phone-wrap reveal">
-          <img class="phone-img" src="/images/intro-phone.png" alt="WildDeals app showing today's deals" />
+          <picture>
+            <source media="(max-width: 880px)" type="image/webp" srcset="/images/intro-phone-sm.webp" />
+            <source type="image/webp" srcset="/images/intro-phone.webp" />
+            <img class="phone-img" src="/images/intro-phone.png" alt="WildDeals app showing today's deals" width="700" height="1050" loading="lazy" decoding="async" />
+          </picture>
         </div>
       </div>
     </div>
