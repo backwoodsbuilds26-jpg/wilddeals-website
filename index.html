@@ -175,6 +175,14 @@
   .feature-list p { font-size: 14px; color: var(--muted); margin: 0; }
 
   .phone-wrap { display: flex; justify-content: center; perspective: 1500px; }
+  .phone-img {
+    width: 320px; max-width: 100%;
+    filter: drop-shadow(0 50px 80px rgba(20,42,31,0.35)) drop-shadow(0 20px 40px rgba(20,42,31,0.25));
+    transform: rotateY(-8deg) rotateX(2deg);
+    transition: transform 0.6s ease;
+  }
+  .phone-img:hover { transform: rotateY(-4deg) rotateX(0deg); }
+  @media (max-width: 880px) { .phone-img { transform: none; width: 280px; } }
   .phone {
     width: 280px; height: 580px; background: #0a1610;
     border-radius: 38px; padding: 10px;
@@ -382,53 +390,7 @@
         </div>
 
         <div class="phone-wrap reveal">
-          <div class="phone">
-            <div class="phone-screen">
-              <div class="phone-status"><span>9:41</span><span>●●●</span></div>
-              <div class="phone-header">
-                <div class="greeting">Today</div>
-                <h4>3 new deals near you</h4>
-              </div>
-              <div class="phone-deals">
-                <div class="phone-deal">
-                  <div class="phone-deal-row">
-                    <span class="phone-deal-store">MEC</span>
-                    <span class="phone-deal-badge">−42%</span>
-                  </div>
-                  <div class="phone-deal-title">MSR Hubba Hubba 2P Tent</div>
-                  <div class="phone-deal-prices">
-                    <span class="phone-deal-now">$279</span>
-                    <span class="phone-deal-was">$479</span>
-                  </div>
-                </div>
-                <div class="phone-deal">
-                  <div class="phone-deal-row">
-                    <span class="phone-deal-store">Sail</span>
-                    <span class="phone-deal-badge">−30%</span>
-                  </div>
-                  <div class="phone-deal-title">Salomon X Ultra 4 Hiker</div>
-                  <div class="phone-deal-prices">
-                    <span class="phone-deal-now">$139</span>
-                    <span class="phone-deal-was">$199</span>
-                  </div>
-                </div>
-                <div class="phone-deal">
-                  <div class="phone-deal-row">
-                    <span class="phone-deal-store">Cabela's</span>
-                    <span class="phone-deal-badge">−25%</span>
-                  </div>
-                  <div class="phone-deal-title">Shimano Stradic Spinning Reel</div>
-                  <div class="phone-deal-prices">
-                    <span class="phone-deal-now">$179</span>
-                    <span class="phone-deal-was">$239</span>
-                  </div>
-                </div>
-              </div>
-              <div class="phone-tab">
-                <span>Feed</span><span>Saved</span><span>Alerts</span><span>You</span>
-              </div>
-            </div>
-          </div>
+          <img class="phone-img" src="https://raw.githubusercontent.com/backwoodsbuilds26-jpg/wilddeals-website/main/images/intro-phone.png" alt="WildDeals app showing today's deals" />
         </div>
       </div>
     </div>
