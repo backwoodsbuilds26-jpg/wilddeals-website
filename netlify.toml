@@ -59,6 +59,13 @@
     Cross-Origin-Resource-Policy = "cross-origin"
     Access-Control-Allow-Origin = "*"
 
+# ── Redirect /home to root (consolidated landing page) ──
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+  force = true
+
 # ── Redirect www to apex ──
 [[redirects]]
   from = "https://www.wilddeals.ca/*"

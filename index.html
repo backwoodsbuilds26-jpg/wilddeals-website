@@ -380,29 +380,7 @@
     .founder { flex-direction: column; text-align: center; }
   }
 
-  /* Click-to-enter hint */
-  .enter-hint {
-    position: fixed; bottom: 28px; right: 28px; z-index: 50;
-    padding: 12px 20px;
-    background: rgba(20,42,31,0.85);
-    color: var(--cream);
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    border-radius: 100px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(199,154,58,0.3);
-    box-shadow: 0 8px 24px rgba(20,42,31,0.25);
-    pointer-events: none;
-    opacity: 0;
-    animation: hintFade 0.8s ease-out 1.4s forwards, hintBob 3s ease-in-out 2.2s infinite;
-  }
-  @keyframes hintFade { to { opacity: 1; } }
-  @keyframes hintBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 
-  @media (max-width: 880px) {
-    .enter-hint { bottom: 18px; right: 18px; padding: 10px 16px; font-size: 10px; }
-  }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -519,16 +497,8 @@
     <div>© 2026 WildDeals · Made in Canada</div>
   </footer>
 
-  <div class="enter-hint" id="enter-hint">Click anywhere to enter →</div>
 
 <script>
-  // ── Skip splash if already seen this session ──
-  try {
-    if (sessionStorage.getItem('wd-splash-seen') === '1') {
-      window.location.replace('/home');
-    }
-  } catch (_) { /* private mode — just show splash */ }
-
   // ── Slow auto-scroll ──────────────────────────
   // Gently scrolls the user down the page until they interact.
   // Pauses on user scroll/touch/click, resumes after 8s of inactivity.
@@ -562,23 +532,6 @@
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
-  })();
-
-  // ── Click-anywhere-to-enter ──────────────────
-  // Any click outside the signup form takes the user to the main site.
-  (function() {
-    const ENTER_URL = '/home';   // change to wherever the "real" homepage lives
-    document.addEventListener('click', function(e) {
-      // Don't intercept clicks inside the signup form, the CTA button, or any link
-      if (e.target.closest('#notify-form')) return;
-      if (e.target.closest('a')) return;             // existing links handle themselves
-      if (e.target.closest('button')) return;
-      // Hide the floating hint immediately
-      const hint = document.getElementById('enter-hint');
-      if (hint) hint.style.display = 'none';
-      try { sessionStorage.setItem('wd-splash-seen', '1'); } catch (_) {}
-      window.location.href = ENTER_URL;
-    });
   })();
 
   if ('IntersectionObserver' in window) {
