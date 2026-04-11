@@ -83,6 +83,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.googletagmanager.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -144,14 +145,23 @@
     .nav-brand { font-size: 20px; gap: 12px; }
     .nav-brand img { width: 56px; height: 56px; }
   }
-  .nav-status {
-    color: rgba(246,244,238,0.7); font-size: 12px; font-weight: 400;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    display: flex; align-items: center; gap: 8px;
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a {
+    color: rgba(246,244,238,0.65); font-size: 13px; font-weight: 400;
+    letter-spacing: 0.06em; text-decoration: none; transition: color 0.2s;
   }
-  .nav-status::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--gold); box-shadow: 0 0 0 4px rgba(199,154,58,0.18);
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold); color: var(--forest); padding: 10px 22px;
+    border-radius: 2px; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: #d8a946; transform: translateY(-1px); }
+  @media (max-width: 680px) {
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 11px; }
+    .nav-cta { padding: 8px 14px; font-size: 10px; }
   }
 
   /* Hero */
@@ -309,6 +319,40 @@
   .stat-num { font-size: 40px; font-weight: 300; color: var(--gold); letter-spacing: -0.02em; }
   .stat-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,244,238,0.55); margin-top: 6px; }
 
+  /* Shop Amazon */
+  .shop { padding: 80px 0; background: var(--cream); border-top: 1px solid var(--line); }
+  .shop-inner { max-width: 560px; margin: 0 auto; text-align: center; padding: 0 32px; }
+  .shop .label { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .shop h2 { font-size: clamp(26px, 3vw, 36px); font-weight: 300; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .shop h2 em { font-style: normal; font-weight: 500; }
+  .shop > .shop-inner > p { font-size: 15px; color: var(--muted); margin-bottom: 32px; }
+  .shop-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 28px; margin-bottom: 12px; border-radius: 2px;
+    text-decoration: none; border: none;
+    background: var(--gold); color: var(--forest);
+    box-shadow: 0 4px 16px rgba(199,154,58,0.2);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .shop-btn:hover { background: #d8a946; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(199,154,58,0.3); }
+  .shop-btn-left { display: flex; align-items: center; gap: 12px; }
+  .shop-btn-flag { font-size: 22px; line-height: 1; }
+  .shop-btn-label { font-size: 16px; font-weight: 600; letter-spacing: 0.02em; }
+  .shop-btn-arrow { font-size: 22px; font-weight: 500; opacity: 0.7; }
+  .shop-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+  .shop-cat {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; padding: 14px 8px; border-radius: 4px; text-decoration: none;
+    background: var(--cream-2); border: 1px solid var(--line);
+    color: var(--forest); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .shop-cat:hover { border-color: var(--gold); background: rgba(199,154,58,0.08); }
+  .shop-cat-icon { font-size: 22px; line-height: 1; }
+  .shop-more { display: inline-block; margin-top: 20px; color: var(--gold); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-decoration: none; border-bottom: 1px solid rgba(199,154,58,0.3); padding-bottom: 2px; }
+  .shop-more:hover { color: var(--forest); border-color: var(--forest); }
+  @media (max-width: 480px) { .shop-cats { grid-template-columns: 1fr 1fr; } }
+
   /* Notify */
   .notify { padding: 90px 0 56px; background: var(--cream); position: relative; }
   .notify-inner { max-width: 600px; margin: 0 auto; text-align: center; padding: 0 32px; }
@@ -357,9 +401,21 @@
   .founder-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
   .founder-text strong { color: var(--forest); font-weight: 500; }
 
-  footer { background: var(--forest); color: rgba(246,244,238,0.55); padding: 18px 0; text-align: center; font-size: 11px; letter-spacing: 0.05em; }
-  footer .footer-brand { color: var(--cream); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px; }
-  footer .footer-brand .dot { color: var(--gold); }
+  footer { background: var(--forest); color: rgba(246,244,238,0.55); padding: 48px 0 24px; font-size: 13px; }
+  .footer-inner { max-width: 1120px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+  .footer-brand-block { }
+  .footer-logo { display: flex; align-items: center; gap: 10px; color: var(--cream); font-size: 16px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .footer-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .footer-logo .dot { color: var(--gold); }
+  .footer-tagline { font-size: 13px; color: rgba(246,244,238,0.45); line-height: 1.6; max-width: 320px; }
+  .footer-col h4 { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .footer-col a { display: block; color: rgba(246,244,238,0.55); text-decoration: none; font-size: 13px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom { max-width: 1120px; margin: 0 auto; padding: 24px 32px 0; margin-top: 32px; border-top: 1px solid rgba(246,244,238,0.08); text-align: center; font-size: 11px; letter-spacing: 0.05em; }
+  @media (max-width: 680px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 28px; text-align: center; }
+    .footer-tagline { margin: 0 auto; }
+  }
 
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1s ease-out, transform 1s ease-out; }
   .reveal.in { opacity: 1; transform: translateY(0); }
@@ -382,6 +438,27 @@
 
 
 
+  /* Cookie banner */
+  .cookie-banner {
+    display: none; position: fixed; bottom: 20px; left: 20px; z-index: 100;
+    max-width: 380px; padding: 20px 24px;
+    background: var(--forest); color: rgba(246,244,238,0.7);
+    border: 1px solid rgba(199,154,58,0.15); border-radius: 4px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    font-size: 13px; line-height: 1.5;
+  }
+  .cookie-banner p { margin-bottom: 14px; }
+  .cookie-banner a { color: var(--gold); }
+  .cookie-btns { display: flex; gap: 10px; }
+  .cookie-btns button {
+    padding: 8px 18px; border: none; border-radius: 2px;
+    font-family: inherit; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.06em; cursor: pointer; transition: opacity 0.2s;
+  }
+  .cookie-accept { background: var(--gold); color: var(--forest); }
+  .cookie-decline { background: rgba(246,244,238,0.1); color: rgba(246,244,238,0.6); }
+  .cookie-btns button:hover { opacity: 0.85; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
@@ -396,6 +473,12 @@
         <span>Wild<span class="dot">·</span>Deals</span>
         <span class="nav-brand-sub">Launching Spring 2026</span>
       </div>
+    </div>
+    <div class="nav-links">
+      <a href="/shop">Shop</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="#notify" class="nav-cta">Get Early Access</a>
     </div>
   </nav>
 
@@ -460,9 +543,34 @@
       <div class="stats-grid">
         <div><div class="stat-num">40+</div><div class="stat-label">Retailers</div></div>
         <div><div class="stat-num">24h</div><div class="stat-label">Refresh cycle</div></div>
-        <div><div class="stat-num">100</div><div class="stat-label">Free Pro spots</div></div>
+        <div><div class="stat-num">500</div><div class="stat-label">Free Pro spots</div></div>
         <div><div class="stat-num">$0</div><div class="stat-label">To get started</div></div>
       </div>
+    </div>
+  </section>
+
+  <section class="shop reveal">
+    <div class="shop-inner">
+      <div class="label">Shop Now</div>
+      <h2>Hand-picked <em>outdoor gear</em> deals</h2>
+      <p>Camping, hiking, fishing, hunting, and outdoor deals from Amazon Canada and the US.</p>
+      <a class="shop-btn" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored">
+        <span class="shop-btn-left"><span class="shop-btn-flag">🇨🇦</span><span class="shop-btn-label">Shop Amazon.ca</span></span>
+        <span class="shop-btn-arrow">→</span>
+      </a>
+      <a class="shop-btn" href="https://amzn.to/4sri85W" target="_blank" rel="noopener sponsored">
+        <span class="shop-btn-left"><span class="shop-btn-flag">🇺🇸</span><span class="shop-btn-label">Shop Amazon.com</span></span>
+        <span class="shop-btn-arrow">→</span>
+      </a>
+      <div class="shop-cats">
+        <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">⛺</span>Camping</a>
+        <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">🎣</span>Fishing</a>
+        <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">🦌</span>Hunting</a>
+        <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">🥾</span>Hiking</a>
+        <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">🔪</span>Survival</a>
+        <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">❄️</span>Winter</a>
+      </div>
+      <a href="/shop" class="shop-more">See all categories on the Shop page →</a>
     </div>
   </section>
 
@@ -482,6 +590,7 @@
         <button type="submit">Notify Me</button>
       </form>
       <div class="notify-success" id="notify-success">🎉 You're in. Check your inbox.</div>
+      <div class="subscriber-count" id="subscriber-count" style="font-size:13px;color:var(--gold);letter-spacing:0.08em;margin-bottom:28px;"></div>
 
       <div class="founder">
         <div class="founder-portrait">JP</div>
@@ -492,9 +601,36 @@
     </div>
   </section>
 
+  <div class="cookie-banner" id="cookie-banner">
+    <p>We use cookies for analytics to understand how visitors use our site. <a href="/privacy">Privacy Policy</a></p>
+    <div class="cookie-btns">
+      <button class="cookie-accept" onclick="acceptCookies()">Accept</button>
+      <button class="cookie-decline" onclick="declineCookies()">Decline</button>
+    </div>
+  </div>
+
   <footer>
-    <div class="footer-brand">Wild<span class="dot">·</span>Deals</div>
-    <div>© 2026 WildDeals · Made in Canada</div>
+    <div class="footer-inner">
+      <div class="footer-brand-block">
+        <div class="footer-logo"><img src="/images/wd-cropped.png" alt="WildDeals" loading="lazy" /> Wild<span class="dot">·</span>Deals</div>
+        <div class="footer-tagline">Canada's outdoor gear deal hunter. Tracking the best discounts from top retailers so you never pay full price.</div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/shop">Shop</a>
+        <a href="/deals">Deals</a>
+        <a href="#notify">Get Early Access</a>
+        <a href="/media-kit">Media Kit</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 WildDeals · Made in Canada</div>
   </footer>
 
 
@@ -592,6 +728,38 @@
       alert('Something went wrong — please try again.');
     }
   });
+
+  // Cookie consent + GA4
+  (function() { if (!localStorage.getItem('cookie_consent')) { document.getElementById('cookie-banner').style.display = 'block'; } })();
+  function acceptCookies() { localStorage.setItem('cookie_consent', 'accepted'); document.getElementById('cookie-banner').style.display = 'none'; if (typeof loadGA4 === 'function') loadGA4(); }
+  function declineCookies() { localStorage.setItem('cookie_consent', 'declined'); document.getElementById('cookie-banner').style.display = 'none'; }
+  function loadGA4() {
+    if (document.getElementById('ga4-script')) return;
+    var s = document.createElement('script'); s.id = 'ga4-script'; s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EG7RPF2LYX';
+    document.head.appendChild(s);
+    s.onload = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); } window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-EG7RPF2LYX', { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
+    };
+  }
+  if (localStorage.getItem('cookie_consent') === 'accepted') { loadGA4(); }
+
+  // Load subscriber count for urgency
+  (async function() {
+    try {
+      var res = await fetch('https://wilddeals-production.up.railway.app/api/newsletter-stats');
+      if (res.ok) {
+        var data = await res.json();
+        var el = document.getElementById('subscriber-count');
+        if (data.first100Remaining > 0 && el) {
+          el.textContent = data.first100Remaining + ' of 500 free Pro spots remaining';
+        }
+      }
+    } catch (e) {}
+  })();
 </script>
 
 </body>
