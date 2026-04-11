@@ -116,7 +116,20 @@
 </head>
 <body>
 
-  <div class="print-btn-bar no-print">
+  <nav class="no-print" style="position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(12,26,18,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(199,154,58,0.12);">
+    <a href="/" style="display:flex;align-items:center;gap:10px;color:#f6f4ee;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;">
+      <img src="/images/wd-cropped.png" alt="WildDeals" style="width:36px;height:36px;object-fit:contain;" />
+      Wild<span style="color:#c79a3a;">·</span>Deals
+    </a>
+    <div style="display:flex;align-items:center;gap:24px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;">
+      <a href="/shop" style="color:rgba(246,244,238,0.6);text-decoration:none;font-size:13px;font-weight:400;">Shop</a>
+      <a href="/about" style="color:rgba(246,244,238,0.6);text-decoration:none;font-size:13px;font-weight:400;">About</a>
+      <a href="/contact" style="color:rgba(246,244,238,0.6);text-decoration:none;font-size:13px;font-weight:400;">Contact</a>
+      <a href="/" style="background:#c79a3a;color:#142a1f;padding:8px 18px;border-radius:2px;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;">Home</a>
+    </div>
+  </nav>
+
+  <div class="print-btn-bar no-print" style="margin-top:56px;">
     <button onclick="window.print()">Save as PDF</button>
     <span>Use your browser's print dialog to save as PDF</span>
   </div>
