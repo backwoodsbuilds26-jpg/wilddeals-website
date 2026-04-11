@@ -136,7 +136,7 @@
     <h1 class="headline">Outdoor Gear Deals</h1>
     <p class="subtext">Hand-picked Amazon finds for the wild at heart.</p>
 
-    <a class="amazon-btn-wrap" href="https://www.amazon.ca/?tag=wilddeals0e-20" target="_blank" rel="noopener sponsored">
+    <a class="amazon-btn-wrap" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored">
       <div class="amazon-btn-inner">
         <div class="btn-left">
           <span class="btn-flag">🇨🇦</span>
@@ -145,7 +145,7 @@
         <span class="btn-arrow">›</span>
       </div>
     </a>
-    <a class="amazon-btn-wrap" href="https://www.amazon.com/?tag=wilddeals03-20" target="_blank" rel="noopener sponsored">
+    <a class="amazon-btn-wrap" href="https://amzn.to/4sri85W" target="_blank" rel="noopener sponsored">
       <div class="amazon-btn-inner">
         <div class="btn-left">
           <span class="btn-flag">🇺🇸</span>
@@ -198,11 +198,9 @@
 <script>
   function setCountry(c) {
     const isCA = c === 'ca';
-    const host = isCA ? 'amazon.ca' : 'amazon.com';
-    const tag = isCA ? 'wilddeals0e-20' : 'wilddeals03-20';
+    const link = isCA ? 'https://amzn.to/4mwIAtS' : 'https://amzn.to/4sri85W';
     document.querySelectorAll('.cat-link').forEach(a => {
-      const q = a.dataset.q;
-      a.href = `https://www.${host}/s?k=${q}&tag=${tag}`;
+      a.href = link;
       a.target = '_blank';
       a.rel = 'noopener sponsored';
     });
