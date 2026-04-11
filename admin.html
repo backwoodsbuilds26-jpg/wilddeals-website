@@ -332,7 +332,7 @@
       <h3 style="color:#1a3a2a;margin-bottom:12px">Newsletter History</h3>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Date Sent</th><th>Template Type</th><th>Subject</th><th>Recipients Count</th></tr></thead>
+          <thead><tr><th>Date Sent</th><th>Template Type</th><th>Subject</th><th>Recipients</th><th>Actions</th></tr></thead>
           <tbody id="nl-history-table"></tbody>
         </table>
       </div>
@@ -1082,16 +1082,19 @@
       const history = histData.history || [];
       const htbody = document.getElementById('nl-history-table');
       htbody.innerHTML = history.length === 0
-        ? '<tr><td colspan="4" style="text-align:center;color:#888;padding:20px">No newsletters sent yet.</td></tr>'
-        : history.map(h => {
+        ? '<tr><td colspan="5" style="text-align:center;color:#888;padding:20px">No newsletters sent yet.</td></tr>'
+        : history.map((h, i) => {
           const date = h.sentAt ? new Date(h.sentAt).toLocaleString() : '-';
           return `<tr>
             <td>${esc(date)}</td>
             <td><span class="badge badge-green">${esc((h.template || '-').replace(/_/g, ' '))}</span></td>
             <td>${esc(h.subject || '-')}</td>
             <td>${esc(h.recipientCount ?? '-')}</td>
+            <td>${h.html ? `<button class="btn btn-sm" onclick="viewPastNewsletter(${i})" style="background:#1a3a2a;color:#fff;font-size:11px;padding:4px 10px;">View</button>` : '<span style="color:#aaa;font-size:11px">N/A</span>'}</td>
           </tr>`;
         }).join('');
+      // Store history globally so View buttons can access the HTML
+      window._nlHistory = history;
       document.getElementById('nl-stat-sent').textContent = histData.totalSent ?? 0;
     } catch (e) {
       console.error('Newsletter history error:', e);
@@ -1099,6 +1102,20 @@
     }
     histLoading.style.display = 'none';
   }
+
+  window.viewPastNewsletter = function(index) {
+    const h = window._nlHistory && window._nlHistory[index];
+    if (!h || !h.html) return alert('No email content saved for this send.');
+    const previewArea = document.getElementById('nl-preview-area');
+    const previewContent = document.getElementById('nl-preview-content');
+    previewContent.innerHTML = `<div style="margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #ddd;">
+      <strong style="color:#1a3a2a;">Subject:</strong> ${esc(h.subject || '-')}<br>
+      <strong style="color:#1a3a2a;">Sent:</strong> ${h.sentAt ? new Date(h.sentAt).toLocaleString() : '-'} &nbsp;·&nbsp;
+      <strong style="color:#1a3a2a;">Recipients:</strong> ${h.recipientCount ?? '-'}
+    </div><iframe srcdoc="${h.html.replace(/"/g, '&quot;')}" style="width:100%;min-height:600px;border:none;border-radius:8px;"></iframe>`;
+    previewArea.style.display = 'block';
+    previewArea.scrollIntoView({ behavior: 'smooth' });
+  };
 
   window.previewNewsletter = async function() {
     const template = document.getElementById('nl-template').value;
