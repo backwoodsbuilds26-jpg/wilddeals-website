@@ -242,7 +242,7 @@
       <!-- Stats -->
       <div class="stats-grid" id="nl-stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
         <div class="stat-card"><div class="stat-value" id="nl-stat-subscribers">-</div><div class="stat-label">Total Subscribers</div></div>
-        <div class="stat-card"><div class="stat-value" id="nl-stat-first100">-</div><div class="stat-label">First 100 Spots Left</div></div>
+        <div class="stat-card"><div class="stat-value" id="nl-stat-first100">-</div><div class="stat-label">First 500 Spots Left</div></div>
         <div class="stat-card"><div class="stat-value" id="nl-stat-sent">-</div><div class="stat-label">Emails Sent</div></div>
         <div class="stat-card"><div class="stat-value" id="nl-stat-latest">-</div><div class="stat-label">Latest Signup</div></div>
       </div>
@@ -254,7 +254,7 @@
       </div>
       <div class="table-wrap" style="margin-bottom:24px">
         <table>
-          <thead><tr><th>#</th><th>Email</th><th>Subscribed Date</th><th>First 100?</th><th>Promo Code</th><th>Actions</th></tr></thead>
+          <thead><tr><th>#</th><th>Email</th><th>Subscribed Date</th><th>First 500?</th><th>Promo Code</th><th>Actions</th></tr></thead>
           <tbody id="nl-subscribers-table"></tbody>
         </table>
         <div id="nl-subscriber-count" style="padding:12px 16px;color:#888;font-size:13px;border-top:1px solid #f0f0f0;"></div>
@@ -1288,7 +1288,7 @@
 
   window.exportSubscribers = function() {
     if (nlSubscribersList.length === 0) { alert('No subscribers to export.'); return; }
-    const header = 'Number,Email,Subscribed Date,First 100,Promo Code\n';
+    const header = 'Number,Email,Subscribed Date,First 500,Promo Code\n';
     const rows = nlSubscribersList.map(s => {
       const date = s.subscribedAt?.toDate ? s.subscribedAt.toDate().toISOString() : (s.subscribedAt || '');
       return `${s.subscriberNumber},"${s.email}","${date}",${s.isFirst100 ? 'Yes' : 'No'},"${s.promoCode || ''}"`;
