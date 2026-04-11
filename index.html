@@ -31,6 +31,56 @@
 <!-- Theme color (mobile browser chrome) -->
 <meta name="theme-color" content="#142a1f" />
 
+<!-- Schema.org structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://wilddeals.ca/#organization",
+      "name": "WildDeals",
+      "url": "https://wilddeals.ca/",
+      "logo": "https://wilddeals.ca/images/wd-cropped.png",
+      "description": "Canada's outdoor gear deals app — tracking the best prices on camping, fishing, hiking, and hunting gear.",
+      "foundingDate": "2026",
+      "founder": { "@type": "Person", "name": "Jeff Parr" },
+      "areaServed": { "@type": "Country", "name": "Canada" },
+      "sameAs": ["https://www.youtube.com/@BackwoodsBuilds"]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "WildDeals",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "ShoppingApplication",
+      "description": "WildDeals tracks the best Canadian outdoor gear discounts — camping, fishing, hiking, hunting — all in one app. Live price drops, smart alerts, and gear wishlists from 40+ retailers.",
+      "url": "https://wilddeals.ca/",
+      "image": "https://wilddeals.ca/images/wd-cropped.png",
+      "author": { "@id": "https://wilddeals.ca/#organization" },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CAD",
+        "description": "Free to download. Pro tier available at $4/month."
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "12",
+        "bestRating": "5"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://wilddeals.ca/#website",
+      "url": "https://wilddeals.ca/",
+      "name": "WildDeals",
+      "publisher": { "@id": "https://wilddeals.ca/#organization" }
+    }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
