@@ -81,10 +81,17 @@
 }
 </script>
 
+<!-- Preconnect to critical origins -->
+<link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://www.googletagmanager.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Preload hero image for fast LCP -->
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=75" fetchpriority="high">
+
+<!-- Non-blocking font load -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
 
 <style>
   :root {
@@ -169,12 +176,15 @@
     position: relative; min-height: 100vh;
     display: flex; align-items: center;
     background-color: #0e1f17;
-    background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=70');
-    background-size: cover; background-position: center;
     color: var(--cream); overflow: hidden;
   }
+  .hero-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    z-index: 0;
+  }
   .hero::before {
-    content: ''; position: absolute; inset: 0;
+    content: ''; position: absolute; inset: 0; z-index: 1;
     background: linear-gradient(180deg, rgba(14,31,23,0.55) 0%, rgba(14,31,23,0.35) 40%, rgba(14,31,23,0.92) 100%);
   }
   .hero-inner { position: relative; z-index: 2; max-width: 720px; padding: 0 40px; margin: 0 auto; width: 100%; text-align: left; }
@@ -182,21 +192,21 @@
     font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase;
     color: var(--gold); margin-bottom: 28px; font-weight: 500;
     text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    opacity: 0; animation: fadeUp 0.9s ease-out 0.2s forwards;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.05s forwards;
   }
   .hero h1 {
     font-size: clamp(40px, 6vw, 72px); font-weight: 300;
     line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px;
-    opacity: 0; animation: fadeUp 1.1s ease-out 0.4s forwards;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.1s forwards;
   }
   .hero h1 em { font-style: normal; font-weight: 500; color: var(--gold); }
   .hero p {
     font-size: 17px; color: rgba(246,244,238,0.78);
     max-width: 520px; margin-bottom: 40px; font-weight: 300;
-    opacity: 0; animation: fadeUp 1.1s ease-out 0.65s forwards;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.15s forwards;
   }
   .hero-form-wrap {
-    opacity: 0; animation: fadeUp 1.1s ease-out 0.85s forwards;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.2s forwards;
     max-width: 480px;
   }
   .hero-form { display: flex; gap: 10px; margin-bottom: 12px; }
@@ -491,7 +501,7 @@
 
   <nav class="nav">
     <div class="nav-brand">
-      <img src="https://raw.githubusercontent.com/backwoodsbuilds26-jpg/wilddeals-website/main/images/wd-cropped.png" alt="WildDeals logo" />
+      <img src="/images/wd-cropped.png" alt="WildDeals logo" width="72" height="72" />
       <div class="nav-brand-text">
         <span>Wild<span class="dot">·</span>Deals</span>
         <span class="nav-brand-sub">Launching Spring 2026</span>
@@ -506,6 +516,7 @@
   </nav>
 
   <section class="hero">
+    <img class="hero-bg" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=75" alt="" width="1400" height="933" fetchpriority="high" decoding="async" />
     <div class="hero-inner">
       <div class="hero-eyebrow">A New Way to Gear Up</div>
       <h1>Find the deal.<br/>Skip the <em>full price.</em></h1>
@@ -528,7 +539,7 @@
       <div class="preview-grid">
         <div class="preview-text reveal">
           <div class="section-mark">
-            <img src="https://raw.githubusercontent.com/backwoodsbuilds26-jpg/wilddeals-website/main/images/wd-cropped.png" alt="" />
+            <img src="/images/wd-cropped.png" alt="" width="36" height="36" loading="lazy" />
             <div class="label">The App</div>
           </div>
           <h2>Built for the<br/><em>backcountry buyer.</em></h2>
@@ -608,7 +619,7 @@
   <section class="notify" id="notify">
     <div class="notify-inner reveal">
       <div class="section-mark">
-        <img src="https://raw.githubusercontent.com/backwoodsbuilds26-jpg/wilddeals-website/main/images/wd-cropped.png" alt="" />
+        <img src="/images/wd-cropped.png" alt="" width="36" height="36" loading="lazy" />
         <div class="label">Early Access</div>
       </div>
       <h2>Get on the list.<br/>Skip the <em>line.</em></h2>
@@ -666,34 +677,33 @@
 
 
 <script>
-  // ── Slow auto-scroll ──────────────────────────
-  // Gently scrolls the user down the page until they interact.
-  // Pauses on user scroll/touch/click, resumes after 8s of inactivity.
-  // Stops entirely once the bottom is reached.
+  // ── Slow auto-scroll (performance-optimized) ──
+  // Gently scrolls on desktop only. Disabled on mobile to save battery/CPU.
   (function() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const SPEED = 1.16;          // pixels per frame (~70px/s @ 60fps)
-    const RESUME_AFTER = 8000;   // ms of inactivity before resuming
+    if (window.innerWidth < 768) return; // skip on mobile
+    const SPEED = 1.16;
+    const RESUME_AFTER = 8000;
     let running = true;
     let resumeTimer = null;
-    let lastY = window.scrollY;
+    let stopped = false;
 
     function pause() {
       running = false;
       clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => { running = true; lastY = window.scrollY; }, RESUME_AFTER);
+      resumeTimer = setTimeout(function() { running = true; }, RESUME_AFTER);
     }
 
-    // Pause on real user input only — not on our own programmatic scrolls
-    ['wheel','touchstart','keydown'].forEach(ev => window.addEventListener(ev, pause, { passive: true }));
+    ['wheel','touchstart','keydown'].forEach(function(ev) { window.addEventListener(ev, pause, { passive: true }); });
 
     function tick() {
+      if (stopped) return;
       if (running) {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
+        var max = document.documentElement.scrollHeight - window.innerHeight;
         if (window.scrollY < max - 1) {
-          const next = window.scrollY + SPEED;
-          window.scrollTo(0, next);
-          lastY = next;
+          window.scrollTo(0, window.scrollY + SPEED);
+        } else {
+          stopped = true; return;
         }
       }
       requestAnimationFrame(tick);
