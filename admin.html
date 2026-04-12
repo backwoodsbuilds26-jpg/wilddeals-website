@@ -264,12 +264,25 @@
       <div class="loading" id="nl-subscribers-loading">Loading subscribers...</div>
 
       <!-- Founding 100 Milestone Blast -->
-      <div style="background:linear-gradient(135deg,#1a3a2a,#244a34);border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div style="background:linear-gradient(135deg,#1a3a2a,#244a34);border-radius:12px;padding:20px 24px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
         <div>
           <div style="color:#e8b84b;font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:4px;">FOUNDING 100 MILESTONE EMAIL</div>
           <div style="color:rgba(255,255,255,0.7);font-size:13px;" id="founding100-status">Sends personalized email to all 100 founding members with their promo code.</div>
         </div>
         <button class="btn" id="founding100-btn" onclick="sendFounding100()" style="background:#e8b84b;color:#1a3a2a;font-weight:800;padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:13px;white-space:nowrap;">Send Founding 100 Email</button>
+      </div>
+
+      <!-- Upgrade Overflow to Lifetime -->
+      <div style="background:linear-gradient(135deg,#2a2a1a,#1a1a0a);border:1px solid rgba(232,184,75,0.3);border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="color:#e8b84b;font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:4px;">UPGRADE OVERFLOW TO LIFETIME</div>
+          <div style="color:rgba(255,255,255,0.7);font-size:13px;" id="upgrade-status">Upgrade subscribers who snuck past #100 to lifetime + send them a "you snuck in" email.</div>
+          <div style="margin-top:8px;">
+            <label style="color:rgba(255,255,255,0.5);font-size:12px;">Upgrade up to subscriber #</label>
+            <input type="number" id="upgrade-max" value="105" min="101" max="200" style="width:70px;padding:4px 8px;border:1px solid rgba(232,184,75,0.3);border-radius:6px;background:#0c1a12;color:#e8b84b;font-weight:700;font-size:14px;margin-left:6px;" />
+          </div>
+        </div>
+        <button class="btn" id="upgrade-btn" onclick="upgradeToLifetime()" style="background:#e8b84b;color:#1a3a2a;font-weight:800;padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:13px;white-space:nowrap;">Upgrade & Send Email</button>
       </div>
 
       <!-- Send Newsletter — Tabs for Template or Custom -->
@@ -1129,6 +1142,37 @@
     </div><iframe srcdoc="${h.html.replace(/"/g, '&quot;')}" style="width:100%;min-height:600px;border:none;border-radius:8px;"></iframe>`;
     previewArea.style.display = 'block';
     previewArea.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  window.upgradeToLifetime = async function() {
+    const maxNum = parseInt(document.getElementById('upgrade-max').value);
+    const btn = document.getElementById('upgrade-btn');
+    const status = document.getElementById('upgrade-status');
+    if (!maxNum || maxNum <= 100) { alert('Enter a subscriber number above 100'); return; }
+    if (!confirm(`Upgrade subscribers #101–#${maxNum} to LIFETIME and send them a "You Just Snuck In" email?`)) return;
+    btn.disabled = true; btn.textContent = 'Upgrading...';
+    status.textContent = 'Upgrading and sending emails...';
+    try {
+      const res = await fetch(`${API_URL}/api/upgrade-to-lifetime`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(await adminHeaders()) },
+        body: JSON.stringify({ maxSubscriberNumber: maxNum }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        status.textContent = `✅ Upgraded ${data.upgraded} subscribers! ${data.sent} emails sent, ${data.failed} failed.`;
+        status.style.color = '#4CAF50';
+        btn.textContent = 'Done ✓';
+      } else {
+        status.textContent = '⚠️ ' + (data.message || 'No subscribers found in that range.');
+        status.style.color = '#e8b84b';
+        btn.disabled = false; btn.textContent = 'Upgrade & Send Email';
+      }
+    } catch (err) {
+      status.textContent = '❌ Error: ' + err.message;
+      status.style.color = '#c0392b';
+      btn.disabled = false; btn.textContent = 'Retry';
+    }
   };
 
   window.sendFounding100 = async function() {
