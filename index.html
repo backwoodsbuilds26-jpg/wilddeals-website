@@ -816,18 +816,20 @@
       var res = await fetch('https://wilddeals-production.up.railway.app/api/newsletter-stats');
       if (res.ok) {
         var data = await res.json();
-        var text = data.promoText || '';
-        if (data.promoActive && text) {
-          var el = document.getElementById('subscriber-count');
-          var heroEl = document.getElementById('hero-spots');
-          if (el) el.textContent = text;
-          if (heroEl) heroEl.textContent = text;
-          // Update the promo pill based on current tier
-          var pill = document.getElementById('promo-pill');
-          if (pill) {
-            if (data.currentPromo === '1month') pill.textContent = 'Next 400 get 1 Month Premium — free';
-            else if (data.currentPromo === 'none') pill.textContent = 'Join the WildDeals launch list';
-          }
+        var el = document.getElementById('subscriber-count');
+        var heroEl = document.getElementById('hero-spots');
+        var pill = document.getElementById('promo-pill');
+
+        // Always show spots remaining text
+        var text = data.promoText || (data.totalSubscribers + ' subscribers and counting');
+        if (el) el.textContent = text;
+        if (heroEl) heroEl.textContent = text;
+
+        // Update the promo pill based on current tier
+        if (pill) {
+          if (data.currentPromo === 'lifetime') pill.textContent = 'First 100 get LIFETIME Premium — free';
+          else if (data.currentPromo === '1month') pill.textContent = 'Next 400 get 1 Month Premium — free';
+          else pill.textContent = 'Join the WildDeals launch list';
         }
       }
     } catch (e) {}
