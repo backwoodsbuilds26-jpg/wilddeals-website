@@ -194,17 +194,39 @@
     max-width: 520px; margin-bottom: 40px; font-weight: 300;
     opacity: 0; animation: fadeUp 1.1s ease-out 0.65s forwards;
   }
-  .hero-cta {
-    display: inline-flex; align-items: center; gap: 12px;
-    padding: 16px 32px; background: var(--gold); color: var(--forest);
-    border-radius: 2px; font-size: 14px; font-weight: 500;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  .hero-form-wrap {
     opacity: 0; animation: fadeUp 1.1s ease-out 0.85s forwards;
+    max-width: 480px;
   }
-  .hero-cta:hover { transform: translateY(-1px); background: #d8a946; box-shadow: 0 12px 30px rgba(199,154,58,0.25); }
-  .hero-cta .arrow { transition: transform 0.3s; }
-  .hero-cta:hover .arrow { transform: translateX(4px); }
+  .hero-form { display: flex; gap: 10px; margin-bottom: 12px; }
+  .hero-form input[type="email"] {
+    flex: 1; padding: 16px 20px;
+    background: rgba(246,244,238,0.12); border: 1px solid rgba(246,244,238,0.2);
+    border-radius: 2px; font-family: inherit; font-size: 15px;
+    color: var(--cream); backdrop-filter: blur(8px);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .hero-form input:focus { outline: none; border-color: var(--gold); background: rgba(246,244,238,0.18); }
+  .hero-form input::placeholder { color: rgba(246,244,238,0.45); }
+  .hero-form button {
+    padding: 16px 28px; background: var(--gold); color: var(--forest);
+    border: none; border-radius: 2px; font-family: inherit;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .hero-form button:hover { background: #d8a946; transform: translateY(-1px); }
+  .hero-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .hero-spots { font-size: 12px; color: var(--gold); letter-spacing: 0.1em; }
+  .hero-success {
+    display: none; padding: 18px; background: rgba(199,154,58,0.15);
+    border-left: 3px solid var(--gold); color: var(--cream);
+    font-size: 15px; text-align: left; margin-bottom: 12px;
+  }
+  @media (max-width: 520px) {
+    .hero-form { flex-direction: column; }
+    .hero-form button { width: 100%; }
+  }
 
   .hero-scroll {
     position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
@@ -487,7 +509,15 @@
       <div class="hero-eyebrow">A New Way to Gear Up</div>
       <h1>Find the deal.<br/>Skip the <em>full price.</em></h1>
       <p>WildDeals tracks the best Canadian outdoor gear discounts — camping, fishing, hiking, hunting — all in one quiet, focused app.</p>
-      <a href="#notify" class="hero-cta">Get Early Access <span class="arrow">→</span></a>
+      <div class="hero-form-wrap">
+        <form class="hero-form" id="hero-form" autocomplete="off">
+          <input type="text" name="bot-field" class="bot-field" tabindex="-1" aria-hidden="true" />
+          <input type="email" id="hero-email" placeholder="you@example.com" required />
+          <button type="submit">Get Early Access</button>
+        </form>
+        <div class="hero-success" id="hero-success"></div>
+        <div class="hero-spots" id="hero-spots"></div>
+      </div>
     </div>
     <div class="hero-scroll">Scroll</div>
   </section>
@@ -701,6 +731,36 @@
     document.querySelectorAll('.stat-num').forEach(el => statsIO.observe(el));
   }
 
+  // Hero signup form
+  document.getElementById('hero-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var form = e.target;
+    var btn = form.querySelector('button');
+    var honey = form.querySelector('input[name="bot-field"]');
+    if (honey && honey.value) return;
+    var email = document.getElementById('hero-email').value.trim();
+    if (!email) return;
+    btn.disabled = true; btn.textContent = 'Joining…';
+    try {
+      var r = await fetch('https://wilddeals-production.up.railway.app/api/newsletter-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      var d = await r.json().catch(function() { return {}; });
+      var msg = document.getElementById('hero-success');
+      if (d.alreadySubscribed) msg.textContent = "You're already on the list. We'll see you at launch.";
+      else if (d.isFirst100) msg.textContent = "🎉 You're Early Bird #" + d.subscriberNumber + ". Check your inbox for your free Pro month code.";
+      else msg.textContent = "🎉 You're in. Check your inbox.";
+      form.style.display = 'none';
+      msg.style.display = 'block';
+    } catch (err) {
+      btn.disabled = false; btn.textContent = 'Get Early Access';
+      alert('Something went wrong — please try again.');
+    }
+  });
+
+  // Lower signup form
   document.getElementById('notify-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const form = e.target;
@@ -747,15 +807,18 @@
   }
   if (localStorage.getItem('cookie_consent') === 'accepted') { loadGA4(); }
 
-  // Load subscriber count for urgency
+  // Load subscriber count for urgency (hero + lower section)
   (async function() {
     try {
       var res = await fetch('https://wilddeals-production.up.railway.app/api/newsletter-stats');
       if (res.ok) {
         var data = await res.json();
-        var el = document.getElementById('subscriber-count');
-        if (data.first100Remaining > 0 && el) {
-          el.textContent = data.first100Remaining + ' of 500 free Pro spots remaining';
+        var text = data.first100Remaining + ' of 500 free Pro spots remaining';
+        if (data.first100Remaining > 0) {
+          var el = document.getElementById('subscriber-count');
+          var heroEl = document.getElementById('hero-spots');
+          if (el) el.textContent = text;
+          if (heroEl) heroEl.textContent = text;
         }
       }
     } catch (e) {}
