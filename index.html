@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>WildDeals — Coming Soon</title>
-<meta name="description" content="Canada's outdoor gear deals app. Launching soon. Join the list — first 500 get 1 month of Pro free." />
+<meta name="description" content="Canada's outdoor gear deals app. Launching soon. Join the list — first 100 signups get lifetime Premium access free." />
 <link rel="canonical" href="https://wilddeals.ca/" />
 
 <!-- Favicons -->
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="WildDeals" />
 <meta property="og:url" content="https://wilddeals.ca/" />
 <meta property="og:title" content="WildDeals — Canada's Outdoor Gear Deals App" />
-<meta property="og:description" content="Tracking the best Canadian deals on camping, fishing, hiking & hunting gear. Launching Spring 2026 — first 500 signups get 1 month of Pro free." />
+<meta property="og:description" content="Tracking the best Canadian deals on camping, fishing, hiking & hunting gear. Launching Spring 2026 — first 100 signups get lifetime Premium access free." />
 <meta property="og:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -574,7 +574,7 @@
       <div class="stats-grid">
         <div><div class="stat-num">40+</div><div class="stat-label">Retailers</div></div>
         <div><div class="stat-num">24h</div><div class="stat-label">Refresh cycle</div></div>
-        <div><div class="stat-num">500</div><div class="stat-label">Free Pro spots</div></div>
+        <div><div class="stat-num">100</div><div class="stat-label">Lifetime Premium spots</div></div>
         <div><div class="stat-num">$0</div><div class="stat-label">To get started</div></div>
       </div>
     </div>
@@ -613,7 +613,7 @@
       </div>
       <h2>Get on the list.<br/>Skip the <em>line.</em></h2>
       <p>Join the launch list and we'll let you know the moment the app goes live.</p>
-      <div class="notify-pill">First 500 get 1 month of Pro — free</div>
+      <div class="notify-pill">First 100 get LIFETIME Premium — free</div>
 
       <form class="notify-form" id="notify-form" autocomplete="off">
         <input type="text" name="bot-field" class="bot-field" tabindex="-1" aria-hidden="true" />
@@ -751,7 +751,7 @@
       var d = await r.json().catch(function() { return {}; });
       var msg = document.getElementById('hero-success');
       if (d.alreadySubscribed) msg.textContent = "You're already on the list. We'll see you at launch.";
-      else if (d.isFirst100) msg.textContent = "🎉 You're Early Bird #" + d.subscriberNumber + ". Check your inbox for your free Pro month code.";
+      else if (d.isFirst100) msg.textContent = "🎉 You're Early Bird #" + d.subscriberNumber + ". Check your inbox for your LIFETIME Premium access code.";
       else msg.textContent = "🎉 You're in. Check your inbox.";
       form.style.display = 'none';
       msg.style.display = 'block';
@@ -780,7 +780,7 @@
       const d = await r.json().catch(() => ({}));
       const msg = document.getElementById('notify-success');
       if (d.alreadySubscribed) msg.textContent = "You're already on the list. We'll see you at launch.";
-      else if (d.isFirst100) msg.textContent = "🎉 You're Early Bird #" + d.subscriberNumber + ". Check your inbox for your free Pro month code.";
+      else if (d.isFirst100) msg.textContent = "🎉 You're Early Bird #" + d.subscriberNumber + ". Check your inbox for your LIFETIME Premium access code.";
       else msg.textContent = "🎉 You're in. Check your inbox.";
       form.style.display = 'none';
       msg.style.display = 'block';
@@ -814,7 +814,7 @@
       var res = await fetch('https://wilddeals-production.up.railway.app/api/newsletter-stats');
       if (res.ok) {
         var data = await res.json();
-        var text = data.first100Remaining + ' of 500 free Pro spots remaining';
+        var text = data.first100Remaining + ' of 100 lifetime Premium spots remaining';
         if (data.first100Remaining > 0) {
           var el = document.getElementById('subscriber-count');
           var heroEl = document.getElementById('hero-spots');

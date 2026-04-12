@@ -480,9 +480,9 @@
 
   <section class="hero">
     <div class="hero-text">
-      <a href="#signup" class="hero-badge" style="cursor:pointer;text-decoration:none;"><div class="hero-badge-dot"></div> App Launching Soon — Get Notified With 1 Month Free Pro</a>
+      <a href="#signup" class="hero-badge" style="cursor:pointer;text-decoration:none;"><div class="hero-badge-dot"></div> App Launching Soon — Get Notified With Lifetime Free Premium</a>
       <h1 class="hero-heading">Never pay full price for <span class="gold">outdoor gear</span> again.</h1>
-      <p class="hero-desc">Get the best camping, fishing, hiking &amp; hunting deals in Canada delivered to your inbox every week — free. Plus, the first 500 signups get <strong>1 month of Pro free</strong> when our app launches.</p>
+      <p class="hero-desc">Get the best camping, fishing, hiking &amp; hunting deals in Canada delivered to your inbox every week — free. Plus, the first 100 signups get <strong>lifetime Premium access free</strong> when our app launches.</p>
       <div class="hero-buttons">
         <a href="#notify" class="btn-primary">Notify Me &#8594;</a>
         <a href="/deals" class="btn-secondary">Browse Deals</a>
@@ -498,7 +498,7 @@
     <div class="inline-signup-inner">
       <div class="inline-signup-text">
         <h3>Get weekly Canadian gear deals — free</h3>
-        <p>Join the newsletter · <strong>First 500 get 1 month Pro free</strong> at app launch</p>
+        <p>Join the newsletter · <strong>First 100 get lifetime Premium free</strong> at app launch</p>
       </div>
       <form class="inline-signup-form" id="inline-signup-form">
         <input type="email" id="inline-signup-email" placeholder="you@example.com" required />
@@ -623,7 +623,7 @@
   <section class="signup" id="signup">
     <div class="promo-badge" id="promo-badge">
       <span class="promo-badge-icon">🎉</span>
-      <span>First 500 signups get <strong>1 month FREE Pro</strong> on the app at launch!</span>
+      <span>First 100 signups get <strong>LIFETIME Premium access FREE</strong> at app launch!</span>
     </div>
     <h2>The Weekly Wild — outdoor gear deals in your inbox</h2>
     <p>Join thousands of Canadians getting a hand-picked weekly roundup of the best camping, fishing, hiking &amp; hunting deals. Free. No spam. Unsubscribe anytime.</p>
@@ -638,14 +638,14 @@
     <div class="signup-success" id="signup-promo-success" style="display:none;">
       <span style="font-size:24px;">🎉</span><br/>
       You're Early Bird #<span id="sub-number"></span>!<br/>
-      <strong>Check your email for your FREE Pro month code!</strong>
+      <strong>Check your email for your LIFETIME Premium access code!</strong>
     </div>
     <div class="subscriber-count" id="subscriber-count"></div>
   </section>
 
   <section class="cta" id="download">
     <h2>Coming Soon.</h2>
-    <p>The WildDeals app launches soon — real-time deal alerts on your phone. Join the weekly newsletter now and the first 500 signups get <strong>1 month of Pro free</strong> when the app goes live.</p>
+    <p>The WildDeals app launches soon — real-time deal alerts on your phone. Join the weekly newsletter now and the first 100 signups get <strong>lifetime Premium access free</strong> when the app goes live.</p>
     <div class="store-btns">
       <a href="#signup" class="btn-primary">Join the Weekly Wild Newsletter &#8594;</a>
     </div>
@@ -715,7 +715,7 @@
         form.style.display = 'none';
         var msg = document.getElementById('inline-signup-success');
         if (d.alreadySubscribed) msg.textContent = "You're already on the list! 🏕️";
-        else if (d.isFirst100) msg.textContent = "🎉 You're Early Bird #" + d.subscriberNumber + "! Check your email for your FREE Pro month code.";
+        else if (d.isFirst100) msg.textContent = "🎉 You're Early Bird #" + d.subscriberNumber + "! Check your email for your LIFETIME Premium access code.";
         else msg.textContent = "🎉 You're in! Check your inbox.";
         msg.style.display = 'block';
       } catch (err) {
@@ -790,7 +790,7 @@
           if (data.first100Remaining <= 0) {
             if (badge) badge.style.display = 'none';
           } else {
-            if (countEl) countEl.textContent = data.first100Remaining + ' of 500 free Pro spots remaining!';
+            if (countEl) countEl.textContent = data.first100Remaining + ' of 100 lifetime Premium spots remaining!';
           }
         }
       } catch (e) {}
