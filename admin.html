@@ -263,6 +263,15 @@
       </div>
       <div class="loading" id="nl-subscribers-loading">Loading subscribers...</div>
 
+      <!-- Founding 100 Milestone Blast -->
+      <div style="background:linear-gradient(135deg,#1a3a2a,#244a34);border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="color:#e8b84b;font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:4px;">FOUNDING 100 MILESTONE EMAIL</div>
+          <div style="color:rgba(255,255,255,0.7);font-size:13px;" id="founding100-status">Sends personalized email to all 100 founding members with their promo code.</div>
+        </div>
+        <button class="btn" id="founding100-btn" onclick="sendFounding100()" style="background:#e8b84b;color:#1a3a2a;font-weight:800;padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:13px;white-space:nowrap;">Send Founding 100 Email</button>
+      </div>
+
       <!-- Send Newsletter — Tabs for Template or Custom -->
       <h3 style="color:#1a3a2a;margin-bottom:12px">Send Newsletter</h3>
       <div style="display:flex;gap:0;margin-bottom:0;">
@@ -1120,6 +1129,52 @@
     </div><iframe srcdoc="${h.html.replace(/"/g, '&quot;')}" style="width:100%;min-height:600px;border:none;border-radius:8px;"></iframe>`;
     previewArea.style.display = 'block';
     previewArea.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  window.sendFounding100 = async function() {
+    const btn = document.getElementById('founding100-btn');
+    const status = document.getElementById('founding100-status');
+    if (!confirm('Send the Founding 100 milestone email to all first-100 subscribers? This will email each one with their personalized promo code.')) return;
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    status.textContent = 'Sending personalized emails to all founding members...';
+    try {
+      const res = await fetch(`${API_URL}/api/send-founding100`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(await adminHeaders()) },
+        body: JSON.stringify({ force: false }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        status.textContent = `✅ Sent! ${data.sent} delivered, ${data.failed} failed out of ${data.total} founding members.`;
+        status.style.color = '#4CAF50';
+        btn.textContent = 'Sent ✓';
+      } else {
+        status.textContent = '⚠️ ' + (data.message || 'Could not send.');
+        status.style.color = '#e8b84b';
+        btn.textContent = 'Already Sent';
+        // Show resend option
+        btn.onclick = async function() {
+          if (!confirm('This email was already sent once. Send again?')) return;
+          btn.disabled = true; btn.textContent = 'Resending...';
+          const r2 = await fetch(`${API_URL}/api/send-founding100`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', ...(await adminHeaders()) },
+            body: JSON.stringify({ force: true }),
+          });
+          const d2 = await r2.json();
+          status.textContent = d2.success ? `✅ Resent! ${d2.sent} delivered, ${d2.failed} failed.` : '❌ ' + (d2.message || 'Failed');
+          status.style.color = d2.success ? '#4CAF50' : '#c0392b';
+          btn.textContent = 'Done';
+        };
+        btn.disabled = false;
+      }
+    } catch (err) {
+      status.textContent = '❌ Error: ' + err.message;
+      status.style.color = '#c0392b';
+      btn.disabled = false;
+      btn.textContent = 'Retry';
+    }
   };
 
   window.previewNewsletter = async function() {
