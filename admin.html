@@ -1051,7 +1051,7 @@
       document.getElementById('nl-stat-subscribers').textContent = data.totalSubscribers ?? '-';
       document.getElementById('nl-stat-first100').textContent = data.first100Remaining ?? '-';
       document.getElementById('nl-stat-next400').textContent = data.next400Remaining ?? '-';
-      const promoLabels = { lifetime: 'Lifetime (First 100)', '1month': '1 Month Free (101-500)', none: 'Ended' };
+      const promoLabels = { lifetime: 'Lifetime (First 100)', '1month': '1 Month Free (First 500)', none: 'Ended' };
       document.getElementById('nl-stat-promo').textContent = promoLabels[data.currentPromo] || '-';
     } catch (e) {
       console.error('Newsletter stats error:', e);
