@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>WildDeals — Coming Soon</title>
-<meta name="description" content="Canada's outdoor gear deals app. Launching soon. Join the list — first 100 get lifetime Premium, first 500 get 1 month free." />
+<meta name="description" content="Canada's deals app — outdoor gear, home & garden, health & fitness, tools & auto. Launching soon. First 500 subscribers get free Premium." />
 <link rel="canonical" href="https://wilddeals.ca/" />
 
 <!-- Favicons -->
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="WildDeals" />
 <meta property="og:url" content="https://wilddeals.ca/" />
 <meta property="og:title" content="WildDeals — Canada's Outdoor Gear Deals App" />
-<meta property="og:description" content="Tracking the best Canadian deals on camping, fishing, hiking & hunting gear. Launching Spring 2026 — first 100 get lifetime Premium, first 500 get 1 month free." />
+<meta property="og:description" content="Tracking the best Canadian deals — outdoors, home & garden, fitness, tools & auto. Launching Spring 2026. First 500 subscribers get free Premium." />
 <meta property="og:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -25,7 +25,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="WildDeals — Canada's Outdoor Gear Deals App" />
-<meta name="twitter:description" content="Tracking the best Canadian deals on camping, fishing, hiking & hunting gear. Launching Spring 2026." />
+<meta name="twitter:description" content="Tracking the best Canadian deals — outdoors, home & garden, fitness, tools & auto. Launching Spring 2026." />
 <meta name="twitter:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
 
 <!-- Theme color (mobile browser chrome) -->
@@ -42,7 +42,7 @@
       "name": "WildDeals",
       "url": "https://wilddeals.ca/",
       "logo": "https://wilddeals.ca/images/wd-cropped.png",
-      "description": "Canada's outdoor gear deals app — tracking the best prices on camping, fishing, hiking, and hunting gear.",
+      "description": "Canada's deals app — tracking the best prices on outdoor gear, home & garden, health & fitness, and tools & auto.",
       "foundingDate": "2026",
       "founder": { "@type": "Organization", "name": "WildDeals" },
       "areaServed": { "@type": "Country", "name": "Canada" },
@@ -53,7 +53,7 @@
       "name": "WildDeals",
       "operatingSystem": "iOS, Android",
       "applicationCategory": "ShoppingApplication",
-      "description": "WildDeals tracks the best Canadian outdoor gear discounts — camping, fishing, hiking, hunting — all in one app. Live price drops, smart alerts, and gear wishlists from 40+ retailers.",
+      "description": "WildDeals tracks the best Canadian deals — outdoors, home & garden, fitness, tools & auto — all in one app. Live price drops, smart alerts, and wishlists from 40+ retailers.",
       "url": "https://wilddeals.ca/",
       "image": "https://wilddeals.ca/images/wd-cropped.png",
       "author": { "@id": "https://wilddeals.ca/#organization" },
@@ -492,6 +492,25 @@
   .cookie-decline { background: rgba(246,244,238,0.1); color: rgba(246,244,238,0.6); }
   .cookie-btns button:hover { opacity: 0.85; }
 
+  /* Categories Banner */
+  .categories-banner {
+    background: var(--forest);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .categories-banner-img {
+    display: block;
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    height: auto;
+  }
+  .categories-banner a {
+    display: block;
+    cursor: pointer;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
@@ -532,6 +551,13 @@
       </div>
     </div>
     <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- Categories Banner -->
+  <section class="categories-banner">
+    <a href="#notify" aria-label="Browse WildDeals categories — Home & Garden, Health & Fitness, Tools & Auto, Outdoors & Adventure">
+      <img class="categories-banner-img" src="/images/wilddealsnew.png" alt="WildDeals categories: Home & Garden, Health & Fitness, Tools & Auto, Outdoors & Adventure — Big deals from top stores" width="1200" height="675" loading="lazy" decoding="async" />
+    </a>
   </section>
 
   <section class="preview">
