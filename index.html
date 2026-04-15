@@ -256,6 +256,57 @@
     50%      { transform: scaleY(1); opacity: 1; }
   }
 
+  /* Free vs Pro */
+  .tiers { padding: 96px 0; background: var(--cream); border-top: 1px solid var(--line); }
+  .tiers-inner { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+  .tiers-head { max-width: 720px; margin-bottom: 48px; }
+  .tiers .label { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .tiers h2 { font-size: clamp(32px, 4vw, 48px); font-weight: 300; line-height: 1.08; letter-spacing: -0.02em; color: var(--forest); margin-bottom: 22px; }
+  .tiers h2 em { font-style: normal; font-weight: 500; color: var(--gold); }
+  .tiers-intro { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 10px; max-width: 640px; }
+  .tiers-intro strong { color: var(--forest); font-weight: 500; }
+  .tiers-intro:last-of-type { margin-bottom: 0; }
+  .tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+  .tier-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 4px;
+    padding: 32px 28px; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  }
+  .tier-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 18px 40px -20px rgba(20,42,31,0.18); }
+  .tier-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(199,154,58,0.12); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+  }
+  .tier-icon svg { width: 22px; height: 22px; }
+  .tier-card h3 {
+    font-size: 16px; font-weight: 500; color: var(--forest);
+    margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .tier-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  .tier-callout {
+    margin-top: 44px; background: var(--forest); color: var(--cream);
+    border-radius: 4px; padding: 28px 36px;
+    display: flex; align-items: center; gap: 24px;
+    border-left: 3px solid var(--gold);
+  }
+  .tier-callout-mark {
+    flex-shrink: 0; font-size: 11px; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--gold); font-weight: 500;
+  }
+  .tier-callout-text { font-size: 15px; line-height: 1.55; color: rgba(246,244,238,0.85); }
+  .tier-callout-text strong { color: var(--cream); font-weight: 500; }
+
+  @media (max-width: 960px) { .tiers-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) {
+    .tiers { padding: 72px 0; }
+    .tiers-inner { padding: 0 24px; }
+    .tiers-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+    .tier-card { padding: 26px 22px; }
+    .tier-callout { flex-direction: column; align-items: flex-start; gap: 10px; padding: 24px; }
+  }
+
   /* Preview / phone */
   .preview { padding: 90px 0; background: var(--cream); position: relative; }
   .preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
@@ -551,6 +602,73 @@
       </div>
     </div>
     <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- Free vs Pro -->
+  <section class="tiers" id="pro">
+    <div class="tiers-inner">
+      <div class="tiers-head">
+        <div class="label">Free vs Pro</div>
+        <h2>Free for everyone.<br/><em>Pro for the hunters.</em></h2>
+        <p class="tiers-intro"><strong>WildDeals is 100% free to use.</strong> Anyone can browse deals, subscribe to the weekly newsletter, and shop our curated picks — no account required, no hidden fees, ever.</p>
+        <p class="tiers-intro"><strong>Pro membership</strong> is an optional upgrade in the app (launching soon) that unlocks the power-user features for serious deal hunters.</p>
+      </div>
+
+      <div class="tiers-grid">
+        <div class="tier-card">
+          <div class="tier-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          </div>
+          <h3>Real-Time Alerts</h3>
+          <p>Push notifications the moment prices drop on gear you care about.</p>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+          </div>
+          <h3>Custom Watchlists</h3>
+          <p>Track specific products, categories, or brands — get notified on your terms.</p>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>Early Access</h3>
+          <p>See the best deals before they hit the free weekly newsletter.</p>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="20" x2="21" y2="20"/><rect x="5" y="12" width="3" height="8"/><rect x="10" y="7" width="3" height="13"/><rect x="15" y="3" width="3" height="17"/></svg>
+          </div>
+          <h3>Price History</h3>
+          <p>Know if a "sale" is actually a good deal with full price charts.</p>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <h3>Ad-Free Experience</h3>
+          <p>A clean, distraction-free app across every screen.</p>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L9 9l-7 1 5 5-1 7 6-3 6 3-1-7 5-5-7-1z"/></svg>
+          </div>
+          <h3>Canada-First Filters</h3>
+          <p>Hide US-only deals with one tap — only what actually ships to you.</p>
+        </div>
+      </div>
+
+      <div class="tier-callout">
+        <div class="tier-callout-mark">Founding Offer</div>
+        <div class="tier-callout-text"><strong>First 100 newsletter signups get lifetime Pro access — free at launch.</strong> No credit card, no catch.</div>
+      </div>
+    </div>
   </section>
 
   <!-- Categories Banner -->
