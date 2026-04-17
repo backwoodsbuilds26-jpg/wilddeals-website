@@ -554,7 +554,7 @@
     // Fetch registered users from backend (Firebase Auth + Firestore merged)
     try {
       const headers = await adminHeaders();
-      const resp = await fetch(API + '/api/admin/users', { headers });
+      const resp = await fetch(API_URL + '/api/admin/users', { headers });
       if (resp.ok) {
         const data = await resp.json();
         allUsers = data.users || [];
