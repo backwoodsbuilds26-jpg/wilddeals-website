@@ -354,6 +354,52 @@
   }
   .phone-img:hover { transform: rotateY(-4deg) rotateX(0deg); }
   @media (max-width: 880px) { .phone-img { transform: none; width: 280px; } }
+
+  /* Phone slideshow */
+  .phone-slideshow {
+    display: flex; justify-content: center; perspective: 1500px;
+  }
+  .phone-device {
+    width: 280px; position: relative;
+    background: #111; border-radius: 40px; padding: 12px;
+    box-shadow:
+      0 50px 100px -20px rgba(20,42,31,0.30),
+      0 30px 60px -30px rgba(20,42,31,0.25),
+      inset 0 0 0 1.5px rgba(255,255,255,0.1);
+    transform: rotateY(-8deg) rotateX(2deg);
+    transition: transform 0.6s ease;
+  }
+  .phone-device:hover { transform: rotateY(-4deg) rotateX(0deg); }
+  .phone-device::before {
+    content: ''; position: absolute;
+    top: 12px; left: 50%; transform: translateX(-50%);
+    width: 90px; height: 26px; background: #111;
+    border-radius: 0 0 16px 16px; z-index: 10;
+  }
+  .phone-screen-wrap {
+    width: 100%; aspect-ratio: 9/19.5; border-radius: 30px;
+    overflow: hidden; position: relative; background: #0a1610;
+  }
+  .phone-screen-wrap img {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; opacity: 0; transition: opacity 0.6s ease;
+  }
+  .phone-screen-wrap img.active { opacity: 1; }
+  .slideshow-dots {
+    display: flex; justify-content: center; gap: 8px; margin-top: 18px;
+  }
+  .slideshow-dots button {
+    width: 10px; height: 10px; border-radius: 50%; border: none;
+    background: rgba(20,42,31,0.2); cursor: pointer; padding: 0;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .slideshow-dots button.active {
+    background: var(--gold); transform: scale(1.25);
+  }
+  @media (max-width: 880px) {
+    .phone-device { transform: none; width: 240px; }
+    .phone-device:hover { transform: none; }
+  }
   .phone {
     width: 280px; height: 580px; background: #0a1610;
     border-radius: 38px; padding: 10px;
@@ -728,12 +774,25 @@
           </ul>
         </div>
 
-        <div class="phone-wrap reveal">
-          <picture>
-            <source media="(max-width: 880px)" type="image/webp" srcset="/images/intro-phone-sm.webp" />
-            <source type="image/webp" srcset="/images/intro-phone.webp" />
-            <img class="phone-img" src="/images/intro-phone.png" alt="WildDeals app showing today's deals" width="700" height="1050" loading="lazy" decoding="async" />
-          </picture>
+        <div class="phone-slideshow reveal">
+          <div>
+            <div class="phone-device">
+              <div class="phone-screen-wrap">
+                <img src="/images/ss1.png" alt="WildDeals Deal Alerts" class="active" />
+                <img src="/images/ss2.png" alt="WildDeals Category Picker" />
+                <img src="/images/ss3.png" alt="WildDeals Profile" />
+                <img src="/images/ss4.png" alt="WildDeals Health & Fitness Deals" />
+                <img src="/images/ss5.png" alt="WildDeals Farm & Ranch Deals" />
+              </div>
+            </div>
+            <div class="slideshow-dots">
+              <button class="active" aria-label="Slide 1"></button>
+              <button aria-label="Slide 2"></button>
+              <button aria-label="Slide 3"></button>
+              <button aria-label="Slide 4"></button>
+              <button aria-label="Slide 5"></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1014,6 +1073,38 @@
         }
       }
     } catch (e) {}
+  })();
+
+  /* Phone slideshow */
+  (function() {
+    const wrap = document.querySelector('.phone-screen-wrap');
+    if (!wrap) return;
+    const imgs = wrap.querySelectorAll('img');
+    const dots = document.querySelectorAll('.slideshow-dots button');
+    let current = 0;
+    let timer;
+
+    function show(idx) {
+      imgs[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = idx % imgs.length;
+      imgs[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function autoplay() {
+      timer = setInterval(function() { show(current + 1); }, 3500);
+    }
+
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() {
+        clearInterval(timer);
+        show(i);
+        autoplay();
+      });
+    });
+
+    autoplay();
   })();
 </script>
 
