@@ -433,8 +433,6 @@
   }
   .shop-cat:hover { border-color: var(--gold); background: rgba(199,154,58,0.08); }
   .shop-cat-icon { font-size: 22px; line-height: 1; }
-  .shop-more { display: inline-block; margin-top: 20px; color: var(--gold); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-decoration: none; border-bottom: 1px solid rgba(199,154,58,0.3); padding-bottom: 2px; }
-  .shop-more:hover { color: var(--forest); border-color: var(--forest); }
   .shop-regions { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; letter-spacing: 0.08em; text-align: center; }
   .shop-regions .region { color: var(--forest); font-weight: 500; }
   .shop-regions .region-soon { color: var(--muted); font-style: italic; }
@@ -548,9 +546,10 @@
   .cookie-banner a { color: var(--gold); }
   .cookie-btns { display: flex; gap: 10px; }
   .cookie-btns button {
-    padding: 8px 18px; border: none; border-radius: 2px;
-    font-family: inherit; font-size: 12px; font-weight: 500;
+    padding: 12px 22px; border: none; border-radius: 2px;
+    font-family: inherit; font-size: 13px; font-weight: 500;
     letter-spacing: 0.06em; cursor: pointer; transition: opacity 0.2s;
+    min-height: 44px;
   }
   .cookie-accept { background: var(--gold); color: var(--forest); }
   .cookie-decline { background: rgba(246,244,238,0.1); color: rgba(246,244,238,0.6); }
@@ -687,7 +686,10 @@
   <!-- Categories Banner -->
   <section class="categories-banner">
     <a href="#notify" aria-label="Browse WildDeals categories — Outdoors & Adventure, Home & Garden, Health & Fitness, Tools n Auto, Farm & Ranch">
-      <img class="categories-banner-img" src="/images/WildDealsReal.png" alt="WildDeals — Amazing deals on premium gear. Outdoors & Adventure, Home & Garden, Health & Fitness, Tools n Auto, Farm & Ranch" width="1536" height="1024" loading="lazy" decoding="async" />
+      <picture>
+        <source type="image/webp" srcset="/images/WildDealsReal.webp" />
+        <img class="categories-banner-img" src="/images/WildDealsReal.png" alt="WildDeals — Amazing deals on premium gear. Outdoors & Adventure, Home & Garden, Health & Fitness, Tools n Auto, Farm & Ranch" width="1536" height="1024" loading="lazy" decoding="async" />
+      </picture>
     </a>
   </section>
 
