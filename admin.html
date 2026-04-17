@@ -193,7 +193,7 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>UID</th><th>Push Token</th><th>Platform</th><th>Pro</th><th>Last Updated</th></tr></thead>
+          <thead><tr><th>Email</th><th>Signed Up</th><th>Last Login</th><th>Platform</th><th>Pro</th><th>Verified</th></tr></thead>
           <tbody id="users-table"></tbody>
         </table>
       </div>
@@ -551,13 +551,20 @@
     updateNewsletterCount();
     updateUserCount();
     updateWelcomeEmailStats();
-    // Still try Firestore read for the Users tab table (may fail silently)
+    // Fetch registered users from backend (Firebase Auth + Firestore merged)
     try {
-      const userSnap = await getDocs(collection(db, 'users'));
-      allUsers = userSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const headers = await adminHeaders();
+      const resp = await fetch(API + '/api/admin/users', { headers });
+      if (resp.ok) {
+        const data = await resp.json();
+        allUsers = data.users || [];
+      } else {
+        console.warn('Failed to fetch users:', resp.status);
+        allUsers = [];
+      }
       renderUsers();
     } catch (e) {
-      console.warn('Users collection read blocked (expected if rules restrict it):', e.message);
+      console.warn('Users fetch error:', e.message);
       allUsers = [];
     }
   }
@@ -766,7 +773,7 @@
   window.renderUsers = function() {
     const search = document.getElementById('user-search').value.toLowerCase();
     let filtered = allUsers.filter(u => {
-      if (search && !u.id?.toLowerCase().includes(search) && !u.pushToken?.toLowerCase().includes(search)) return false;
+      if (search && !(u.email || '').toLowerCase().includes(search) && !(u.uid || '').toLowerCase().includes(search) && !(u.platform || '').toLowerCase().includes(search)) return false;
       return true;
     });
 
@@ -774,17 +781,19 @@
     const start = usersPage * PAGE;
     const page = filtered.slice(start, start + PAGE);
 
-    document.getElementById('users-count').textContent = `Showing ${start+1}-${Math.min(start+PAGE, total)} of ${total}`;
+    document.getElementById('users-count').textContent = `Showing ${start+1}-${Math.min(start+PAGE, total)} of ${total} registered users`;
 
     document.getElementById('users-table').innerHTML = page.map(u => {
-      const updatedRaw = u.pushTokenUpdatedAt?.toDate ? u.pushTokenUpdatedAt.toDate().toLocaleDateString() : (u.pushTokenUpdatedAt || '-');
+      const signedUp = u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '-';
+      const lastLogin = u.lastSignIn ? new Date(u.lastSignIn).toLocaleDateString() : '-';
       return `
         <tr>
-          <td style="font-family:monospace;font-size:12px">${esc(String(u.id || '').substring(0,16))}...</td>
-          <td style="font-family:monospace;font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis">${esc(u.pushToken || '-')}</td>
+          <td style="font-size:13px">${esc(u.email || 'No email')}</td>
+          <td>${signedUp}</td>
+          <td>${lastLogin}</td>
           <td>${esc(u.platform || '-')}</td>
           <td>${u.isPro ? '<span class="badge badge-gold">Pro</span>' : '<span class="badge badge-green">Free</span>'}</td>
-          <td>${esc(updatedRaw)}</td>
+          <td>${u.emailVerified ? '<span class="badge badge-green">Yes</span>' : '<span class="badge" style="background:#555">No</span>'}</td>
         </tr>
       `;
     }).join('');
