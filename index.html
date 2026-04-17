@@ -378,11 +378,18 @@
   }
   .phone-screen-wrap {
     width: 100%; aspect-ratio: 9/19.5; border-radius: 30px;
-    overflow: hidden; position: relative; background: #0a1610;
+    overflow: hidden; position: relative; background: #111;
+  }
+  .phone-screen-wrap::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 20px; z-index: 5; border-radius: 30px 30px 0 0;
+    background: linear-gradient(to bottom, #111 40%, transparent 100%);
+    pointer-events: none;
   }
   .phone-screen-wrap img {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover; opacity: 0; transition: opacity 0.6s ease;
+    position: absolute; top: 5px; left: 0; width: 100%; height: calc(100% - 5px);
+    object-fit: cover; object-position: center top;
+    opacity: 0; transition: opacity 0.6s ease;
   }
   .phone-screen-wrap img.active { opacity: 1; }
   .slideshow-dots {
