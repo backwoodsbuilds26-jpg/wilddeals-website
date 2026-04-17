@@ -520,7 +520,16 @@
     .founder { flex-direction: column; text-align: center; }
   }
 
-
+  /* Closing note */
+  .about-note { padding: 80px 0 72px; background: var(--cream); border-top: 1px solid var(--line); }
+  .about-note-inner { max-width: 640px; margin: 0 auto; padding: 0 32px; text-align: center; }
+  .about-note .label { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+  .about-note h2 { font-size: clamp(28px, 3.4vw, 38px); font-weight: 300; line-height: 1.15; letter-spacing: -0.02em; color: var(--forest); margin-bottom: 22px; }
+  .about-note h2 em { font-style: normal; font-weight: 500; color: var(--gold); }
+  .about-note p { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 14px; }
+  .about-note p:last-child { margin-bottom: 0; }
+  .about-note .signoff { margin-top: 22px; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--forest); font-weight: 500; }
+  @media (max-width: 600px) { .about-note { padding: 64px 0 56px; } .about-note-inner { padding: 0 24px; } }
 
   /* Cookie banner */
   .cookie-banner {
@@ -782,6 +791,17 @@
           <strong>From the Founder of WildDeals.</strong> Whether it's a new patio set, trail boots, gym equipment, or a power tool — good stuff shouldn't cost full price. WildDeals was built so Canadians can spend less time hunting for deals and more time enjoying what they buy. Thanks for being here early. We'll see you at launch.
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="about-note reveal">
+    <div class="about-note-inner">
+      <div class="label">Our Mission</div>
+      <h2>Trying something new<br/><em>shouldn't cost a fortune.</em></h2>
+      <p>Your first tent. Your first fishing rod. Your first set of weights. Your first power tool. These are the doors to the things you'll actually remember — the weekends, the trips, the quiet mornings out on the water. And the price tag shouldn't be what stops you from walking through them.</p>
+      <p>We built WildDeals so Canadians can spend less time hunting for deals and more time actually out there — getting outside, starting a new hobby, finishing the project, trying the thing they've been putting off for years. Good gear shouldn't be a luxury.</p>
+      <p>Find the deal. Skip the markup. Go do the thing.</p>
+      <div class="signoff">— The WildDeals Team</div>
     </div>
   </section>
 
