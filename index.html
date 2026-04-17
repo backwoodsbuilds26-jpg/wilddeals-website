@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>WildDeals — Coming Soon</title>
-<meta name="description" content="Canada's deals app — outdoors, home & garden, health & fitness, tools & auto, farm & ranch. 100% free. No ads. No subscriptions. First 1,000 signups become Founding Members." />
+<meta name="description" content="The deals app — outdoors, home & garden, health & fitness, tools & auto, farm & ranch. 100% free. No ads. No subscriptions. Made in Canada. First 1,000 signups become Founding Members." />
 <link rel="canonical" href="https://wilddeals.ca/" />
 
 <!-- Favicons -->
@@ -15,17 +15,17 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="WildDeals" />
 <meta property="og:url" content="https://wilddeals.ca/" />
-<meta property="og:title" content="WildDeals — Canada's Deal Tracking App" />
-<meta property="og:description" content="Tracking the best Canadian deals — outdoors, home & garden, fitness, tools & auto, farm & ranch. 100% free. Launching Spring 2026. First 1,000 signups become Founding Members." />
+<meta property="og:title" content="WildDeals — The Deal Tracking App" />
+<meta property="og:description" content="Tracking the best deals — outdoors, home & garden, fitness, tools & auto, farm & ranch. 100% free. Made in Canada. Launching Spring 2026. First 1,000 signups become Founding Members." />
 <meta property="og:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="WildDeals — Canada's deal tracking app" />
+<meta property="og:image:alt" content="WildDeals — The deal tracking app" />
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="WildDeals — Canada's Deal Tracking App" />
-<meta name="twitter:description" content="Tracking the best Canadian deals — outdoors, home & garden, fitness, tools & auto, farm & ranch. Launching Spring 2026." />
+<meta name="twitter:title" content="WildDeals — The Deal Tracking App" />
+<meta name="twitter:description" content="Tracking the best deals — outdoors, home & garden, fitness, tools & auto, farm & ranch. Made in Canada. Launching Spring 2026." />
 <meta name="twitter:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
 
 <!-- Theme color (mobile browser chrome) -->
@@ -42,10 +42,10 @@
       "name": "WildDeals",
       "url": "https://wilddeals.ca/",
       "logo": "https://wilddeals.ca/images/wd-cropped.png",
-      "description": "Canada's deals app — tracking the best prices on outdoors, home & garden, health & fitness, tools & auto, and farm & ranch.",
+      "description": "The deals app — tracking the best prices on outdoors, home & garden, health & fitness, tools & auto, and farm & ranch. Made in Canada.",
       "foundingDate": "2026",
       "founder": { "@type": "Organization", "name": "WildDeals" },
-      "areaServed": { "@type": "Country", "name": "Canada" },
+      "areaServed": [{ "@type": "Country", "name": "Canada" }, { "@type": "Country", "name": "United States" }],
       "sameAs": ["https://www.youtube.com/@BackwoodsBuilds"]
     },
     {
@@ -53,7 +53,7 @@
       "name": "WildDeals",
       "operatingSystem": "iOS, Android",
       "applicationCategory": "ShoppingApplication",
-      "description": "WildDeals tracks the best Canadian deals — outdoors, home & garden, fitness, tools & auto, farm & ranch — all in one app. Live price drops, smart alerts, and wishlists from 40+ retailers.",
+      "description": "WildDeals tracks the best deals — outdoors, home & garden, fitness, tools & auto, farm & ranch — all in one app. Live price drops, smart alerts, and wishlists from 40+ retailers. Made in Canada.",
       "url": "https://wilddeals.ca/",
       "image": "https://wilddeals.ca/images/wd-cropped.png",
       "author": { "@id": "https://wilddeals.ca/#organization" },
@@ -435,7 +435,11 @@
   .shop-cat-icon { font-size: 22px; line-height: 1; }
   .shop-more { display: inline-block; margin-top: 20px; color: var(--gold); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-decoration: none; border-bottom: 1px solid rgba(199,154,58,0.3); padding-bottom: 2px; }
   .shop-more:hover { color: var(--forest); border-color: var(--forest); }
-  @media (max-width: 480px) { .shop-cats { grid-template-columns: 1fr 1fr; } }
+  .shop-regions { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; letter-spacing: 0.08em; text-align: center; }
+  .shop-regions .region { color: var(--forest); font-weight: 500; }
+  .shop-regions .region-soon { color: var(--muted); font-style: italic; }
+  .shop-regions .sep { margin: 0 12px; color: var(--muted); opacity: 0.5; }
+  @media (max-width: 480px) { .shop-cats { grid-template-columns: 1fr 1fr; } .shop-regions .sep { margin: 0 8px; } }
 
   /* Notify */
   .notify { padding: 90px 0 56px; background: var(--cream); position: relative; }
@@ -599,7 +603,7 @@
     <div class="hero-inner">
       <div class="hero-eyebrow">A New Way to Gear Up</div>
       <h1>Find the deal.<br/>Skip the <em>full price.</em></h1>
-      <p>WildDeals tracks the best Canadian deals across every category — outdoors, home & garden, fitness, tools & auto, farm & ranch — all in one quiet, focused app.</p>
+      <p>WildDeals tracks the best deals across every category — outdoors, home & garden, fitness, tools & auto, farm & ranch — all in one quiet, focused app. Currently tracking Canada & USA. Europe coming soon.</p>
       <div class="hero-form-wrap">
         <form class="hero-form" id="hero-form" autocomplete="off">
           <input type="text" name="bot-field" class="bot-field" tabindex="-1" aria-hidden="true" />
@@ -668,8 +672,8 @@
           <div class="tier-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L9 9l-7 1 5 5-1 7 6-3 6 3-1-7 5-5-7-1z"/></svg>
           </div>
-          <h3>Canada-First Filters</h3>
-          <p>Hide US-only deals with one tap — only what actually ships to you.</p>
+          <h3>Region Filters</h3>
+          <p>Hide deals that don't ship to where you live — only see what's actually relevant.</p>
         </div>
       </div>
 
@@ -702,7 +706,7 @@
               <div class="feature-icon">◆</div>
               <div>
                 <h3>Live Price Drops</h3>
-                <p>Tracked daily across 40+ Canadian retailers.</p>
+                <p>Tracked daily across 40+ retailers.</p>
               </div>
             </li>
             <li>
@@ -748,7 +752,7 @@
     <div class="shop-inner">
       <div class="label">Shop Now</div>
       <h2>Hand-picked <em>deals</em> across every category</h2>
-      <p>Outdoors, home & garden, fitness, tools & auto, farm & ranch — curated deals from Amazon Canada and the US.</p>
+      <p>Outdoors, home & garden, fitness, tools & auto, farm & ranch — curated deals from Amazon Canada and the US. Europe coming soon.</p>
       <a class="shop-btn" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored">
         <span class="shop-btn-left"><span class="shop-btn-flag">🇨🇦</span><span class="shop-btn-label">Shop Amazon.ca</span></span>
         <span class="shop-btn-arrow">→</span>
@@ -763,6 +767,9 @@
         <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">💪</span>Health & Fitness</a>
         <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">🔧</span>Tools & Auto</a>
         <a class="shop-cat" href="https://amzn.to/4mwIAtS" target="_blank" rel="noopener sponsored"><span class="shop-cat-icon">🤠</span>Farm & Ranch</a>
+      </div>
+      <div class="shop-regions">
+        <span class="region">🇨🇦 Canada</span><span class="sep">·</span><span class="region">🇺🇸 USA</span><span class="sep">·</span><span class="region-soon">🇪🇺 Europe coming soon</span>
       </div>
     </div>
   </section>
@@ -788,7 +795,7 @@
       <div class="founder">
         <div class="founder-portrait">WD</div>
         <div class="founder-text">
-          <strong>From the Founder of WildDeals.</strong> Whether it's a new patio set, trail boots, gym equipment, or a power tool — good stuff shouldn't cost full price. WildDeals was built so Canadians can spend less time hunting for deals and more time enjoying what they buy. Thanks for being here early. We'll see you at launch.
+          <strong>From the Founder of WildDeals.</strong> Whether it's a new patio set, trail boots, gym equipment, or a power tool — good stuff shouldn't cost full price. WildDeals was built so you can spend less time hunting for deals and more time enjoying what you buy. Thanks for being here early. We'll see you at launch.
         </div>
       </div>
     </div>
@@ -817,7 +824,7 @@
     <div class="footer-inner">
       <div class="footer-brand-block">
         <div class="footer-logo"><img src="/images/wd-cropped.png" alt="WildDeals" loading="lazy" /> Wild<span class="dot">·</span>Deals</div>
-        <div class="footer-tagline">Canada's deal tracking app. Finding the best discounts across every category so you never pay full price.</div>
+        <div class="footer-tagline">The deal tracking app. Made in Canada. Finding the best discounts across every category so you never pay full price.</div>
       </div>
       <div class="footer-col">
         <h4>Product</h4>
