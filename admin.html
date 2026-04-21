@@ -1305,8 +1305,12 @@
       const data = await res.json();
       if (data.success) {
         result.className = 'notif-result notif-success';
-        result.textContent = `Newsletter sent successfully to ${data.recipientCount ?? 'all'} subscriber(s)!`;
-        // Reload history
+        if (data.background) {
+          result.textContent = `📤 ${data.message || 'Broadcast started.'} Refresh Mail History in ~2 minutes to see final sent/failed counts.`;
+        } else {
+          result.textContent = `Newsletter sent successfully to ${data.recipientCount ?? 'all'} subscriber(s)!`;
+        }
+        // Reload history so the "sending…" row appears right away
         nlDataLoaded = false;
         loadNewsletterData();
       } else {
