@@ -357,7 +357,7 @@
       <h3 style="color:#1a3a2a;margin-bottom:12px">Mail History</h3>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Date Sent</th><th>Template Type</th><th>Subject</th><th>Recipients</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Date Sent</th><th>Template Type</th><th>Subject</th><th>Status</th><th>Recipients</th><th>Actions</th></tr></thead>
           <tbody id="nl-history-table"></tbody>
         </table>
       </div>
@@ -1120,14 +1120,29 @@
       const history = histData.history || [];
       const htbody = document.getElementById('nl-history-table');
       htbody.innerHTML = history.length === 0
-        ? '<tr><td colspan="5" style="text-align:center;color:#888;padding:20px">No newsletters sent yet.</td></tr>'
+        ? '<tr><td colspan="6" style="text-align:center;color:#888;padding:20px">No newsletters sent yet.</td></tr>'
         : history.map((h, i) => {
           const date = h.sentAt ? new Date(h.sentAt).toLocaleString() : '-';
+          let statusCell;
+          if (h.status === 'sending') {
+            statusCell = `<span style="color:#e8b84b;font-weight:700;font-size:11px">📤 Sending…</span>`;
+          } else if (h.status === 'error') {
+            statusCell = `<span style="color:#c0392b;font-weight:700;font-size:11px">✗ Error</span>`;
+          } else if (h.status === 'completed' || h.completedAt) {
+            statusCell = `<span style="color:#2a7a3a;font-weight:700;font-size:11px">✓ Sent</span>`;
+          } else {
+            // Legacy rows without status — assume completed
+            statusCell = `<span style="color:#2a7a3a;font-weight:700;font-size:11px">✓ Sent</span>`;
+          }
+          const recipients = (typeof h.totalCount === 'number' && h.status === 'sending')
+            ? `${h.recipientCount ?? 0} / ${h.totalCount}`
+            : `${h.recipientCount ?? '-'}${(h.failedCount ? ` (${h.failedCount} failed)` : '')}`;
           return `<tr>
             <td>${esc(date)}</td>
             <td><span class="badge badge-green">${esc((h.template || '-').replace(/_/g, ' '))}</span></td>
             <td>${esc(h.subject || '-')}</td>
-            <td>${esc(h.recipientCount ?? '-')}</td>
+            <td>${statusCell}</td>
+            <td>${esc(recipients)}</td>
             <td>${h.html ? `<button class="btn btn-sm" onclick="viewPastNewsletter(${i})" style="background:#1a3a2a;color:#fff;font-size:11px;padding:4px 10px;">View</button>` : '<span style="color:#aaa;font-size:11px">N/A</span>'}</td>
           </tr>`;
         }).join('');
@@ -1515,8 +1530,21 @@
   window.switchTab = function(name) {
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
     document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+    try { localStorage.setItem('admin_active_tab', name); } catch (e) {}
     if (name === 'newsletters') loadNewsletterData();
   };
+
+  // Restore the tab the user was on before a page reload.
+  // Runs after auth so the app div exists + is visible.
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      const saved = localStorage.getItem('admin_active_tab');
+      if (saved && document.querySelector(`.tab[data-tab="${saved}"]`)) {
+        // Defer so it fires after onAuthStateChanged shows the app div
+        setTimeout(() => window.switchTab(saved), 100);
+      }
+    } catch (e) {}
+  });
 </script>
 
 </body>
