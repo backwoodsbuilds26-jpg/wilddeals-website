@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>WildDeals — Coming Soon</title>
-<meta name="description" content="The deals app — outdoors, home & garden, health & fitness, tools & auto, farm & ranch. 100% free. No ads. No subscriptions. Made in Canada. First 1,000 signups become Founding Members." />
+<title>WildDeals — 20,000+ Deals. Now on iPhone. Made in Canada.</title>
+<meta name="description" content="20,000+ live deals across outdoors, home & garden, fitness, tools & auto, and farm & ranch. You find out hours before Reddit, Slickdeals, and the rest of the deal-hunting crowd. 100% free. No ads. No subscriptions. Made in Canada. Now on iPhone. Android coming May 5. First 1,000 signups become Founding Members." />
 <link rel="canonical" href="https://wilddeals.ca/" />
 
 <!-- Favicons -->
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="WildDeals" />
 <meta property="og:url" content="https://wilddeals.ca/" />
 <meta property="og:title" content="WildDeals — The Deal Tracking App" />
-<meta property="og:description" content="Tracking the best deals — outdoors, home & garden, fitness, tools & auto, farm & ranch. 100% free. Made in Canada. Launching Spring 2026. First 1,000 signups become Founding Members." />
+<meta property="og:description" content="Tracking the best deals — outdoors, home & garden, fitness, tools & auto, farm & ranch. 100% free. Made in Canada. Now on iPhone. Android coming May 5. First 1,000 signups become Founding Members." />
 <meta property="og:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -25,7 +25,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="WildDeals — The Deal Tracking App" />
-<meta name="twitter:description" content="Tracking the best deals — outdoors, home & garden, fitness, tools & auto, farm & ranch. Made in Canada. Launching Spring 2026." />
+<meta name="twitter:description" content="Tracking the best deals — outdoors, home & garden, fitness, tools & auto, farm & ranch. Made in Canada. Now on iPhone. Android coming May 5." />
 <meta name="twitter:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
 
 <!-- Theme color (mobile browser chrome) -->
@@ -228,6 +228,28 @@
   .hero-form button:hover { background: #d8a946; transform: translateY(-1px); }
   .hero-form button:disabled { opacity: 0.6; cursor: not-allowed; }
   .hero-spots { font-size: 12px; color: var(--gold); letter-spacing: 0.1em; }
+  .hero-stores { display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch; margin-bottom: 18px; animation: subtleFade 0.8s ease-out; }
+  .store-badge { display: inline-flex; text-decoration: none; transition: transform 0.2s, opacity 0.2s; }
+  .store-badge:hover { transform: translateY(-2px); opacity: 0.92; }
+  .store-badge img { height: 56px; width: auto; display: block; }
+  .store-placeholder {
+    display: inline-flex; flex-direction: column; justify-content: center;
+    height: 56px; padding: 6px 20px;
+    background: rgba(246,244,238,0.08); border: 1px solid rgba(246,244,238,0.22);
+    border-radius: 8px; color: rgba(246,244,238,0.7);
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    text-align: left; text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .store-placeholder:hover { background: rgba(246,244,238,0.14); border-color: rgba(246,244,238,0.4); color: var(--cream); transform: translateY(-2px); }
+  .store-placeholder strong { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; text-transform: none; color: var(--cream); margin-top: 2px; }
+  .hero-android-note {
+    font-size: 12px; color: rgba(246,244,238,0.6); margin-bottom: 14px;
+    line-height: 1.7; max-width: 480px;
+  }
+  .hero-android-note strong { color: var(--cream); font-weight: 600; }
+  .hero-android-note a { color: var(--gold); text-decoration: underline; }
+  .hero-android-note a:hover { color: #d8a946; }
   .hero-success {
     display: none; padding: 18px; background: rgba(199,154,58,0.15);
     border-left: 3px solid var(--gold); color: var(--cream);
@@ -636,28 +658,34 @@
       <img src="/images/wd-cropped.png" alt="WildDeals logo" width="72" height="72" />
       <div class="nav-brand-text">
         <span>Wild<span class="dot">·</span>Deals</span>
-        <span class="nav-brand-sub">Launching Spring 2026</span>
+        <span class="nav-brand-sub">Now on iPhone · Android May 5</span>
       </div>
     </div>
     <div class="nav-links">
       <a href="/shop">Shop</a>
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
-      <a href="#notify" class="nav-cta">Get Early Access</a>
+      <a href="https://apps.apple.com/app/id6762442126" class="nav-cta" target="_blank" rel="noopener">Download</a>
     </div>
   </nav>
 
   <section class="hero">
     <img class="hero-bg" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=75" alt="" width="1400" height="933" fetchpriority="high" decoding="async" />
     <div class="hero-inner">
-      <div class="hero-eyebrow">A New Way to Gear Up</div>
-      <h1>Find the deal.<br/>Skip the <em>full price.</em></h1>
-      <p>WildDeals tracks the best deals across every category — outdoors, home & garden, fitness, tools & auto, farm & ranch — all in one quiet, focused app. Currently tracking Canada & USA. Europe coming soon.</p>
+      <div class="hero-eyebrow">NOW ON iPHONE · ANDROID MAY 5</div>
+      <h1>Every deal.<br/>Hours before <em>Reddit.</em></h1>
+      <p>20,000+ live deals across the categories you actually shop — outdoors, home & garden, fitness, tools & auto, farm & ranch. Curated daily. In your hands before they hit Slickdeals, Reddit, or anyone else. 100% free. No ads. No subscriptions.</p>
       <div class="hero-form-wrap">
+        <div class="hero-stores">
+          <a class="store-badge" href="https://apps.apple.com/app/id6762442126" target="_blank" rel="noopener">
+            <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" />
+          </a>
+        </div>
+        <div class="hero-android-note">Android coming <strong>May 5</strong>. Want in early? Sign up below — testing group members are hand-picked from the newsletter list.</div>
         <form class="hero-form" id="hero-form" autocomplete="off">
           <input type="text" name="bot-field" class="bot-field" tabindex="-1" aria-hidden="true" />
           <input type="email" id="hero-email" placeholder="you@example.com" required />
-          <button type="submit">Get Early Access</button>
+          <button type="submit">Notify Me</button>
         </form>
         <div class="hero-success" id="hero-success"></div>
         <div class="hero-spots" id="hero-spots"></div>
@@ -768,8 +796,8 @@
           <div class="tier-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
-          <h3>Early Access</h3>
-          <p>See the best deals before they hit the free weekly newsletter.</p>
+          <h3>Spotted First</h3>
+          <p>See deals hours before they hit Reddit, Slickdeals, or the weekly newsletter.</p>
         </div>
 
         <div class="tier-card">
@@ -845,10 +873,10 @@
     <div class="notify-inner reveal">
       <div class="section-mark">
         <img src="/images/wd-cropped.png" alt="" width="36" height="36" loading="lazy" />
-        <div class="label">Early Access</div>
+        <div class="label">Launch Updates</div>
       </div>
-      <h2>Get on the list.<br/>Skip the <em>line.</em></h2>
-      <p>Join the launch list and we'll let you know the moment the app goes live.</p>
+      <h2>iPhone? <em>Grab it.</em><br/>Android? <em>Almost there.</em></h2>
+      <p>iPhone is live on the App Store right now. Android lands May 5 — drop your email to get notified the moment it goes live, or to be picked for the early access testing group.</p>
       <div class="notify-pill" id="promo-pill">First 1,000 become Founding Members</div>
 
       <form class="notify-form" id="notify-form" autocomplete="off">
@@ -896,7 +924,7 @@
         <h4>Product</h4>
         <a href="/shop">Shop</a>
         <a href="/deals">Deals</a>
-        <a href="#notify">Get Early Access</a>
+        <a href="https://apps.apple.com/app/id6762442126" target="_blank" rel="noopener">Download on iOS</a>
         <a href="/media-kit">Media Kit</a>
       </div>
       <div class="footer-col">
@@ -1001,7 +1029,7 @@
       form.style.display = 'none';
       msg.style.display = 'block';
     } catch (err) {
-      btn.disabled = false; btn.textContent = 'Get Early Access';
+      btn.disabled = false; btn.textContent = 'Notify Me';
       alert('Something went wrong — please try again.');
     }
   });
