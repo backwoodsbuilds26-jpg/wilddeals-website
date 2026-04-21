@@ -227,6 +227,15 @@
         <button class="btn btn-primary" onclick="sendNotification()">Send Notification</button>
         <div id="notif-result"></div>
       </div>
+
+      <div class="notif-card" style="margin-top:16px;border:1px dashed #1a3a2a;">
+        <h3 style="color:#1a3a2a">🧪 Diagnostic — Test Push to All Categories</h3>
+        <p style="color:#666;font-size:13px;margin:4px 0 12px;">
+          Fires one test push per category to every user who has that category enabled. Returns live delivery numbers so you can confirm the alert pipeline works end-to-end. Recipients see a &ldquo;🧪 Test — [Category]&rdquo; push.
+        </p>
+        <button class="btn" style="background:#1a3a2a;color:#fff" onclick="runCategoryDiagnostic()">Run Diagnostic</button>
+        <div id="diag-result" style="margin-top:12px"></div>
+      </div>
     </div>
 
     <!-- ── Newsletters ── -->
@@ -851,6 +860,37 @@
     } catch (e) {
       result.className = 'notif-result notif-error';
       result.textContent = 'Network error: ' + e.message;
+    }
+  };
+
+  // Category alert diagnostic — fires one test push per category to subscribed users.
+  window.runCategoryDiagnostic = async function() {
+    const out = document.getElementById('diag-result');
+    if (!confirm('This sends a real test push per category to everyone who has that category enabled. Continue?')) return;
+    out.className = 'notif-result';
+    out.textContent = 'Running diagnostic — sending test pushes...';
+    try {
+      const res = await fetch(`${API_URL}/api/notify/test-all-categories`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(await adminHeaders()) },
+      });
+      const data = await res.json();
+      if (!data.success) {
+        out.className = 'notif-result notif-error';
+        out.textContent = data.error || 'Diagnostic failed.';
+        return;
+      }
+      const rows = Object.entries(data.results || {}).map(([cat, r]) => {
+        const status = r.skipped
+          ? `<span style="color:#888">skipped (${esc(r.skipped)})</span>`
+          : `<span style="color:#2a7a3a;font-weight:700">${r.sent}</span> / ${r.eligible} sent${r.failed ? `, <span style="color:#c0392b">${r.failed} failed</span>` : ''}`;
+        return `<tr><td style="padding:6px 12px;text-transform:capitalize;font-weight:600">${esc(cat)}</td><td style="padding:6px 12px">${status}</td></tr>`;
+      }).join('');
+      out.className = 'notif-result notif-success';
+      out.innerHTML = `<div style="margin-bottom:8px">✅ Diagnostic complete — ${data.totalSent} pushes sent to ${data.totalEligible} eligible devices across all categories.</div><table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden"><tbody>${rows}</tbody></table>`;
+    } catch (e) {
+      out.className = 'notif-result notif-error';
+      out.textContent = 'Network error: ' + e.message;
     }
   };
 
