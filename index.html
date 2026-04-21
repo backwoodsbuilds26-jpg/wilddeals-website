@@ -185,23 +185,38 @@
   }
   .hero::before {
     content: ''; position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(180deg, rgba(14,31,23,0.55) 0%, rgba(14,31,23,0.35) 40%, rgba(14,31,23,0.92) 100%);
+    background: linear-gradient(180deg, rgba(14,31,23,0.5) 0%, rgba(14,31,23,0.28) 40%, rgba(14,31,23,0.88) 100%);
   }
-  .hero-inner { position: relative; z-index: 2; max-width: 720px; padding: 0 40px; margin: 0 auto; width: 100%; text-align: left; }
+  .hero-inner { position: relative; z-index: 2; max-width: 760px; padding: 0 40px; margin: 0 auto; width: 100%; text-align: left; }
   .hero-eyebrow {
-    font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 28px; font-weight: 500;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    animation: subtleFade 0.8s ease-out;
+    display: inline-flex; align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, rgba(232,184,75,0.24), rgba(232,184,75,0.08));
+    border: 1px solid rgba(232,184,75,0.55);
+    border-radius: 100px;
+    font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #f8e5b8; margin-bottom: 26px; font-weight: 700;
+    box-shadow: 0 0 22px rgba(232,184,75,0.18);
+    animation: pillGlow 2.6s ease-in-out infinite alternate, subtleFade 0.8s ease-out;
+  }
+  @keyframes pillGlow {
+    from { box-shadow: 0 0 18px rgba(232,184,75,0.18); }
+    to   { box-shadow: 0 0 38px rgba(232,184,75,0.48); }
   }
   .hero h1 {
-    font-size: clamp(40px, 6vw, 72px); font-weight: 300;
-    line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px;
+    font-size: clamp(44px, 6.8vw, 78px); font-weight: 800;
+    line-height: 1.04; letter-spacing: -0.025em; margin-bottom: 22px;
+    color: #ffffff;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.45);
   }
-  .hero h1 em { font-style: normal; font-weight: 500; color: var(--gold); }
+  .hero h1 em {
+    font-style: normal; font-weight: 800; color: var(--gold);
+    text-shadow: 0 4px 24px rgba(0,0,0,0.55), 0 0 40px rgba(232,184,75,0.55);
+  }
   .hero p {
-    font-size: 17px; color: rgba(246,244,238,0.78);
-    max-width: 520px; margin-bottom: 40px; font-weight: 300;
+    font-size: 18px; color: rgba(255,255,255,0.94);
+    max-width: 540px; margin-bottom: 36px; font-weight: 400; line-height: 1.55;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.55);
     animation: subtleFade 0.8s ease-out;
   }
   .hero-form-wrap {
@@ -672,9 +687,9 @@
   <section class="hero">
     <img class="hero-bg" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=75" alt="" width="1400" height="933" fetchpriority="high" decoding="async" />
     <div class="hero-inner">
-      <div class="hero-eyebrow">NOW ON iPHONE · ANDROID MAY 5</div>
-      <h1>Every deal.<br/>Hours before <em>Reddit.</em></h1>
-      <p>20,000+ live deals across the categories you actually shop — outdoors, home & garden, fitness, tools & auto, farm & ranch. Curated daily. In your hands before they hit Slickdeals, Reddit, or anyone else. 100% free. No ads. No subscriptions.</p>
+      <div class="hero-eyebrow">🎉 Just Launched · iPhone Now · Android May 5</div>
+      <h1>40,000+ deals.<br/>Hours before <em>other forums.</em></h1>
+      <p>Save thousands on gear you'd buy anyway — outdoors, home & garden, fitness, tools & auto, farm & ranch. Curated daily. Real prices. Real savings. 100% free. No ads. No subscriptions.</p>
       <div class="hero-form-wrap">
         <div class="hero-stores">
           <a class="store-badge" href="https://apps.apple.com/app/id6762442126" target="_blank" rel="noopener">
@@ -940,40 +955,6 @@
 
 
 <script>
-  // ── Slow auto-scroll (performance-optimized) ──
-  // Gently scrolls on desktop only. Disabled on mobile to save battery/CPU.
-  (function() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.innerWidth < 768) return; // skip on mobile
-    const SPEED = 1.16;
-    const RESUME_AFTER = 8000;
-    let running = true;
-    let resumeTimer = null;
-    let stopped = false;
-
-    function pause() {
-      running = false;
-      clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(function() { running = true; }, RESUME_AFTER);
-    }
-
-    ['wheel','touchstart','keydown'].forEach(function(ev) { window.addEventListener(ev, pause, { passive: true }); });
-
-    function tick() {
-      if (stopped) return;
-      if (running) {
-        var max = document.documentElement.scrollHeight - window.innerHeight;
-        if (window.scrollY < max - 1) {
-          window.scrollTo(0, window.scrollY + SPEED);
-        } else {
-          stopped = true; return;
-        }
-      }
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  })();
-
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
