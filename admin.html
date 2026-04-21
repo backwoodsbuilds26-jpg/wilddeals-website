@@ -1530,21 +1530,8 @@
   window.switchTab = function(name) {
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
     document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
-    try { localStorage.setItem('admin_active_tab', name); } catch (e) {}
     if (name === 'newsletters') loadNewsletterData();
   };
-
-  // Restore the tab the user was on before a page reload.
-  // Runs after auth so the app div exists + is visible.
-  document.addEventListener('DOMContentLoaded', function() {
-    try {
-      const saved = localStorage.getItem('admin_active_tab');
-      if (saved && document.querySelector(`.tab[data-tab="${saved}"]`)) {
-        // Defer so it fires after onAuthStateChanged shows the app div
-        setTimeout(() => window.switchTab(saved), 100);
-      }
-    } catch (e) {}
-  });
 </script>
 
 </body>
