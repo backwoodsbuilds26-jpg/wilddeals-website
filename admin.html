@@ -299,6 +299,7 @@
             <label>Template Type</label>
             <select id="nl-template" onchange="nlTemplateChanged()">
               <option value="">Select template...</option>
+              <option value="ios_launch">🎉 iOS Launch Announcement</option>
               <option value="weekly_deals">Weekly Deals Roundup</option>
               <option value="milestone">Milestone Celebration</option>
               <option value="seasonal_spring">Seasonal - Spring</option>
@@ -1049,6 +1050,7 @@
   let nlSubscribersList = []; // cached for search/export
 
   const NL_SUBJECT_DEFAULTS = {
+    ios_launch: '📱 WildDeals is now on the App Store',
     weekly_deals: 'This Week\'s Wildest Deals Are Here!',
     milestone: 'WildDeals Milestone - Thank You!',
     seasonal_spring: 'Spring Into Savings - New Outdoor Deals!',
