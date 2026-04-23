@@ -1,0 +1,21 @@
+{
+  "name": "WildDeals",
+  "short_name": "WildDeals",
+  "description": "40,000+ deals. Hours before other forums. 100% free, no ads, no subscriptions. Made in Canada.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "lang": "en",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "/images/WDicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
