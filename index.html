@@ -8,8 +8,10 @@
 <link rel="canonical" href="https://wilddeals.ca/" />
 
 <!-- Favicons -->
-<link rel="icon" type="image/png" href="/images/wd-favicon.png" />
-<link rel="apple-touch-icon" href="/images/wd-favicon.png" />
+<link rel="icon" type="image/x-icon" href="/images/web/favicon.ico" />
+<link rel="icon" type="image/png" sizes="192x192" href="/images/web/icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/images/web/icon-512.png" />
+<link rel="apple-touch-icon" href="/images/web/apple-touch-icon.png" />
 
 <!-- Open Graph (Facebook, iMessage, WhatsApp, Slack, Discord) -->
 <meta property="og:type" content="website" />
@@ -29,7 +31,7 @@
 <meta name="twitter:image" content="https://wilddeals.ca/images/wild-deals-banner.png" />
 
 <!-- Theme color (mobile browser chrome) -->
-<meta name="theme-color" content="#142a1f" />
+<meta name="theme-color" content="#0d0d0d" />
 
 <!-- Schema.org structured data -->
 <script type="application/ld+json">
@@ -41,7 +43,7 @@
       "@id": "https://wilddeals.ca/#organization",
       "name": "WildDeals",
       "url": "https://wilddeals.ca/",
-      "logo": "https://wilddeals.ca/images/wd-cropped.png",
+      "logo": "https://wilddeals.ca/images/wd-logo-red.png",
       "description": "The deals app — tracking the best prices on outdoors, home & garden, health & fitness, tools & auto, and farm & ranch. Made in Canada.",
       "foundingDate": "2026",
       "founder": { "@type": "Organization", "name": "WildDeals" },
@@ -55,7 +57,7 @@
       "applicationCategory": "ShoppingApplication",
       "description": "WildDeals tracks the best deals — outdoors, home & garden, fitness, tools & auto, farm & ranch — all in one app. Live price drops, smart alerts, and wishlists from 40+ retailers. Made in Canada.",
       "url": "https://wilddeals.ca/",
-      "image": "https://wilddeals.ca/images/wd-cropped.png",
+      "image": "https://wilddeals.ca/images/wd-logo-red.png",
       "author": { "@id": "https://wilddeals.ca/#organization" },
       "offers": {
         "@type": "Offer",
@@ -82,12 +84,8 @@
 </script>
 
 <!-- Preconnect to critical origins -->
-<link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- Preload hero image for fast LCP -->
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=75" fetchpriority="high">
 
 <!-- Non-blocking font load -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -95,13 +93,14 @@
 
 <style>
   :root {
-    --forest: #142a1f;
-    --forest-2: #1f3a2c;
+    --forest: #0d0d0d;
+    --forest-2: #1a1a1a;
     --cream: #f6f4ee;
     --cream-2: #ecead9;
-    --gold: #c79a3a;
+    --gold: #dc1b1b;
+    --gold-2: #b31414;
     --muted: #6e7771;
-    --line: rgba(20,42,31,0.08);
+    --line: rgba(13,13,13,0.08);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -138,7 +137,7 @@
   .nav-brand-sub::before {
     content: ''; display: inline-block;
     width: 6px; height: 6px; border-radius: 50%;
-    background: var(--gold); box-shadow: 0 0 0 4px rgba(199,154,58,0.18);
+    background: var(--gold); box-shadow: 0 0 0 4px rgba(220,27,27,0.18);
     margin-right: 8px; vertical-align: 1px;
   }
   .nav-brand img {
@@ -159,12 +158,12 @@
   }
   .nav-links a:hover { color: var(--gold); }
   .nav-cta {
-    background: var(--gold); color: var(--forest); padding: 10px 22px;
+    background: var(--gold); color: var(--cream); padding: 10px 22px;
     border-radius: 2px; font-size: 12px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     transition: background 0.2s, transform 0.2s;
   }
-  .nav-cta:hover { background: #d8a946; transform: translateY(-1px); }
+  .nav-cta:hover { background: #b31414; transform: translateY(-1px); }
   @media (max-width: 680px) {
     .nav-links { gap: 16px; }
     .nav-links a { font-size: 11px; }
@@ -175,33 +174,34 @@
   .hero {
     position: relative; min-height: 100vh;
     display: flex; align-items: center;
-    background-color: #0e1f17;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(220,27,27,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 80%, rgba(220,27,27,0.10) 0%, transparent 50%),
+      linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
     color: var(--cream); overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
-    z-index: 0;
   }
   .hero::before {
     content: ''; position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(180deg, rgba(14,31,23,0.5) 0%, rgba(14,31,23,0.28) 40%, rgba(14,31,23,0.88) 100%);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(220,27,27,0.08) 0%, transparent 60%),
+      linear-gradient(180deg, transparent 0%, transparent 60%, rgba(0,0,0,0.5) 100%);
+    pointer-events: none;
   }
   .hero-inner { position: relative; z-index: 2; max-width: 760px; padding: 0 40px; margin: 0 auto; width: 100%; text-align: left; }
   .hero-eyebrow {
     display: inline-flex; align-items: center;
     padding: 10px 20px;
-    background: linear-gradient(135deg, rgba(232,184,75,0.24), rgba(232,184,75,0.08));
-    border: 1px solid rgba(232,184,75,0.55);
+    background: linear-gradient(135deg, rgba(220,27,27,0.24), rgba(220,27,27,0.08));
+    border: 1px solid rgba(220,27,27,0.55);
     border-radius: 100px;
     font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: #f8e5b8; margin-bottom: 22px; font-weight: 700;
-    box-shadow: 0 0 22px rgba(232,184,75,0.18);
+    color: #ffd9d9; margin-bottom: 22px; font-weight: 700;
+    box-shadow: 0 0 22px rgba(220,27,27,0.18);
     animation: pillGlow 2.6s ease-in-out infinite alternate, subtleFade 0.8s ease-out;
   }
   @keyframes pillGlow {
-    from { box-shadow: 0 0 18px rgba(232,184,75,0.18); }
-    to   { box-shadow: 0 0 38px rgba(232,184,75,0.48); }
+    from { box-shadow: 0 0 18px rgba(220,27,27,0.18); }
+    to   { box-shadow: 0 0 38px rgba(220,27,27,0.48); }
   }
   .hero h1 {
     font-size: clamp(40px, 6.1vw, 66px); font-weight: 800;
@@ -210,7 +210,7 @@
     text-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.45);
   }
   .hero h1 em {
-    font-style: normal; font-weight: 800; color: #f0c04c;
+    font-style: normal; font-weight: 800; color: #ff3838;
     text-shadow:
       0 1px 0 rgba(0,0,0,0.85),
       0 -1px 0 rgba(0,0,0,0.85),
@@ -240,13 +240,13 @@
   .hero-form input:focus { outline: none; border-color: var(--gold); background: rgba(246,244,238,0.18); }
   .hero-form input::placeholder { color: rgba(246,244,238,0.45); }
   .hero-form button {
-    padding: 16px 28px; background: var(--gold); color: var(--forest);
+    padding: 16px 28px; background: var(--gold); color: var(--cream);
     border: none; border-radius: 2px; font-family: inherit;
     font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
     text-transform: uppercase; cursor: pointer;
     transition: background 0.2s, transform 0.2s;
   }
-  .hero-form button:hover { background: #d8a946; transform: translateY(-1px); }
+  .hero-form button:hover { background: #b31414; transform: translateY(-1px); }
   .hero-form button:disabled { opacity: 0.6; cursor: not-allowed; }
   .hero-spots { font-size: 12px; color: var(--gold); letter-spacing: 0.1em; }
   .hero-stores { display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch; margin-bottom: 20px; animation: subtleFade 0.8s ease-out; }
@@ -271,9 +271,9 @@
   }
   .hero-android-note strong { color: var(--cream); font-weight: 600; }
   .hero-android-note a { color: var(--gold); text-decoration: underline; }
-  .hero-android-note a:hover { color: #d8a946; }
+  .hero-android-note a:hover { color: #b31414; }
   .hero-success {
-    display: none; padding: 18px; background: rgba(199,154,58,0.15);
+    display: none; padding: 18px; background: rgba(220,27,27,0.15);
     border-left: 3px solid var(--gold); color: var(--cream);
     font-size: 15px; text-align: left; margin-bottom: 12px;
   }
@@ -315,10 +315,10 @@
     background: #fff; border: 1px solid var(--line); border-radius: 4px;
     padding: 32px 28px; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
   }
-  .tier-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 18px 40px -20px rgba(20,42,31,0.18); }
+  .tier-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 18px 40px -20px rgba(13,13,13,0.18); }
   .tier-icon {
     width: 44px; height: 44px; border-radius: 50%;
-    background: rgba(199,154,58,0.12); color: var(--gold);
+    background: rgba(220,27,27,0.12); color: var(--gold);
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 22px;
   }
@@ -380,7 +380,7 @@
   .feature-list li:last-child { border-bottom: 1px solid var(--line); }
   .feature-icon {
     flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(199,154,58,0.12); color: var(--gold);
+    background: rgba(220,27,27,0.12); color: var(--gold);
     display: flex; align-items: center; justify-content: center;
     font-size: 14px; margin-top: 2px;
   }
@@ -390,7 +390,7 @@
   .phone-wrap { display: flex; justify-content: center; perspective: 1500px; }
   .phone-img {
     width: 320px; max-width: 100%; height: auto;
-    filter: drop-shadow(0 30px 50px rgba(20,42,31,0.32));
+    filter: drop-shadow(0 30px 50px rgba(13,13,13,0.32));
     transform: rotateY(-8deg) rotateX(2deg);
     transition: transform 0.6s ease;
     will-change: transform;
@@ -407,8 +407,8 @@
     width: 280px; position: relative;
     background: #111; border-radius: 40px; padding: 12px;
     box-shadow:
-      0 50px 100px -20px rgba(20,42,31,0.30),
-      0 30px 60px -30px rgba(20,42,31,0.25),
+      0 50px 100px -20px rgba(13,13,13,0.30),
+      0 30px 60px -30px rgba(13,13,13,0.25),
       inset 0 0 0 1.5px rgba(255,255,255,0.1);
     transform: rotateY(-8deg) rotateX(2deg);
     transition: transform 0.6s ease;
@@ -438,7 +438,7 @@
   }
   .slideshow-dots button {
     width: 10px; height: 10px; border-radius: 50%; border: none;
-    background: rgba(20,42,31,0.2); cursor: pointer; padding: 0;
+    background: rgba(13,13,13,0.2); cursor: pointer; padding: 0;
     transition: background 0.3s, transform 0.3s;
   }
   .slideshow-dots button.active {
@@ -449,11 +449,11 @@
     .phone-device:hover { transform: none; }
   }
   .phone {
-    width: 280px; height: 580px; background: #0a1610;
+    width: 280px; height: 580px; background: #0a0a0a;
     border-radius: 38px; padding: 10px;
     box-shadow:
-      0 50px 100px -20px rgba(20,42,31,0.30),
-      0 30px 60px -30px rgba(20,42,31,0.25),
+      0 50px 100px -20px rgba(13,13,13,0.30),
+      0 30px 60px -30px rgba(13,13,13,0.25),
       inset 0 0 0 1px rgba(255,255,255,0.06);
     position: relative;
     transform: rotateY(-8deg) rotateX(2deg);
@@ -463,7 +463,7 @@
   .phone::before {
     content: ''; position: absolute;
     top: 18px; left: 50%; transform: translateX(-50%);
-    width: 80px; height: 22px; background: #0a1610;
+    width: 80px; height: 22px; background: #0a0a0a;
     border-radius: 0 0 14px 14px; z-index: 3;
   }
   .phone-screen {
@@ -480,7 +480,7 @@
   .phone-deal { background: rgba(246,244,238,0.06); border: 1px solid rgba(246,244,238,0.08); border-radius: 12px; padding: 14px; color: var(--cream); }
   .phone-deal-row { display: flex; justify-content: space-between; align-items: flex-start; }
   .phone-deal-store { font-size: 10px; opacity: 0.5; letter-spacing: 0.08em; text-transform: uppercase; }
-  .phone-deal-badge { background: var(--gold); color: var(--forest); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 3px; }
+  .phone-deal-badge { background: var(--gold); color: var(--cream); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 3px; }
   .phone-deal-title { font-size: 13px; font-weight: 500; margin-top: 6px; line-height: 1.35; }
   .phone-deal-prices { display: flex; gap: 8px; align-items: baseline; margin-top: 8px; }
   .phone-deal-now { font-size: 16px; font-weight: 600; color: var(--gold); }
@@ -508,11 +508,11 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 16px 28px; margin-bottom: 12px; border-radius: 2px;
     text-decoration: none; border: none;
-    background: var(--gold); color: var(--forest);
-    box-shadow: 0 4px 16px rgba(199,154,58,0.2);
+    background: var(--gold); color: var(--cream);
+    box-shadow: 0 4px 16px rgba(220,27,27,0.2);
     transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
   }
-  .shop-btn:hover { background: #d8a946; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(199,154,58,0.3); }
+  .shop-btn:hover { background: #b31414; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(220,27,27,0.3); }
   .shop-btn-left { display: flex; align-items: center; gap: 12px; }
   .shop-btn-flag { font-size: 22px; line-height: 1; }
   .shop-btn-label { font-size: 16px; font-weight: 600; letter-spacing: 0.02em; }
@@ -525,7 +525,7 @@
     color: var(--forest); font-size: 12px; font-weight: 500;
     letter-spacing: 0.04em; transition: all 0.2s;
   }
-  .shop-cat:hover { border-color: var(--gold); background: rgba(199,154,58,0.08); }
+  .shop-cat:hover { border-color: var(--gold); background: rgba(220,27,27,0.08); }
   .shop-cat-icon { font-size: 22px; line-height: 1; }
   .shop-regions { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; letter-spacing: 0.08em; text-align: center; }
   .shop-regions .region { color: var(--forest); font-weight: 500; }
@@ -541,7 +541,7 @@
   .notify h2 em { font-style: normal; font-weight: 500; }
   .notify > .notify-inner > p { font-size: 16px; color: var(--muted); margin-bottom: 8px; }
   .notify-pill {
-    display: inline-block; background: rgba(199,154,58,0.12);
+    display: inline-block; background: rgba(220,27,27,0.12);
     color: var(--gold); font-size: 12px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     padding: 8px 16px; border-radius: 100px; margin: 20px 0 24px;
@@ -554,7 +554,7 @@
     transition: border-color 0.3s, background 0.3s;
   }
   .notify-form input:focus { outline: none; border-color: var(--gold); background: #fff; }
-  .notify-form input::placeholder { color: rgba(20,42,31,0.4); }
+  .notify-form input::placeholder { color: rgba(13,13,13,0.4); }
   .notify-form button {
     padding: 16px 28px; background: var(--forest); color: var(--cream);
     border: none; border-radius: 2px; font-family: inherit;
@@ -632,7 +632,7 @@
     display: none; position: fixed; bottom: 20px; left: 20px; z-index: 100;
     max-width: 380px; padding: 20px 24px;
     background: var(--forest); color: rgba(246,244,238,0.7);
-    border: 1px solid rgba(199,154,58,0.15); border-radius: 4px;
+    border: 1px solid rgba(220,27,27,0.15); border-radius: 4px;
     box-shadow: 0 16px 40px rgba(0,0,0,0.25);
     font-size: 13px; line-height: 1.5;
   }
@@ -645,7 +645,7 @@
     letter-spacing: 0.06em; cursor: pointer; transition: opacity 0.2s;
     min-height: 44px;
   }
-  .cookie-accept { background: var(--gold); color: var(--forest); }
+  .cookie-accept { background: var(--gold); color: var(--cream); }
   .cookie-decline { background: rgba(246,244,238,0.1); color: rgba(246,244,238,0.6); }
   .cookie-btns button:hover { opacity: 0.85; }
 
@@ -677,7 +677,7 @@
 
   <nav class="nav">
     <div class="nav-brand">
-      <img src="/images/wd-cropped.png" alt="WildDeals logo" width="72" height="72" />
+      <img src="/images/wd-logo-red.png" alt="WildDeals logo" width="72" height="72" />
       <div class="nav-brand-text">
         <span>Wild<span class="dot">·</span>Deals</span>
         <span class="nav-brand-sub">Now on iPhone · Android May 5</span>
@@ -692,7 +692,6 @@
   </nav>
 
   <section class="hero">
-    <img class="hero-bg" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=75" alt="" width="1400" height="933" fetchpriority="high" decoding="async" />
     <div class="hero-inner">
       <div class="hero-eyebrow">🎉 Just Launched · iPhone Now · Android May 5</div>
       <h1>40,000+ deals.<br/>Hours before <em>other forums.</em></h1>
@@ -721,7 +720,7 @@
       <div class="preview-grid">
         <div class="preview-text reveal">
           <div class="section-mark">
-            <img src="/images/wd-cropped.png" alt="" width="36" height="36" loading="lazy" />
+            <img src="/images/wd-logo-red.png" alt="" width="36" height="36" loading="lazy" />
             <div class="label">The App</div>
           </div>
           <h2>Built for the<br/><em>backcountry buyer.</em></h2>
@@ -856,23 +855,9 @@
 
   <!-- Categories Banner -->
   <section class="categories-banner">
-    <a href="#notify" aria-label="Browse WildDeals categories — Outdoors & Adventure, Home & Garden, Health & Fitness, Tools n Auto, Farm & Ranch">
-      <picture>
-        <source type="image/webp" srcset="/images/WildDealsReal.webp" />
-        <img class="categories-banner-img" src="/images/WildDealsReal.png" alt="WildDeals — Amazing deals on premium gear. Outdoors & Adventure, Home & Garden, Health & Fitness, Tools n Auto, Farm & Ranch" width="1536" height="1024" loading="lazy" decoding="async" />
-      </picture>
+    <a href="#notify" aria-label="Browse WildDeals categories — Outdoors & Adventure, Home & Garden, Health & Fitness, Farm & Ranch">
+      <img class="categories-banner-img" src="/images/wilddealsweb.png" alt="WildDeals — Everything you need. Deals that deliver. Shop the best deals in Outdoors & Adventure, Home & Garden, Health & Fitness, and Farm & Ranch. 40+ retailers, 24h refresh cycle, 1,000+ Founding Member spots, $0 forever." width="1536" height="900" loading="lazy" decoding="async" />
     </a>
-  </section>
-
-  <section class="stats">
-    <div class="container">
-      <div class="stats-grid">
-        <div><div class="stat-num">40+</div><div class="stat-label">Retailers</div></div>
-        <div><div class="stat-num">24h</div><div class="stat-label">Refresh cycle</div></div>
-        <div><div class="stat-num">1,000</div><div class="stat-label">Founding Member spots</div></div>
-        <div><div class="stat-num">$0</div><div class="stat-label">Forever</div></div>
-      </div>
-    </div>
   </section>
 
   <section class="shop reveal">
@@ -894,7 +879,7 @@
   <section class="notify" id="notify">
     <div class="notify-inner reveal">
       <div class="section-mark">
-        <img src="/images/wd-cropped.png" alt="" width="36" height="36" loading="lazy" />
+        <img src="/images/wd-logo-red.png" alt="" width="36" height="36" loading="lazy" />
         <div class="label">Launch Updates</div>
       </div>
       <h2>iPhone? <em>Grab it.</em><br/>Android? <em>Almost there.</em></h2>
@@ -939,7 +924,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand-block">
-        <div class="footer-logo"><img src="/images/wd-cropped.png" alt="WildDeals" loading="lazy" /> Wild<span class="dot">·</span>Deals</div>
+        <div class="footer-logo"><img src="/images/wd-logo-red.png" alt="WildDeals" loading="lazy" /> Wild<span class="dot">·</span>Deals</div>
         <div class="footer-tagline">The deal tracking app. Made in Canada. Finding the best discounts across every category so you never pay full price.</div>
       </div>
       <div class="footer-col">
