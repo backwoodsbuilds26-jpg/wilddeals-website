@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/images/wd-favicon.png" />
-  <link rel="apple-touch-icon" href="/images/wd-favicon.png" />
+  <link rel="icon" type="image/png" href="/images/WDfavicon.png" />
+  <link rel="apple-touch-icon" href="/images/WDfavicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WildDeals Growth Hub</title>
   <style>
@@ -11,17 +11,17 @@
     body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
 
     /* ── Topbar ── */
-    .topbar { background: #1a3a2a; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
-    .topbar h1 { color: #e8f5e0; font-size: 20px; }
-    .topbar a { color: #7db88a; font-size: 13px; text-decoration: none; }
-    .topbar a:hover { color: #e8f5e0; }
+    .topbar { background: #0d0d0d; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
+    .topbar h1 { color: #f6f4ee; font-size: 20px; }
+    .topbar a { color: #c0b8a8; font-size: 13px; text-decoration: none; }
+    .topbar a:hover { color: #f6f4ee; }
 
     /* ── Main ── */
     .main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
     .bookmark-note {
-      background: linear-gradient(135deg, #1a3a2a, #2a5a3a);
-      color: #e8f5e0;
+      background: linear-gradient(135deg, #0d0d0d, #2a5a3a);
+      color: #f6f4ee;
       padding: 16px 24px;
       border-radius: 12px;
       font-size: 15px;
@@ -30,17 +30,17 @@
       align-items: center;
       gap: 10px;
     }
-    .bookmark-note strong { color: #e8b84b; }
+    .bookmark-note strong { color: #dc1b1b; }
 
     /* ── Section ── */
     .section { margin-bottom: 36px; }
     .section-title {
       font-size: 20px;
       font-weight: 800;
-      color: #1a3a2a;
+      color: #0d0d0d;
       margin-bottom: 16px;
       padding-bottom: 8px;
-      border-bottom: 3px solid #e8b84b;
+      border-bottom: 3px solid #dc1b1b;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -67,7 +67,7 @@
       transform: translateY(-2px);
     }
     .card-icon { font-size: 28px; margin-bottom: 8px; }
-    .card-title { font-size: 15px; font-weight: 700; color: #1a3a2a; margin-bottom: 4px; }
+    .card-title { font-size: 15px; font-weight: 700; color: #0d0d0d; margin-bottom: 4px; }
     .card-desc { font-size: 13px; color: #888; }
 
     /* ── Checklist ── */
@@ -82,7 +82,7 @@
     }
     .checklist-item:last-child { border-bottom: none; }
     .checklist-item a {
-      color: #1a3a2a;
+      color: #0d0d0d;
       font-weight: 600;
       text-decoration: none;
     }
@@ -103,17 +103,17 @@
       gap: 8px;
       padding: 12px 18px;
       background: #fff;
-      border: 2px solid #e8b84b;
+      border: 2px solid #dc1b1b;
       border-radius: 10px;
       font-size: 13px;
       font-weight: 600;
-      color: #1a3a2a;
+      color: #0d0d0d;
       text-decoration: none;
       transition: background 0.2s;
     }
     .alert-btn:hover {
-      background: #e8b84b;
-      color: #2a1800;
+      background: #dc1b1b;
+      color: #f6f4ee;
     }
 
     /* ── Content Ideas ── */
@@ -128,11 +128,11 @@
     }
     .idea-item:last-child { border-bottom: none; }
     .idea-icon { font-size: 18px; }
-    .idea-text { font-weight: 600; color: #1a3a2a; }
+    .idea-text { font-weight: 600; color: #0d0d0d; }
 
     /* ── Badge ── */
     .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
-    .badge-green { background: #e8f5e0; color: #1a7a3a; }
+    .badge-green { background: #f6f4ee; color: #0d0d0d; }
     .badge-gold { background: #fff8e0; color: #8a6d1b; }
 
     /* ── Responsive ── */
@@ -264,9 +264,9 @@
       </div>
 
     </div>
-    <div style="margin-top:16px;padding:14px 18px;background:#f0f7ec;border:1px solid #1a3a2a;border-radius:10px;">
-      <strong style="color:#1a3a2a;">IndexNow (Bing/Yandex/DuckDuckGo)</strong> &mdash; instant indexing API
-      <button id="indexnow-btn" onclick="submitIndexNow()" style="margin-left:12px;background:#1a3a2a;color:#e8b84b;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;">Ping IndexNow</button>
+    <div style="margin-top:16px;padding:14px 18px;background:#f0f7ec;border:1px solid #0d0d0d;border-radius:10px;">
+      <strong style="color:#0d0d0d;">IndexNow (Bing/Yandex/DuckDuckGo)</strong> &mdash; instant indexing API
+      <button id="indexnow-btn" onclick="submitIndexNow()" style="margin-left:12px;background:#0d0d0d;color:#dc1b1b;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;">Ping IndexNow</button>
       <span id="indexnow-status" style="margin-left:10px;font-size:13px;color:#666;"></span>
     </div>
     <script>
@@ -282,7 +282,7 @@
           });
           var data = await res.json();
           status.textContent = data.ok ? ('\u2713 Submitted ' + data.count + ' URLs (HTTP ' + data.status + ')') : ('\u2717 Failed: ' + (data.error || data.status));
-          status.style.color = data.ok ? '#1a7a3a' : '#c0392b';
+          status.style.color = data.ok ? '#0d0d0d' : '#c0392b';
         } catch (e) {
           status.textContent = '\u2717 ' + e.message; status.style.color = '#c0392b';
         }
