@@ -38,14 +38,14 @@
     body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: #f0f0f0; color: #1a1a1a; }
 
     .print-btn-bar {
-      position: fixed; top: 0; left: 0; right: 0; background: #0c1a12; padding: 12px 24px;
+      position: fixed; top: 0; left: 0; right: 0; background: #0a0a0a; padding: 12px 24px;
       display: flex; align-items: center; justify-content: center; gap: 16px; z-index: 100;
     }
     .print-btn-bar button {
-      background: #e8b84b; color: #2a1800; border: none; padding: 10px 24px; border-radius: 8px;
+      background: #dc1b1b; color: #f6f4ee; border: none; padding: 10px 24px; border-radius: 8px;
       font-weight: bold; font-size: 15px; cursor: pointer;
     }
-    .print-btn-bar span { color: #7db88a; font-size: 13px; }
+    .print-btn-bar span { color: #c0b8a8; font-size: 13px; }
 
     body { padding-top: 56px; }
 
@@ -53,7 +53,7 @@
 
     /* Cover */
     .cover {
-      background: #1a3a2a; color: #e8f5e0; position: relative; overflow: hidden;
+      background: #0d0d0d; color: #f6f4ee; position: relative; overflow: hidden;
     }
     .cover-hero {
       width: 100%; height: 280px; object-fit: cover; display: block;
@@ -61,7 +61,7 @@
     }
     .cover-overlay {
       position: absolute; top: 0; left: 0; right: 0; height: 280px;
-      background: linear-gradient(180deg, rgba(26,58,42,0.3), rgba(26,58,42,0.9));
+      background: linear-gradient(180deg, rgba(13,13,13,0.3), rgba(13,13,13,0.9));
     }
     .cover-brand {
       position: absolute; top: 40px; left: 60px; display: flex; align-items: center; gap: 16px; z-index: 2;
@@ -70,18 +70,18 @@
 
     /* Sections */
     .content-page { padding: 60px; }
-    .section-label { font-size: 11px; color: #e8b84b; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px; }
-    .section-title { font-size: 28px; font-weight: 800; color: #1a3a2a; margin-bottom: 8px; }
+    .section-label { font-size: 11px; color: #dc1b1b; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px; }
+    .section-title { font-size: 28px; font-weight: 800; color: #0d0d0d; margin-bottom: 8px; }
     .section-desc { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 24px; }
-    .divider { height: 3px; width: 48px; background: #e8b84b; border-radius: 2px; margin-bottom: 28px; }
+    .divider { height: 3px; width: 48px; background: #dc1b1b; border-radius: 2px; margin-bottom: 28px; }
 
     /* Photo Banner */
     .photo-banner { width: 100%; height: 200px; object-fit: cover; display: block; }
 
     /* Stats */
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
-    .stat-card { background: #f8faf7; border-radius: 12px; padding: 24px; text-align: center; border: 1px solid #e0e8e0; }
-    .stat-number { font-size: 32px; font-weight: 800; color: #1a3a2a; }
+    .stat-card { background: #f6f4ee; border-radius: 12px; padding: 24px; text-align: center; border: 1px solid #ecead9; }
+    .stat-number { font-size: 32px; font-weight: 800; color: #0d0d0d; }
     .stat-label { font-size: 12px; color: #888; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
 
     /* Categories with photos */
@@ -96,41 +96,41 @@
 
     /* Partnership cards */
     .opp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 36px; }
-    .opp-card { background: #1a3a2a; border-radius: 14px; padding: 28px; color: #e8f5e0; }
-    .opp-card h3 { font-size: 17px; margin-bottom: 8px; color: #e8b84b; }
-    .opp-card p { font-size: 13px; color: #7db88a; line-height: 1.6; }
-    .opp-card.gold { background: linear-gradient(135deg, #e8b84b, #d4a43d); color: #2a1800; }
-    .opp-card.gold h3 { color: #2a1800; }
+    .opp-card { background: #0d0d0d; border-radius: 14px; padding: 28px; color: #f6f4ee; }
+    .opp-card h3 { font-size: 17px; margin-bottom: 8px; color: #dc1b1b; }
+    .opp-card p { font-size: 13px; color: #c0b8a8; line-height: 1.6; }
+    .opp-card.gold { background: linear-gradient(135deg, #dc1b1b, #b31414); color: #f6f4ee; }
+    .opp-card.gold h3 { color: #f6f4ee; }
     .opp-card.gold p { color: #5a4010; }
 
     /* Pro */
-    .pro-box { background: #1a3a2a; border-radius: 16px; padding: 32px; color: #e8f5e0; margin-bottom: 36px; }
+    .pro-box { background: #0d0d0d; border-radius: 16px; padding: 32px; color: #f6f4ee; margin-bottom: 36px; }
     .pro-box h3 { font-size: 22px; margin-bottom: 12px; }
-    .pro-box .price { color: #e8b84b; font-size: 28px; font-weight: 800; }
+    .pro-box .price { color: #dc1b1b; font-size: 28px; font-weight: 800; }
     .pro-features { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
-    .pro-features li { list-style: none; font-size: 14px; color: #7db88a; padding-left: 20px; position: relative; }
-    .pro-features li::before { content: '\2713'; position: absolute; left: 0; color: #e8b84b; font-weight: bold; }
+    .pro-features li { list-style: none; font-size: 14px; color: #c0b8a8; padding-left: 20px; position: relative; }
+    .pro-features li::before { content: '\2713'; position: absolute; left: 0; color: #dc1b1b; font-weight: bold; }
 
     /* Contact */
-    .contact-bar { background: #f8faf7; border-radius: 12px; padding: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border: 1px solid #e0e8e0; }
-    .contact-info h3 { font-size: 18px; color: #1a3a2a; margin-bottom: 4px; }
+    .contact-bar { background: #f6f4ee; border-radius: 12px; padding: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border: 1px solid #ecead9; }
+    .contact-info h3 { font-size: 18px; color: #0d0d0d; margin-bottom: 4px; }
     .contact-info p { font-size: 14px; color: #666; }
-    .contact-cta { background: #e8b84b; color: #2a1800; padding: 12px 28px; border-radius: 10px; font-weight: bold; font-size: 15px; text-decoration: none; }
+    .contact-cta { background: #dc1b1b; color: #f6f4ee; padding: 12px 28px; border-radius: 10px; font-weight: bold; font-size: 15px; text-decoration: none; }
     .kit-footer { text-align: center; padding: 24px; color: #aaa; font-size: 12px; }
   </style>
 </head>
 <body>
 
-  <nav class="no-print" style="position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(12,26,18,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(199,154,58,0.12);">
+  <nav class="no-print" style="position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(199,154,58,0.12);">
     <a href="/" style="display:flex;align-items:center;gap:10px;color:#f6f4ee;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;">
-      <img src="/images/wd-cropped.png" alt="WildDeals" style="width:36px;height:36px;object-fit:contain;" />
-      Wild<span style="color:#c79a3a;">·</span>Deals
+      <img src="/images/WDicon.png" alt="WildDeals" style="width:36px;height:36px;object-fit:contain;" />
+      Wild<span style="color:#b31414;">·</span>Deals
     </a>
     <div style="display:flex;align-items:center;gap:24px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;">
       <a href="/shop" style="color:rgba(246,244,238,0.6);text-decoration:none;font-size:13px;font-weight:400;">Shop</a>
       <a href="/about" style="color:rgba(246,244,238,0.6);text-decoration:none;font-size:13px;font-weight:400;">About</a>
       <a href="/contact" style="color:rgba(246,244,238,0.6);text-decoration:none;font-size:13px;font-weight:400;">Contact</a>
-      <a href="/" style="background:#c79a3a;color:#142a1f;padding:8px 18px;border-radius:2px;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;">Home</a>
+      <a href="/" style="background:#b31414;color:#142a1f;padding:8px 18px;border-radius:2px;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;">Home</a>
     </div>
   </nav>
 
@@ -146,41 +146,41 @@
       <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1200&h=600&fit=crop" alt="Camping in the wilderness" class="cover-hero" />
       <div class="cover-overlay"></div>
       <div class="cover-brand">
-        <img src="/images/wd-cropped.png" alt="WildDeals" style="width:52px;height:52px;border-radius:12px;border:2px solid rgba(232,184,75,0.4);object-fit:contain"  loading="lazy" />
+        <img src="/images/WDicon.png" alt="WildDeals" style="width:52px;height:52px;border-radius:12px;border:2px solid rgba(220,27,27,0.4);object-fit:contain"  loading="lazy" />
         <div>
-          <div style="color:#e8b84b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">Media Kit 2026</div>
+          <div style="color:#dc1b1b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">Media Kit 2026</div>
         </div>
       </div>
 
       <div class="cover-content">
-        <h1 style="font-size:48px;font-weight:800;line-height:1.1;margin-bottom:16px;">Wild<span style="color:#e8b84b;">Deals</span></h1>
-        <p style="font-size:18px;color:#7db88a;line-height:1.5;margin-bottom:36px;max-width:480px;">
+        <h1 style="font-size:48px;font-weight:800;line-height:1.1;margin-bottom:16px;">Wild<span style="color:#dc1b1b;">Deals</span></h1>
+        <p style="font-size:18px;color:#c0b8a8;line-height:1.5;margin-bottom:36px;max-width:480px;">
           The deals app for outdoor gear. Hunting, fishing, camping, hiking — updated daily from hundreds of retailers. Made in Canada.
         </p>
 
         <!-- Stats Row -->
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:36px;">
           <div style="text-align:center;">
-            <div style="color:#e8b84b;font-size:28px;font-weight:800;">300+</div>
-            <div style="color:#7db88a;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Deals Daily</div>
+            <div style="color:#dc1b1b;font-size:28px;font-weight:800;">300+</div>
+            <div style="color:#c0b8a8;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Deals Daily</div>
           </div>
           <div style="text-align:center;">
-            <div style="color:#e8b84b;font-size:28px;font-weight:800;">12</div>
-            <div style="color:#7db88a;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Categories</div>
+            <div style="color:#dc1b1b;font-size:28px;font-weight:800;">12</div>
+            <div style="color:#c0b8a8;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Categories</div>
           </div>
           <div style="text-align:center;">
-            <div style="color:#e8b84b;font-size:28px;font-weight:800;">50%</div>
-            <div style="color:#7db88a;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Avg Discount</div>
+            <div style="color:#dc1b1b;font-size:28px;font-weight:800;">50%</div>
+            <div style="color:#c0b8a8;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Avg Discount</div>
           </div>
           <div style="text-align:center;">
-            <div style="color:#e8b84b;font-size:28px;font-weight:800;">24/7</div>
-            <div style="color:#7db88a;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Live Updates</div>
+            <div style="color:#dc1b1b;font-size:28px;font-weight:800;">24/7</div>
+            <div style="color:#c0b8a8;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Live Updates</div>
           </div>
         </div>
 
         <!-- What We Do -->
         <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:32px;border:1px solid rgba(255,255,255,0.08);">
-          <div style="color:#e8b84b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">What We Do</div>
+          <div style="color:#dc1b1b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">What We Do</div>
           <p style="color:#c0d8c8;font-size:14px;line-height:1.7;">
             WildDeals aggregates the best outdoor gear deals from Amazon.ca, Amazon.com, Cabela's, Bass Pro Shops, Sport Chek, Canadian Tire, MEC, Atmosphere, and hundreds more. Our app is 100% free — real-time deal alerts, price tracking, and custom watchlists for every outdoor enthusiast. No subscriptions, no paywalls. Currently in Canada & USA; Europe coming next.
           </p>
@@ -189,12 +189,12 @@
         <!-- Audience + Revenue -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;">
           <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:18px;border:1px solid rgba(255,255,255,0.08);">
-            <div style="color:#e8b84b;font-size:13px;font-weight:700;margin-bottom:6px;">Target Audience</div>
-            <div style="color:#7db88a;font-size:13px;line-height:1.5;">Outdoor enthusiasts, hunters, anglers, campers, and hikers aged 25-55 — Canada & USA, with Europe coming</div>
+            <div style="color:#dc1b1b;font-size:13px;font-weight:700;margin-bottom:6px;">Target Audience</div>
+            <div style="color:#c0b8a8;font-size:13px;line-height:1.5;">Outdoor enthusiasts, hunters, anglers, campers, and hikers aged 25-55 — Canada & USA, with Europe coming</div>
           </div>
           <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:18px;border:1px solid rgba(255,255,255,0.08);">
-            <div style="color:#e8b84b;font-size:13px;font-weight:700;margin-bottom:6px;">Revenue Model</div>
-            <div style="color:#7db88a;font-size:13px;line-height:1.5;">Affiliate commissions and sponsored deal placements (app is 100% free to users)</div>
+            <div style="color:#dc1b1b;font-size:13px;font-weight:700;margin-bottom:6px;">Revenue Model</div>
+            <div style="color:#c0b8a8;font-size:13px;line-height:1.5;">Affiliate commissions and sponsored deal placements (app is 100% free to users)</div>
           </div>
         </div>
 
