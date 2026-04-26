@@ -251,9 +251,7 @@
       <!-- Stats -->
       <div class="stats-grid" id="nl-stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
         <div class="stat-card"><div class="stat-value" id="nl-stat-subscribers">-</div><div class="stat-label">Total Subscribers</div></div>
-        <div class="stat-card"><div class="stat-value" id="nl-stat-first100">-</div><div class="stat-label">Lifetime Spots Left</div></div>
-        <div class="stat-card"><div class="stat-value" id="nl-stat-next400">-</div><div class="stat-label">1-Month Free Spots Left</div></div>
-        <div class="stat-card"><div class="stat-value" id="nl-stat-promo">-</div><div class="stat-label">Current Promo</div></div>
+        <div class="stat-card"><div class="stat-value" id="nl-stat-founding">-</div><div class="stat-label">Founding Spots Left</div></div>
         <div class="stat-card"><div class="stat-value" id="nl-stat-sent">-</div><div class="stat-label">Emails Sent</div></div>
         <div class="stat-card"><div class="stat-value" id="nl-stat-latest">-</div><div class="stat-label">Latest Signup</div></div>
       </div>
@@ -265,7 +263,7 @@
       </div>
       <div class="table-wrap" style="margin-bottom:24px">
         <table>
-          <thead><tr><th>#</th><th>Email</th><th>Subscribed Date</th><th>Promo Tier</th><th>Promo Code</th><th>Actions</th></tr></thead>
+          <thead><tr><th>#</th><th>Email</th><th>Subscribed Date</th><th>Status</th><th>Promo Code</th><th>Actions</th></tr></thead>
           <tbody id="nl-subscribers-table"></tbody>
         </table>
         <div id="nl-subscriber-count" style="padding:12px 16px;color:#888;font-size:13px;border-top:1px solid #f0f0f0;"></div>
@@ -279,19 +277,6 @@
           <div style="color:rgba(255,255,255,0.7);font-size:13px;" id="founding100-status">Sends personalized email to all 100 founding members with their promo code.</div>
         </div>
         <button class="btn" id="founding100-btn" onclick="sendFounding100()" style="background:#dc1b1b;color:#0d0d0d;font-weight:800;padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:13px;white-space:nowrap;">Send Founding 100 Email</button>
-      </div>
-
-      <!-- Upgrade Overflow to Lifetime -->
-      <div style="background:linear-gradient(135deg,#2a2a1a,#1a1a0a);border:1px solid rgba(220,27,27,0.3);border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="color:#dc1b1b;font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:4px;">UPGRADE OVERFLOW TO LIFETIME</div>
-          <div style="color:rgba(255,255,255,0.7);font-size:13px;" id="upgrade-status">Upgrade subscribers who snuck past #100 to lifetime + send them a "you snuck in" email.</div>
-          <div style="margin-top:8px;">
-            <label style="color:rgba(255,255,255,0.5);font-size:12px;">Upgrade up to subscriber #</label>
-            <input type="number" id="upgrade-max" value="105" min="101" max="200" style="width:70px;padding:4px 8px;border:1px solid rgba(220,27,27,0.3);border-radius:6px;background:#0a0a0a;color:#dc1b1b;font-weight:700;font-size:14px;margin-left:6px;" />
-          </div>
-        </div>
-        <button class="btn" id="upgrade-btn" onclick="upgradeToLifetime()" style="background:#dc1b1b;color:#0d0d0d;font-weight:800;padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:13px;white-space:nowrap;">Upgrade & Send Email</button>
       </div>
 
       <!-- Send Newsletter — Tabs for Template or Custom -->
@@ -1122,10 +1107,11 @@
       });
       const data = await res.json();
       document.getElementById('nl-stat-subscribers').textContent = data.totalSubscribers ?? '-';
-      document.getElementById('nl-stat-first100').textContent = data.first100Remaining ?? '-';
-      document.getElementById('nl-stat-next400').textContent = data.next400Remaining ?? '-';
-      const promoLabels = { lifetime: 'Lifetime (First 100)', '1month': '1 Month Free (First 500)', none: 'Ended' };
-      document.getElementById('nl-stat-promo').textContent = promoLabels[data.currentPromo] || '-';
+      // Founding spots = first 1,000 (post-pivot model). Backend exposes
+      // foundingRemaining; fall back to computing from totalSubscribers if
+      // an older response shape comes back.
+      const foundingLeft = data.foundingRemaining ?? Math.max(0, 1000 - (data.totalSubscribers || 0));
+      document.getElementById('nl-stat-founding').textContent = foundingLeft;
     } catch (e) {
       console.error('Newsletter stats error:', e);
     }
@@ -1195,36 +1181,10 @@
     previewArea.scrollIntoView({ behavior: 'smooth' });
   };
 
-  window.upgradeToLifetime = async function() {
-    const maxNum = parseInt(document.getElementById('upgrade-max').value);
-    const btn = document.getElementById('upgrade-btn');
-    const status = document.getElementById('upgrade-status');
-    if (!maxNum || maxNum <= 100) { alert('Enter a subscriber number above 100'); return; }
-    if (!confirm(`Upgrade subscribers #101–#${maxNum} to LIFETIME and send them a "You Just Snuck In" email?`)) return;
-    btn.disabled = true; btn.textContent = 'Upgrading...';
-    status.textContent = 'Upgrading and sending emails...';
-    try {
-      const res = await fetch(`${API_URL}/api/upgrade-to-lifetime`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...(await adminHeaders()) },
-        body: JSON.stringify({ maxSubscriberNumber: maxNum }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        status.textContent = `✅ Upgraded ${data.upgraded} subscribers! ${data.sent} emails sent, ${data.failed} failed.`;
-        status.style.color = '#4CAF50';
-        btn.textContent = 'Done ✓';
-      } else {
-        status.textContent = '⚠️ ' + (data.message || 'No subscribers found in that range.');
-        status.style.color = '#dc1b1b';
-        btn.disabled = false; btn.textContent = 'Upgrade & Send Email';
-      }
-    } catch (err) {
-      status.textContent = '❌ Error: ' + err.message;
-      status.style.color = '#c0392b';
-      btn.disabled = false; btn.textContent = 'Retry';
-    }
-  };
+  // upgradeToLifetime() removed — the "Upgrade Overflow to Lifetime" UI was
+  // tied to the pre-pivot Pro tier. Backend endpoint /api/upgrade-to-lifetime
+  // is kept for the legacy schema records (subs #101-105 already upgraded)
+  // but is not exposed as an admin button anymore.
 
   window.sendFounding100 = async function() {
     const btn = document.getElementById('founding100-btn');
@@ -1397,9 +1357,13 @@
       ? '<tr><td colspan="6" style="text-align:center;color:#888;padding:20px">No subscribers yet.</td></tr>'
       : subs.map(s => {
         const date = s.subscribedAt?.toDate ? s.subscribedAt.toDate().toLocaleDateString() : (typeof s.subscribedAt === 'string' ? new Date(s.subscribedAt).toLocaleDateString() : '-');
-        const isFirst100 = s.isFirst100 || s.subscriberNumber <= 100;
-        const isNext400 = s.isNext400 || (!isFirst100 && s.subscriberNumber <= 500);
-        const tierBadge = isFirst100 ? '<span class="nl-badge-yes">Lifetime</span>' : isNext400 ? '<span class="nl-badge-yes" style="background:#e8f7e8;color:#2e7d32;">1 Month</span>' : '<span class="nl-badge-no">—</span>';
+        // Founding Member badge for first 1,000 (post-pivot model). The
+        // legacy isFirst100/isNext400 fields are retained on the doc but
+        // collapsed into a single "Founding" tier here for display.
+        const isFounding = s.subscriberNumber > 0 && s.subscriberNumber <= 1000;
+        const tierBadge = isFounding
+          ? '<span class="nl-badge-yes">Founding</span>'
+          : '<span class="nl-badge-no">—</span>';
         const emailEsc = esc(s.email || '-');
         const emailJs = jsStr(s.email || '');
         const idJs = jsStr(s.id || '');
@@ -1466,11 +1430,11 @@
 
   window.exportSubscribers = function() {
     if (nlSubscribersList.length === 0) { alert('No subscribers to export.'); return; }
-    const header = 'Number,Email,Subscribed Date,Promo Tier,Promo Code\n';
+    const header = 'Number,Email,Subscribed Date,Status,Promo Code\n';
     const rows = nlSubscribersList.map(s => {
       const date = s.subscribedAt?.toDate ? s.subscribedAt.toDate().toISOString() : (s.subscribedAt || '');
-      const tier = s.isFirst100 ? 'Lifetime' : (s.isNext400 || (!s.isFirst100 && s.subscriberNumber <= 500)) ? '1 Month' : 'None';
-      return `${s.subscriberNumber},"${s.email}","${date}",${tier},"${s.promoCode || ''}"`;
+      const status = (s.subscriberNumber > 0 && s.subscriberNumber <= 1000) ? 'Founding' : 'Subscriber';
+      return `${s.subscriberNumber},"${s.email}","${date}",${status},"${s.promoCode || ''}"`;
     }).join('\n');
     const blob = new Blob([header + rows], { type: 'text/csv' });
     const a = document.createElement('a');
